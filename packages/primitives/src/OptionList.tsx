@@ -24,8 +24,8 @@ const OptionListItem = forwardRef<HTMLButtonElement, OptionListItemProps>(
 				ref={ref}
 				type={type}
 				className={clsx(
-					"w-full cursor-pointer rounded-md px-3 py-2 text-left text-sm hover:bg-menu-hover",
-					selected && "bg-menu-selected text-ink",
+					"w-full cursor-pointer rounded-md px-3 py-2 text-left text-sm hover:bg-app-hover",
+					selected && "bg-app-selected hover:bg-app-selected text-ink",
 					className,
 				)}
 				{...props}
