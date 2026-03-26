@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { forwardRef, useState } from 'react';
 import { KindIcon } from './KindIcon';
-import type { FileInfo } from '../types';
+import type { FileInfo } from './types';
 
 interface FileThumbProps {
   file: FileInfo;

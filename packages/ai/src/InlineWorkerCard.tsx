@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { forwardRef, useState } from 'react';
-import { CaretDown, CaretRight, Copy, X, CheckCircle, Terminal } from '@phosphor-icons/react';
+import { CaretDown, CaretRight, Copy, X, Terminal } from '@phosphor-icons/react';
 import { Card, CardContent, Badge, Button } from '@spaceui/primitives';
 import { ToolCall } from './ToolCall';
 import type { ToolCallPair, TranscriptStep, TaskInfo } from './types';
@@ -65,7 +65,7 @@ const InlineWorkerCard = forwardRef<HTMLDivElement, InlineWorkerCardProps>(
 
           {expanded && (
             <div className="mt-3 space-y-2 border-t border-app-line pt-3">
-              {pairs.map(([action, result], index) => {
+              {pairs.map(([action, result], _index) => {
                 if (!action) return null;
                 
                 const toolCall: ToolCallPair = {

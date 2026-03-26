@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@spaceui/primitives": "workspace:*",
+    "@phosphor-icons/react": "^2.1.0",
     "clsx": "^2.1.0"
   },
   "devDependencies": {

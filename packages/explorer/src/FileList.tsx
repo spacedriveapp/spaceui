@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
-import { forwardRef, lazy, Suspense } from 'react';
+import { forwardRef, Suspense } from 'react';
 import { FileRow } from './FileRow';
-import type { FileInfo, SortField, SortDirection } from '../types';
+import type { FileInfo, SortField, SortDirection } from './types';
 
 interface FileListProps {
   files: FileInfo[];
@@ -51,7 +51,7 @@ const FileListContent = forwardRef<HTMLDivElement, FileListProps>(
               key={file.id}
               file={file}
               selected={selectedIds.has(file.id)}
-              onClick={(e) => onFileClick(file, e as unknown as React.MouseEvent)}
+              onClick={() => onFileClick(file, {} as unknown as React.MouseEvent)}
               onDoubleClick={() => onFileDoubleClick(file)}
             />
           ))}

@@ -22,7 +22,8 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@spaceui/primitives": "workspace:*",
+    "@spaceui/primitives": "file:../primitives",
+    "@phosphor-icons/react": "^2.1.0",
     "react-markdown": "^9.0.0",
     "remark-gfm": "^4.0.0",
     "rehype-raw": "^7.0.0",

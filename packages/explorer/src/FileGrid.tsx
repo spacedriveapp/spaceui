@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
-import { forwardRef, lazy, Suspense } from 'react';
+import { forwardRef, Suspense } from 'react';
 import { FileThumb } from './FileThumb';
 import { Checkbox } from '@spaceui/primitives';
-import type { FileInfo } from '../types';
+import type { FileInfo } from './types';
 
 interface FileGridProps {
   files: FileInfo[];

@@ -1,12 +1,12 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@spaceui/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
-interface SelectOption {
+export interface SelectOption {
   value: string;
   label: string;
 }
 
-interface SelectFieldProps {
+export interface SelectFieldProps {
   name: string;
   label?: string;
   description?: string;
@@ -45,4 +45,3 @@ function SelectField({ name, label, description, placeholder, options, disabled 
 }
 
 export { SelectField };
-export type { SelectOption };

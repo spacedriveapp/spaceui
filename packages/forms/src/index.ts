@@ -17,11 +17,3 @@ export { SelectField } from './SelectField';
 export { CheckboxField } from './CheckboxField';
 export { RadioGroupField } from './RadioGroupField';
 export { SwitchField } from './SwitchField';
-
-// Types
-export type { InputFieldProps } from './InputField';
-export type { TextAreaFieldProps } from './TextAreaField';
-export type { SelectFieldProps, SelectOption } from './SelectField';
-export type { CheckboxFieldProps } from './CheckboxField';
-export type { RadioGroupFieldProps, RadioOption } from './RadioGroupField';
-export type { SwitchFieldProps } from './SwitchField';

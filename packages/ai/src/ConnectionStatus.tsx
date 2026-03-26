@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
-import { Wifi, WifiSlash, Spinner } from '@phosphor-icons/react';
+import { WifiHigh, WifiSlash, Spinner } from '@phosphor-icons/react';
 
 interface ConnectionStatusProps {
   status: 'connected' | 'connecting' | 'offline' | 'error';
@@ -12,7 +12,7 @@ const ConnectionStatus = forwardRef<HTMLDivElement, ConnectionStatusProps>(
   ({ status, className, showLabel = true }, ref) => {
     const config = {
       connected: {
-        icon: Wifi,
+        icon: WifiHigh,
         label: 'Connected',
         color: 'text-status-success',
         bgColor: 'bg-status-success/10',

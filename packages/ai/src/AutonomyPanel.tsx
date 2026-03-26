@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { forwardRef, useState } from 'react';
-import { Shield, ShieldAlert, ShieldCheck, AlertCircle, CheckCircle2 } from '@phosphor-icons/react';
-import { Card, CardContent, CardHeader, CardTitle, Badge, Button, Slider, Switch } from '@spaceui/primitives';
+import { Shield, ShieldCheck, WarningCircle, XCircle, CheckCircle } from '@phosphor-icons/react';
+import { Card, CardContent, CardHeader, CardTitle, Badge, Button, Slider } from '@spaceui/primitives';
 
 interface AutonomyLevel {
   level: 'manual' | 'assisted' | 'semi' | 'full';
@@ -27,13 +27,13 @@ const autonomyLevels: AutonomyLevel[] = [
     level: 'semi',
     label: 'Semi-Autonomous',
     description: 'Execute safe actions, ask for permission on destructive ones',
-    icon: ShieldAlert,
+    icon: WarningCircle,
   },
   {
     level: 'full',
     label: 'Full Autonomy',
     description: 'Execute all actions independently',
-    icon: AlertCircle,
+    icon: WarningCircle,
   },
 ];
 
@@ -58,9 +58,10 @@ const AutonomyPanel = forwardRef<HTMLDivElement, AutonomyPanelProps>(
     const currentLevelIndex = autonomyLevels.findIndex((l) => l.level === currentLevel);
     const [selectedLevel, setSelectedLevel] = useState(currentLevelIndex);
 
-    const handleLevelChange = (value: number) => {
-      setSelectedLevel(value);
-      onLevelChange?.(autonomyLevels[value].level);
+    const handleLevelChange = (value: number[]) => {
+      const nextLevel = value[0] ?? 0;
+      setSelectedLevel(nextLevel);
+      onLevelChange?.(autonomyLevels[nextLevel].level);
     };
 
     return (
@@ -71,8 +72,8 @@ const AutonomyPanel = forwardRef<HTMLDivElement, AutonomyPanelProps>(
           </CardHeader>
           <CardContent className="space-y-4">
             <Slider
-              value={selectedLevel}
-              onChange={handleLevelChange}
+              value={[selectedLevel]}
+              onValueChange={handleLevelChange}
               min={0}
               max={3}
               step={1}
@@ -147,7 +148,7 @@ const AutonomyPanel = forwardRef<HTMLDivElement, AutonomyPanelProps>(
                         className="size-7 text-status-error hover:text-status-error"
                         onClick={() => onDeny(request.id)}
                       >
-                        <AlertCircle className="size-4" />
+                         <XCircle className="size-4" />
                       </Button>
                     )}
                     {onApprove && (
@@ -157,7 +158,7 @@ const AutonomyPanel = forwardRef<HTMLDivElement, AutonomyPanelProps>(
                         className="size-7 text-status-success hover:text-status-success"
                         onClick={() => onApprove(request.id)}
                       >
-                        <CheckCircle2 className="size-4" />
+                         <CheckCircle className="size-4" />
                       </Button>
                     )}
                   </div>

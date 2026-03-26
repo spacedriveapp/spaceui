@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
 import { forwardRef, useState } from 'react';
-import { Plus, Play, Pause, Trash2, Clock, CheckCircle, History } from '@phosphor-icons/react';
+import { Plus, Play, Pause, Trash, Clock, CheckCircle, ClockCounterClockwise } from '@phosphor-icons/react';
 import { Card, CardContent, Button, Badge, Switch } from '@spaceui/primitives';
-import type { CronJobInfo } from '../types';
+import type { CronJobInfo } from './types';
 
 interface CronJobListProps {
   jobs: CronJobInfo[];
@@ -87,7 +87,7 @@ const CronJobList = forwardRef<HTMLDivElement, CronJobListProps>(
                         className="size-7"
                         onClick={() => setExpandedJob(isExpanded ? null : job.id)}
                       >
-                        <History className="size-4" />
+                         <ClockCounterClockwise className="size-4" />
                       </Button>
 
                       {onRunJob && job.status === 'active' && (
@@ -108,7 +108,7 @@ const CronJobList = forwardRef<HTMLDivElement, CronJobListProps>(
                           className="size-7 text-status-error hover:text-status-error"
                           onClick={() => onDeleteJob(job.id)}
                         >
-                          <Trash2 className="size-4" />
+                          <Trash className="size-4" />
                         </Button>
                       )}
                     </div>

@@ -1,7 +1,7 @@
 import { Checkbox } from '@spaceui/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
-interface CheckboxFieldProps {
+export interface CheckboxFieldProps {
   name: string;
   label?: string;
   description?: string;

@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 
-interface ShortcutProps extends React.HTMLAttributes<HTMLSpanElement> {
+export interface ShortcutProps extends React.HTMLAttributes<HTMLSpanElement> {
   keys: string[];
   variant?: 'default' | 'small';
 }

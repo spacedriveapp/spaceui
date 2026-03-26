@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { Minus, Plus } from '@phosphor-icons/react';
 
 export interface NumberStepperProps {

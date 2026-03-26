@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 import { X } from '@phosphor-icons/react';
 
-interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ToastProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
   description?: string;
   variant?: 'default' | 'success' | 'error' | 'warning';

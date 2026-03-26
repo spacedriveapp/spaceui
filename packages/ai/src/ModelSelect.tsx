@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { forwardRef, useState } from 'react';
-import { Check, Search, Brain, Wrench } from '@phosphor-icons/react';
+import { Check, MagnifyingGlass, Brain, Wrench } from '@phosphor-icons/react';
 import { Popover, PopoverContent, PopoverTrigger, Button, Badge } from '@spaceui/primitives';
 import type { ModelOption } from './types';
 
@@ -73,7 +73,7 @@ const ModelSelect = forwardRef<HTMLButtonElement, ModelSelectProps>(
         </PopoverTrigger>
         <PopoverContent className="w-[300px] p-0">
           <div className="flex items-center border-b border-menu-line px-3 py-2">
-            <Search className="mr-2 size-4 text-ink-faint" />
+            <MagnifyingGlass className="mr-2 size-4 text-ink-faint" />
             <input
               placeholder="Search models..."
               className="flex-1 bg-transparent text-sm text-ink placeholder:text-ink-faint focus:outline-none"

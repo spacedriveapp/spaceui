@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 
-interface LoaderProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface LoaderProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: 'sm' | 'md' | 'lg';
   variant?: 'spinner' | 'dots';
 }

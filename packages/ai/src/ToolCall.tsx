@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
-import { Terminal, CheckCircle, XCircle, Loader } from '@phosphor-icons/react';
+import { Terminal, CheckCircle, XCircle, Spinner } from '@phosphor-icons/react';
 import type { ToolCallPair, ToolCallStatus } from './types';
 
 interface ToolCallProps {
@@ -11,7 +11,7 @@ interface ToolCallProps {
 }
 
 const statusIcons: Record<ToolCallStatus, React.ComponentType<{ className?: string }>> = {
-  running: Loader,
+  running: Spinner,
   completed: CheckCircle,
   error: XCircle,
 };

@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
 import { forwardRef, useState } from 'react';
-import { Search, Filter, Trash2, Pencil } from '@phosphor-icons/react';
+import { MagnifyingGlass, Funnel, Trash, Pencil } from '@phosphor-icons/react';
 import { Card, CardContent, Badge, Button, Input } from '@spaceui/primitives';
-import type { MemoryInfo } from '../types';
+import type { MemoryInfo } from './types';
 
 interface MemoryListProps {
   memories: MemoryInfo[];
@@ -35,7 +35,7 @@ const MemoryList = forwardRef<HTMLDivElement, MemoryListProps>(
       <div ref={ref} className={clsx('space-y-4', className)}>
         <div className="flex items-center gap-2">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-faint" />
+            <MagnifyingGlass className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-ink-faint" />
             <Input
               placeholder="Search memories..."
               value={search}
@@ -48,7 +48,7 @@ const MemoryList = forwardRef<HTMLDivElement, MemoryListProps>(
             size="icon"
             onClick={() => setTypeFilter(null)}
           >
-            <Filter className="size-4" />
+            <Funnel className="size-4" />
           </Button>
         </div>
 
@@ -134,7 +134,7 @@ const MemoryList = forwardRef<HTMLDivElement, MemoryListProps>(
                           onMemoryDelete(memory);
                         }}
                       >
-                        <Trash2 className="size-3.5" />
+                        <Trash className="size-3.5" />
                       </Button>
                     )}
                   </div>

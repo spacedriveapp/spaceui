@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
-import { forwardRef, lazy, Suspense } from 'react';
-import type { MemoryInfo } from '../types';
+import { forwardRef, Suspense } from 'react';
+import type { MemoryInfo } from './types';
 
 interface MemoryGraphProps {
   memories: MemoryInfo[];
@@ -10,7 +10,7 @@ interface MemoryGraphProps {
 
 // Lazy loaded component for Sigma.js integration
 const MemoryGraphContent = forwardRef<HTMLDivElement, MemoryGraphProps>(
-  ({ memories, onNodeClick, className }, ref) => {
+  ({ memories, onNodeClick: _onNodeClick, className }, ref) => {
     // Placeholder for Sigma.js graph visualization
     // This would be implemented with @react-sigma/core in a real app
     return (

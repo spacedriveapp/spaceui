@@ -1,12 +1,12 @@
 import { RadioGroup, RadioGroupItem } from '@spaceui/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
-interface RadioOption {
+export interface RadioOption {
   value: string;
   label: string;
 }
 
-interface RadioGroupFieldProps {
+export interface RadioGroupFieldProps {
   name: string;
   label?: string;
   description?: string;
@@ -47,4 +47,3 @@ function RadioGroupField({ name, label, description, options, disabled }: RadioG
 }
 
 export { RadioGroupField };
-export type { RadioOption };

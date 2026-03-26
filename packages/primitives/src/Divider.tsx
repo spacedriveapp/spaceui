@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 
-interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
   orientation?: 'horizontal' | 'vertical';
 }
 

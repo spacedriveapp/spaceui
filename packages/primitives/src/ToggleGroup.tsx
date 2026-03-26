@@ -2,13 +2,13 @@ import * as ToggleGroupPrimitive from '@radix-ui/react-toggle-group';
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 
-interface ToggleOption {
+export interface ToggleOption {
   value: string;
   label: string;
   icon?: React.ComponentType<{ className?: string }>;
 }
 
-interface ToggleGroupProps {
+export interface ToggleGroupProps {
   options: ToggleOption[];
   value: string;
   onChange: (value: string) => void;
@@ -53,4 +53,3 @@ const ToggleGroup = forwardRef<React.ElementRef<typeof ToggleGroupPrimitive.Root
 ToggleGroup.displayName = 'ToggleGroup';
 
 export { ToggleGroup };
-export type { ToggleOption };

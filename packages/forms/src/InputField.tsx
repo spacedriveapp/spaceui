@@ -1,8 +1,7 @@
 import { Input } from '@spaceui/primitives';
-import { useFormContext, Controller } from 'react-hook-form';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
-interface InputFieldProps {
+export interface InputFieldProps {
   name: string;
   label?: string;
   description?: string;

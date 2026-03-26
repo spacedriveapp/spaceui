@@ -1,8 +1,8 @@
 import { clsx } from 'clsx';
-import { forwardRef, useCallback, useEffect, useState, Suspense, lazy } from 'react';
+import { forwardRef, useCallback, useEffect, useState, Suspense } from 'react';
 import { X, ArrowsOut, ArrowLeft, ArrowRight } from '@phosphor-icons/react';
 import { Button, Dialog, DialogContent, DialogTitle } from '@spaceui/primitives';
-import type { FileInfo } from '../types';
+import type { FileInfo } from './types';
 
 interface QuickPreviewProps {
   file: FileInfo;

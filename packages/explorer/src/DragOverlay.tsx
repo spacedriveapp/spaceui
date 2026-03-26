@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 import { FileThumb } from './FileThumb';
 import { Badge } from '@spaceui/primitives';
-import type { FileInfo } from '../types';
+import type { FileInfo } from './types';
 
 interface DragOverlayProps {
   files: FileInfo[];

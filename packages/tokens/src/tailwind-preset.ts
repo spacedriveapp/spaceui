@@ -17,7 +17,7 @@ const flattenColors = (obj: Record<string, unknown>, prefix = ''): Record<string
   return result;
 };
 
-export const spaceUiPreset: Config = {
+export const spaceUiPreset: Partial<Config> = {
   darkMode: 'class',
   theme: {
     extend: {

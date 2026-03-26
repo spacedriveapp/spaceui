@@ -10,7 +10,7 @@ interface DropdownProps {
 }
 
 const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
-  ({ trigger, children, className, align = 'center' }, ref) => {
+  ({ trigger, children, className, align = 'center' }, forwardedRef) => {
     const [isOpen, setIsOpen] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -32,7 +32,7 @@ const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
     };
 
     return (
-      <div ref={containerRef} className="relative inline-block">
+      <div ref={forwardedRef} className="relative inline-block">
         <div onClick={() => setIsOpen(!isOpen)}>{trigger}</div>
         <AnimatePresence>
           {isOpen && (

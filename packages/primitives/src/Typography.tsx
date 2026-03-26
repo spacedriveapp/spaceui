@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 
-const headingVariants = {
+export const headingVariants = {
   h1: 'text-3xl font-bold tracking-tight',
   h2: 'text-2xl font-semibold tracking-tight',
   h3: 'text-xl font-semibold tracking-tight',
@@ -10,14 +10,14 @@ const headingVariants = {
   h6: 'text-sm font-semibold',
 };
 
-const bodyVariants = {
+export const bodyVariants = {
   large: 'text-base leading-relaxed',
   default: 'text-sm leading-relaxed',
   small: 'text-xs leading-relaxed',
   muted: 'text-sm leading-relaxed text-ink-dull',
 };
 
-interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
+export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
   variant?: keyof typeof headingVariants | keyof typeof bodyVariants;
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span' | 'div';
 }
@@ -53,4 +53,4 @@ const Typography = forwardRef<HTMLElement, TypographyProps>(
 
 Typography.displayName = 'Typography';
 
-export { Typography, headingVariants, bodyVariants };
+export { Typography };

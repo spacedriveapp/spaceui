@@ -1,7 +1,7 @@
 import { Switch } from '@spaceui/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
-interface SwitchFieldProps {
+export interface SwitchFieldProps {
   name: string;
   label?: string;
   description?: string;

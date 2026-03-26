@@ -1,6 +1,6 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
-import type { TaskInfo } from '../types';
+import type { TaskInfo } from './types';
 
 interface TaskBoardProps {
   tasks: TaskInfo[];
@@ -10,7 +10,7 @@ interface TaskBoardProps {
 }
 
 const TaskBoard = forwardRef<HTMLDivElement, TaskBoardProps>(
-  ({ tasks, onTaskMove, onTaskClick, className }, ref) => {
+  ({ tasks, onTaskMove: _onTaskMove, onTaskClick, className }, ref) => {
     const columns = ['pending_approval', 'backlog', 'ready', 'in_progress', 'done'];
 
     const tasksByStatus = columns.reduce((acc, status) => {

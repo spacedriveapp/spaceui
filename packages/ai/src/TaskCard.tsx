@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 import { ProfileAvatar } from './ProfileAvatar';
 import { Badge } from '@spaceui/primitives';
-import type { TaskInfo } from '../types';
+import type { TaskInfo } from './types';
 
 interface TaskCardProps {
   task: TaskInfo;
@@ -49,7 +49,7 @@ const TaskCard = forwardRef<HTMLDivElement, TaskCardProps>(
 
         {task.assignees.length > 0 && (
           <div className="mt-3 flex items-center -space-x-1">
-            {task.assignees.map((assignee, i) => (
+            {task.assignees.map((assignee: string, i: number) => (
               <ProfileAvatar
                 key={i}
                 name={assignee}

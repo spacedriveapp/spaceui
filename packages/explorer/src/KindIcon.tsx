@@ -1,7 +1,6 @@
 import { clsx } from 'clsx';
-import { forwardRef } from 'react';
-import { File, Folder, Image, Video, Music, FileArchive, FileCode, FileText, Question } from '@phosphor-icons/react';
-import type { FileKind } from '../types';
+import { File, Image, Video, FileAudio, FileArchive, FileCode, FileText, Question } from '@phosphor-icons/react';
+import type { FileKind } from './types';
 
 interface KindIconProps {
   kind: FileKind;
@@ -13,7 +12,7 @@ const kindIcons: Record<FileKind, React.ComponentType<{ className?: string }>> =
   document: FileText,
   image: Image,
   video: Video,
-  audio: Music,
+  audio: FileAudio,
   archive: FileArchive,
   executable: File,
   code: FileCode,
@@ -37,20 +36,15 @@ const sizeClasses = {
   lg: 'size-6',
 };
 
-const KindIcon = forwardRef<SVGSVGElement, KindIconProps>(
-  ({ kind, className, size = 'md' }, ref) => {
-    const Icon = kindIcons[kind] || Question;
+const KindIcon = ({ kind, className, size = 'md' }: KindIconProps) => {
+  const Icon = kindIcons[kind] || Question;
 
-    return (
-      <Icon
-        ref={ref}
-        className={clsx(sizeClasses[size], kindColors[kind], className)}
-      />
-    );
-  }
-);
-
-KindIcon.displayName = 'KindIcon';
+  return (
+    <Icon
+      className={clsx(sizeClasses[size], kindColors[kind], className)}
+    />
+  );
+};
 
 export { KindIcon };
 export type { KindIconProps };

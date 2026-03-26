@@ -31,19 +31,3 @@ export { MemoryGraph } from './MemoryGraph';
 export { MemoryList } from './MemoryList';
 export { CronJobList } from './CronJobList';
 export { AutonomyPanel } from './AutonomyPanel';
-
-// Export types for props
-export type { ToolCallProps } from './ToolCall';
-export type { MarkdownProps } from './Markdown';
-export type { InlineWorkerCardProps } from './InlineWorkerCard';
-export type { ChatComposerProps } from './ChatComposer';
-export type { ModelSelectProps } from './ModelSelect';
-export type { ProfileAvatarProps } from './ProfileAvatar';
-export type { AgentSelectorProps } from './AgentSelector';
-export type { ConnectionStatusProps } from './ConnectionStatus';
-export type { TaskBoardProps } from './TaskBoard';
-export type { TaskCardProps } from './TaskCard';
-export type { MemoryGraphProps } from './MemoryGraph';
-export type { MemoryListProps } from './MemoryList';
-export type { CronJobListProps } from './CronJobList';
-export type { AutonomyPanelProps } from './AutonomyPanel';

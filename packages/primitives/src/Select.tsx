@@ -1,6 +1,6 @@
 import * as SelectPrimitive from '@radix-ui/react-select';
 import { clsx } from 'clsx';
-import { CaretDown, CaretUp, Check } from '@phosphor-icons/react';
+import { CaretDown, Check } from '@phosphor-icons/react';
 import { forwardRef } from 'react';
 
 const Select = SelectPrimitive.Root;

@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 import { FileThumb } from './FileThumb';
 import { KindIcon } from './KindIcon';
-import type { FileInfo } from '../types';
+import type { FileInfo } from './types';
 
 interface FileRowProps {
   file: FileInfo;

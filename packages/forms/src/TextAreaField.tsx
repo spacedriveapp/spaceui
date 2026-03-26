@@ -1,7 +1,6 @@
-import { useFormContext, Controller } from 'react-hook-form';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
-interface TextAreaFieldProps {
+export interface TextAreaFieldProps {
   name: string;
   label?: string;
   description?: string;

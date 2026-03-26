@@ -1,7 +1,7 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@spaceui/primitives';
-import { CaretDown, CaretRight } from '@phosphor-icons/react';
+import { CaretDown } from '@phosphor-icons/react';
 
 interface InspectorPanelProps {
   title: string;

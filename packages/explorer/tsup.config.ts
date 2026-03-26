@@ -11,6 +11,7 @@ export default defineConfig({
     'react',
     'react-dom',
     '@spaceui/primitives',
+    '@phosphor-icons/react',
     '@tanstack/react-virtual'
   ],
   esbuildOptions(options) {

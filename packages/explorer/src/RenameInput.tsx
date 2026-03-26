@@ -10,7 +10,7 @@ interface RenameInputProps {
   className?: string;
 }
 
-const RenameInput = forwardRef<HTMLDivElement, RenameInputProps>(
+const RenameInput = forwardRef<HTMLFormElement, RenameInputProps>(
   ({ initialValue, onRename, onCancel, className }, ref) => {
     const [value, setValue] = useState(initialValue);
     const inputRef = useRef<HTMLInputElement>(null);

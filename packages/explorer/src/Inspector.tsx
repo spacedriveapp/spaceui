@@ -2,7 +2,7 @@ import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 import { TagPill } from './TagPill';
 import { Card, CardContent, CardHeader, CardTitle, Divider } from '@spaceui/primitives';
-import type { FileInfo, TagInfo } from '../types';
+import type { FileInfo, TagInfo } from './types';
 
 interface InspectorProps {
   file: FileInfo;
@@ -13,7 +13,7 @@ interface InspectorProps {
 }
 
 const Inspector = forwardRef<HTMLDivElement, InspectorProps>(
-  ({ file, tags = [], onTagRemove, onTagAdd, className }, ref) => {
+  ({ file, tags = [], onTagRemove, onTagAdd: _onTagAdd, className }, ref) => {
     const formatSize = (bytes: number): string => {
       if (bytes === 0) return '0 B';
       const k = 1024;
