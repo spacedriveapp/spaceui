@@ -1,15 +1,15 @@
 import clsx from "clsx";
 import { Children, cloneElement, isValidElement } from "react";
 
-interface TopBarButtonGroupProps {
+interface CircleButtonGroupProps {
 	children: React.ReactNode;
 	className?: string;
 }
 
-export function TopBarButtonGroup({
+export function CircleButtonGroup({
 	children,
 	className,
-}: TopBarButtonGroupProps) {
+}: CircleButtonGroupProps) {
 	const childArray = Children.toArray(children);
 
 	return (
@@ -42,3 +42,5 @@ export function TopBarButtonGroup({
 		</div>
 	);
 }
+
+export type { CircleButtonGroupProps };

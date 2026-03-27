@@ -58,7 +58,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
 				)}
 			>
 				<MagnifyingGlass
-					className="size-[18px] flex-shrink-0 text-sidebar-inkFaint"
+					className="size-[18px] flex-shrink-0 text-ink"
 					weight="bold"
 				/>
 				<input

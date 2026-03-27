@@ -2,12 +2,12 @@
 
 import * as PopoverPrimitive from "@radix-ui/react-popover";
 import clsx from "clsx";
-import { forwardRef, useState } from "react";
+import {forwardRef, useState} from "react";
 
 /** Convenience hook for controlled popover state */
 export function usePopover() {
 	const [open, setOpen] = useState(false);
-	return { open, setOpen };
+	return {open, setOpen};
 }
 
 const Root = PopoverPrimitive.Root;
@@ -19,27 +19,36 @@ const Portal = PopoverPrimitive.Portal;
 const Content = forwardRef<
 	React.ElementRef<typeof PopoverPrimitive.Content>,
 	React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ className, sideOffset = 8, ...props }, ref) => (
-	<PopoverPrimitive.Portal>
+>(({className, sideOffset = 8, style, children, ...props}, ref) => (
+	<Portal>
 		<PopoverPrimitive.Content
 			ref={ref}
 			sideOffset={sideOffset}
 			onOpenAutoFocus={(event) => event.preventDefault()}
 			onCloseAutoFocus={(event) => event.preventDefault()}
-			className={clsx(
-				"flex flex-col",
-				"z-[9999] min-w-44",
-				"cursor-default select-none rounded-lg",
-				"text-left text-sm text-ink",
-				"bg-app-overlay",
-				"border border-app-line",
-				"shadow-2xl",
-				"radix-state-closed:animate-out radix-state-closed:fade-out-0",
-				className,
-			)}
+			className="z-[9999]"
 			{...props}
-		/>
-	</PopoverPrimitive.Portal>
+		>
+			<div
+				className={clsx(
+					"flex flex-col",
+					"cursor-default select-none rounded-2xl",
+					"px-1.5 py-1.5",
+					"text-left text-sm text-ink",
+					"bg-app-overlay",
+					"border border-app-line",
+					"shadow-2xl",
+					className,
+				)}
+				style={{
+					width: "var(--radix-popover-trigger-width)",
+					...style,
+				}}
+			>
+				{children}
+			</div>
+		</PopoverPrimitive.Content>
+	</Portal>
 ));
 
 Content.displayName = PopoverPrimitive.Content.displayName;

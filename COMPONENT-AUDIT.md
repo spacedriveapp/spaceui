@@ -66,27 +66,27 @@ Use this to track migration progress as components are faithfully rebuilt from t
 
 ## Explorer (`@spaceui/explorer`)
 
-### Worth keeping
+### Done — faithful to real Spacedrive
 
-| Component | Accuracy | Real Source | Status | Notes |
-|---|---|---|---|---|
-| TagPill | 70% | `interface/src/components/Tags/TagPill.tsx` | 🔧 Fix | Similar structure, different props API (tag object vs color+children) |
-| RenameInput | 60% | `interface/src/routes/explorer/components/InlineNameEdit.tsx` | 🔧 Fix | Missing extension handling, async save, blur cancellation |
+| Component | Real Source | Status | Notes |
+|---|---|---|---|
+| TagPill | `interface/src/components/Tags/TagPill.tsx` | ✅ Done | Faithful: color+children API, sizes, color dot, remove button |
+| RenameInput | `interface/src/routes/explorer/components/InlineNameEdit.tsx` | ✅ Done | Faithful: generic (no File type), extension handling, async save, blur cancels |
 
-### Rebuild from scratch
+### Removed — too large/complex for a UI library, belong in @sd/interface
 
-| Component | Accuracy | Real Source | Status | Notes |
-|---|---|---|---|---|
-| FileList | 40% | `interface/src/routes/explorer/views/ListView/` | ❌ Rebuild | Missing TanStack Virtual + Table, column resizing, keyboard nav |
-| FileRow | 30% | `interface/src/routes/explorer/views/ListView/TableRow.tsx` | ❌ Rebuild | Missing table integration, drag-drop, inline rename, tags |
-| FileGrid | 20% | `interface/src/routes/explorer/views/GridView/` | ❌ Rebuild | Missing virtualization, drag-drop, context menus, folder drop zones |
-| PathBar | 20% | `interface/src/routes/explorer/components/PathBar.tsx` | ❌ Rebuild | Real has animated modes, editable paths, device integration, SdPath |
-| DragOverlay | 15% | `interface/src/components/DndProvider.tsx` | ❌ Rebuild | Real has polymorphic previews (palette, label, file grid/list) |
-| FileThumb | 10% | `interface/src/routes/explorer/File/Thumb.tsx` | ❌ Rebuild | Real has sidecar system, caching, video scrubber, scale variants |
-| Inspector | 5% | `interface/src/components/Inspector/` | ❌ Rebuild | Real is polymorphic (file/multi-file/location/empty variants) |
-| QuickPreview | 5% | `interface/src/components/QuickPreview/` | ❌ Rebuild | Real is standalone Tauri window, not a modal |
-| KindIcon | 0% | Uses `@sd/assets/util.getIcon()` | ❌ Rebuild | Real uses Rust-generated asset system, not Phosphor icons |
-| InspectorPanel | 0% | N/A | ❌ Delete | Does not exist in real app |
+| Component | Reason |
+|---|---|
+| FileList | TanStack Virtual + Table, column resizing, keyboard nav — app-level |
+| FileRow | Table integration, drag-drop, inline rename — app-level |
+| FileGrid | Virtualization, dnd-kit, context menus — app-level |
+| PathBar | SdPath, device system, routing, animations — app-level |
+| DragOverlay | Integrated into DndProvider — app-level |
+| FileThumb | Sidecar system, caching, video scrubber — app-level |
+| Inspector | Polymorphic variants, deeply tied to data types — app-level |
+| QuickPreview | Standalone Tauri window — app-level |
+| KindIcon | Rust-generated asset system — app-level |
+| InspectorPanel | Didn't exist in real app — deleted |
 
 ---
 

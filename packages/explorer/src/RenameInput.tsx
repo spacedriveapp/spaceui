@@ -1,72 +1,117 @@
-import { clsx } from 'clsx';
-import { forwardRef, useState, useRef, useEffect } from 'react';
-import { Check, X } from '@phosphor-icons/react';
-import { Button } from '@spaceui/primitives';
+import { Input } from "@spaceui/primitives";
+import clsx from "clsx";
+import { useCallback, useEffect, useRef, useState } from "react";
 
-interface RenameInputProps {
-  initialValue: string;
-  onRename: (newName: string) => void;
-  onCancel: () => void;
-  className?: string;
+export interface RenameInputProps {
+	/** Current name (without extension) */
+	name: string;
+	/** File extension (e.g. "txt"). If provided, shown as read-only suffix */
+	extension?: string;
+	/** Called with the full new name (including extension) on save */
+	onSave: (newName: string) => Promise<void>;
+	/** Called when rename is cancelled (Escape or blur) */
+	onCancel: () => void;
+	className?: string;
 }
 
-const RenameInput = forwardRef<HTMLFormElement, RenameInputProps>(
-  ({ initialValue, onRename, onCancel, className }, ref) => {
-    const [value, setValue] = useState(initialValue);
-    const inputRef = useRef<HTMLInputElement>(null);
+/**
+ * Inline name editing component.
+ *
+ * - Auto-focuses and selects text on mount
+ * - Only edits the name portion (extension shown as read-only)
+ * - Enter saves, Escape cancels, blur cancels (macOS Finder behavior)
+ */
+export function RenameInput({
+	name,
+	extension,
+	onSave,
+	onCancel,
+	className,
+}: RenameInputProps) {
+	const hasExtension = extension && extension.length > 0;
 
-    useEffect(() => {
-      inputRef.current?.focus();
-      inputRef.current?.select();
-    }, []);
+	const [value, setValue] = useState(name);
+	const [isSaving, setIsSaving] = useState(false);
+	const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (value.trim() && value !== initialValue) {
-        onRename(value.trim());
-      } else {
-        onCancel();
-      }
-    };
+	useEffect(() => {
+		if (inputRef.current) {
+			inputRef.current.focus();
+			inputRef.current.select();
+		}
+	}, []);
 
-    const handleKeyDown = (e: React.KeyboardEvent) => {
-      if (e.key === 'Escape') {
-        onCancel();
-      }
-    };
+	const handleSave = useCallback(async () => {
+		if (isSaving) return;
 
-    return (
-      <form
-        ref={ref}
-        onSubmit={handleSubmit}
-        className={clsx('flex items-center gap-1', className)}
-      >
-        <input
-          ref={inputRef}
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="flex-1 min-w-0 rounded-md border border-accent bg-app-box px-2 py-1 text-sm text-ink focus:outline-none focus:ring-2 focus:ring-accent/20"
-        />
-        <Button type="submit" size="icon" className="size-7 shrink-0">
-          <Check className="size-4" />
-        </Button>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          className="size-7 shrink-0"
-          onClick={onCancel}
-        >
-          <X className="size-4" />
-        </Button>
-      </form>
-    );
-  }
-);
+		const trimmedValue = value.trim();
 
-RenameInput.displayName = 'RenameInput';
+		if (!trimmedValue) {
+			onCancel();
+			return;
+		}
 
-export { RenameInput };
-export type { RenameInputProps };
+		const fullNewName = hasExtension
+			? `${trimmedValue}.${extension}`
+			: trimmedValue;
+		const currentFullName = hasExtension
+			? `${name}.${extension}`
+			: name;
+
+		if (fullNewName === currentFullName) {
+			onCancel();
+			return;
+		}
+
+		setIsSaving(true);
+		try {
+			await onSave(fullNewName);
+		} catch {
+			setIsSaving(false);
+		}
+	}, [value, isSaving, hasExtension, extension, name, onSave, onCancel]);
+
+	const handleKeyDown = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.key === "Enter") {
+				e.preventDefault();
+				e.stopPropagation();
+				handleSave();
+			} else if (e.key === "Escape") {
+				e.preventDefault();
+				e.stopPropagation();
+				onCancel();
+			}
+		},
+		[handleSave, onCancel],
+	);
+
+	const handleBlur = useCallback(() => {
+		if (!isSaving) {
+			onCancel();
+		}
+	}, [isSaving, onCancel]);
+
+	return (
+		<div className={clsx("inline-flex items-center", className)}>
+			<Input
+				ref={inputRef}
+				value={value}
+				onChange={(e) => setValue(e.target.value)}
+				onKeyDown={handleKeyDown}
+				onBlur={handleBlur}
+				variant="transparent"
+				size="xs"
+				disabled={isSaving}
+				className={clsx(
+					"min-w-[60px] !h-auto !py-0.5 !px-1 text-center",
+					isSaving && "opacity-50",
+				)}
+				inputElementClassName="text-center"
+			/>
+			{hasExtension && (
+				<span className="text-sm text-ink-dull">.{extension}</span>
+			)}
+		</div>
+	);
+}

@@ -58,6 +58,10 @@ export * as Dropdown from "./Dropdown";
 export { Select, SelectOption, selectStyles } from "./Select";
 export type { SelectProps } from "./Select";
 
+// SelectPill
+export { SelectPill, selectPillStyles } from "./SelectPill";
+export type { SelectPillProps } from "./SelectPill";
+
 // Toast (Sonner-based)
 export { toast, Toaster, TOAST_TIMEOUT } from "./Toast";
 export type { ToastId, ToastMessage } from "./Toast";
@@ -83,9 +87,15 @@ export { SearchBar } from "./SearchBar";
 export { Shortcut } from "./Shortcut";
 export type { ShortcutProps } from "./Shortcut";
 
-// TopBar
-export { TopBarButton } from "./TopBarButton";
-export { TopBarButtonGroup } from "./TopBarButtonGroup";
+// CircleButton (formerly TopBarButton)
+export { CircleButton, circleButtonStyles } from "./CircleButton";
+export type { CircleButtonProps } from "./CircleButton";
+export { CircleButtonGroup } from "./CircleButtonGroup";
+export type { CircleButtonGroupProps } from "./CircleButtonGroup";
+
+// Backward-compat aliases
+export { CircleButton as TopBarButton } from "./CircleButton";
+export { CircleButtonGroup as TopBarButtonGroup } from "./CircleButtonGroup";
 
 // Shiny components
 export { ShinyButton } from "./ShinyButton";

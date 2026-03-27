@@ -20,6 +20,8 @@ export { Markdown } from './Markdown';
 export { InlineWorkerCard } from './InlineWorkerCard';
 export { ChatComposer } from './ChatComposer';
 export { ModelSelect } from './ModelSelect';
+export { ModelSelector } from './ModelSelector';
+export type { ModelSelectorProps } from './ModelSelector';
 export { ProfileAvatar } from './ProfileAvatar';
 export { AgentSelector } from './AgentSelector';
 export { ConnectionStatus } from './ConnectionStatus';
