@@ -1,7 +1,7 @@
 "use client";
 
-import { cva, cx, type VariantProps } from "class-variance-authority";
-import { forwardRef } from "react";
+import {cva, cx, type VariantProps} from "class-variance-authority";
+import {forwardRef} from "react";
 
 export type ButtonBaseProps = VariantProps<typeof buttonStyles>;
 
@@ -26,7 +26,7 @@ const hasHref = (
 
 export const buttonStyles = cva(
 	[
-		"cursor-default items-center rounded-xl border font-medium tracking-wide outline-none transition-colors duration-100",
+		"cursor-default items-center border font-medium tracking-wide outline-none transition-colors duration-100",
 		"disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70",
 		"focus:ring-none focus:ring-offset-none cursor-pointer ring-offset-app-box",
 	],
@@ -55,7 +55,7 @@ export const buttonStyles = cva(
 				],
 				gray: [
 					"bg-app-button hover:bg-app-hover focus:bg-app-selected text-white",
-					"border border-app-line/80 hover:border-app-line focus:ring-1 focus:ring-accent",
+					"border border-app-line/50 hover:border-app-line/70 focus:ring-1 focus:ring-accent",
 				],
 				accent: [
 					"border-accent bg-accent text-white shadow-md shadow-app-shade/10 hover:brightness-110 focus:outline-none",
@@ -70,12 +70,14 @@ export const buttonStyles = cva(
 				none: "rounded-none",
 				left: "rounded-l-md rounded-r-none",
 				right: "rounded-l-none rounded-r-md",
-				both: "rounded-md",
+				both: "rounded-xl",
+				full: "rounded-full",
 			},
 		},
 		defaultVariants: {
 			size: "sm",
 			variant: "default",
+			rounding: "both",
 		},
 	},
 );
@@ -83,7 +85,7 @@ export const buttonStyles = cva(
 export const Button = forwardRef<
 	HTMLButtonElement | HTMLAnchorElement,
 	ButtonProps | LinkButtonProps
->(({ className, ...props }, ref) => {
+>(({className, ...props}, ref) => {
 	className = cx(buttonStyles(props), className);
 	return hasHref(props) ? (
 		<a
@@ -103,4 +105,4 @@ export const Button = forwardRef<
 
 Button.displayName = "Button";
 
-export { buttonStyles as buttonVariants };
+export {buttonStyles as buttonVariants};

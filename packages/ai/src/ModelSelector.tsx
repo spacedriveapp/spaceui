@@ -1,6 +1,6 @@
 "use client";
 
-import { Check } from "@phosphor-icons/react";
+import {Check} from "@phosphor-icons/react";
 import {
 	Popover,
 	usePopover,
@@ -11,9 +11,9 @@ import {
 	type SelectPillProps,
 } from "@spaceui/primitives";
 import clsx from "clsx";
-import { forwardRef, useMemo, useState } from "react";
+import {forwardRef, useMemo, useState} from "react";
 
-import type { ModelOption } from "./types";
+import type {ModelOption} from "./types";
 
 export interface ModelSelectorProps {
 	/** Available models */
@@ -99,11 +99,7 @@ export const ModelSelector = forwardRef<HTMLButtonElement, ModelSelectorProps>(
 						{selectedModel?.name ?? placeholder}
 					</SelectPill>
 				</Popover.Trigger>
-				<Popover.Content
-					align="end"
-					sideOffset={8}
-					style={{ width: 280 }}
-				>
+				<Popover.Content align="end" sideOffset={8} style={{width: 280}}>
 					{/* Search */}
 					<SearchBar
 						value={search}
@@ -115,46 +111,43 @@ export const ModelSelector = forwardRef<HTMLButtonElement, ModelSelectorProps>(
 
 					{/* Grouped results */}
 					<div className="max-h-[280px] overflow-y-auto">
-						{Object.entries(grouped).map(
-							([provider, providerModels]) => (
-								<div key={provider}>
-									<div className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink-faint">
-										{provider}
-									</div>
-									<OptionList>
-										{providerModels.map((model) => (
-											<OptionListItem
-												key={model.id}
-												selected={model.id === value}
-												onClick={() => {
-													onChange(model.id);
-													popover.setOpen(false);
-													setSearch("");
-												}}
-											>
-												<div className="flex w-full items-center justify-between">
-													<div>
-														<div>{model.name}</div>
-														{model.context_window && (
-															<div className="text-[10px] text-ink-faint">
-																{model.context_window.toLocaleString()}{" "}
-																tokens
-															</div>
-														)}
-													</div>
-													{model.id === value && (
-														<Check
-															className="size-3.5 text-accent"
-															weight="bold"
-														/>
+						{Object.entries(grouped).map(([provider, providerModels]) => (
+							<div key={provider}>
+								<div className="px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-ink-faint">
+									{provider}
+								</div>
+								<OptionList>
+									{providerModels.map((model) => (
+										<OptionListItem
+											key={model.id}
+											selected={model.id === value}
+											onClick={() => {
+												onChange(model.id);
+												popover.setOpen(false);
+												setSearch("");
+											}}
+										>
+											<div className="flex w-full items-center justify-between">
+												<div>
+													<div>{model.name}</div>
+													{model.context_window && (
+														<div className="text-[10px] text-ink-faint">
+															{model.context_window.toLocaleString()} tokens
+														</div>
 													)}
 												</div>
-											</OptionListItem>
-										))}
-									</OptionList>
-								</div>
-							),
-						)}
+												{model.id === value && (
+													<Check
+														className="size-3.5 text-accent"
+														weight="bold"
+													/>
+												)}
+											</div>
+										</OptionListItem>
+									))}
+								</OptionList>
+							</div>
+						))}
 						{Object.keys(grouped).length === 0 && (
 							<div className="px-3 py-3 text-center text-xs text-ink-faint">
 								No models found

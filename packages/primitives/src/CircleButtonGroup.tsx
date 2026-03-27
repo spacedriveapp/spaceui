@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Children, cloneElement, isValidElement } from "react";
+import {Children, cloneElement, isValidElement} from "react";
 
 interface CircleButtonGroupProps {
 	children: React.ReactNode;
@@ -16,8 +16,8 @@ export function CircleButtonGroup({
 		<div
 			className={clsx(
 				"flex h-8 items-center rounded-full",
-				"border border-sidebar-line/30 backdrop-blur-xl",
-				"overflow-hidden bg-sidebar-box/20",
+				"border border-app-line/50 backdrop-blur-xl",
+				"overflow-hidden bg-app-overlay/80",
 				className,
 			)}
 		>
@@ -30,7 +30,7 @@ export function CircleButtonGroup({
 							className: clsx(
 								(child as any).props.className,
 								"!rounded-none !border-0 !backdrop-blur-none !bg-transparent",
-								"hover:!bg-sidebar-box/30",
+								"hover:!bg-app-box",
 							),
 						})}
 						{index < childArray.length - 1 && (
@@ -43,4 +43,4 @@ export function CircleButtonGroup({
 	);
 }
 
-export type { CircleButtonGroupProps };
+export type {CircleButtonGroupProps};

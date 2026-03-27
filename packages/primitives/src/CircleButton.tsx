@@ -1,14 +1,14 @@
 "use client";
 
-import { cva, type VariantProps } from "class-variance-authority";
+import {cva, type VariantProps} from "class-variance-authority";
 import clsx from "clsx";
-import { forwardRef } from "react";
+import {forwardRef} from "react";
 
 export const circleButtonStyles = cva(
 	[
 		"flex items-center justify-center",
 		"backdrop-blur-xl transition-all",
-		"border border-sidebar-line/30",
+		"border border-app-line/50",
 		"rounded-full",
 		"active:scale-95",
 	],
@@ -16,7 +16,7 @@ export const circleButtonStyles = cva(
 		variants: {
 			variant: {
 				default:
-					"bg-sidebar-box/20 text-sidebar-inkDull hover:bg-sidebar-box/30 hover:text-sidebar-ink",
+					"bg-app-overlay/80 text-sidebar-inkDull hover:bg-app-box hover:text-sidebar-ink",
 				active: "bg-sidebar-box/40 text-sidebar-ink",
 				accent: "border-accent/30 bg-accent/20 text-accent",
 				solid:
@@ -36,7 +36,8 @@ export const circleButtonStyles = cva(
 );
 
 export interface CircleButtonProps
-	extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "size">,
+	extends
+		Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "size">,
 		VariantProps<typeof circleButtonStyles> {
 	icon?: React.ElementType;
 	/** @deprecated Use variant="active" or variant="accent" instead */
@@ -62,11 +63,7 @@ export const CircleButton = forwardRef<HTMLButtonElement, CircleButtonProps>(
 		// Resolve legacy active/activeAccent props to variant
 		const resolvedVariant =
 			variant ??
-			(active && activeAccent
-				? "accent"
-				: active
-					? "active"
-					: "default");
+			(active && activeAccent ? "accent" : active ? "active" : "default");
 
 		return (
 			<button
@@ -82,9 +79,7 @@ export const CircleButton = forwardRef<HTMLButtonElement, CircleButtonProps>(
 				{...props}
 			>
 				{Icon && <Icon className="size-[18px]" weight="bold" />}
-				{children && (
-					<span className="text-xs font-medium">{children}</span>
-				)}
+				{children && <span className="text-xs font-medium">{children}</span>}
 			</button>
 		);
 	},

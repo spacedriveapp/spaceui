@@ -23,10 +23,10 @@
 	--color-app-focus: hsl(235, 15%, 10%);
 	--color-app-line: hsl(235, 15%, 23%);
 	--color-app-divider: hsl(235, 15%, 5%);
-	--color-app-button: hsl(235, 15%, 23%);
+	--color-app-button: hsl(235, 15%, 17%);
 	--color-app-selected: hsl(235, 15%, 24%);
 	--color-app-selected-item: hsl(235, 15%, 18%);
-	--color-app-hover: hsl(235, 15%, 21%);
+	--color-app-hover: hsl(235, 15%, 19%);
 	--color-app-active: hsl(235, 15%, 30%);
 	--color-app-shade: hsl(235, 15%, 0%);
 	--color-app-frame: hsl(235, 15%, 25%);
@@ -74,9 +74,9 @@
 	--font-mono: "JetBrains Mono", "Menlo", "Monaco", monospace;
 
 	/* Custom font sizes (override Tailwind defaults to match Spacedrive's tighter scale) */
-	--text-tiny: 0.70rem;
+	--text-tiny: 0.7rem;
 	--text-xs: 0.75rem;
-	--text-sm: 0.80rem;
+	--text-sm: 0.8rem;
 	--text-base: 1rem;
 	--text-lg: 1.125rem;
 	--text-xl: 1.25rem;
