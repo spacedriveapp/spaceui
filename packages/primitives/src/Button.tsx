@@ -1,7 +1,7 @@
 "use client";
 
 import { cva, cx, type VariantProps } from "class-variance-authority";
-import { type ComponentProps, forwardRef } from "react";
+import { forwardRef } from "react";
 
 export type ButtonBaseProps = VariantProps<typeof buttonStyles>;
 

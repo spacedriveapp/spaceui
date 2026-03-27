@@ -28,8 +28,8 @@ export type { RootProps as RadioGroupRootProps, ItemProps as RadioGroupItemProps
 export { Dialog, dialogManager, useDialog, Dialogs } from "./Dialog";
 export type { DialogProps, DialogState, DialogOptions, UseDialogProps } from "./Dialog";
 
-// Popover
-export { Popover, usePopover, PopoverClose } from "./Popover";
+// Popover (Radix composable)
+export { Popover, usePopover, PopoverRoot, PopoverTrigger, PopoverContent, PopoverAnchor, PopoverClose, PopoverPortal } from "./Popover";
 
 // Tooltip
 export { Tooltip, TooltipProvider, Kbd } from "./Tooltip";
@@ -38,8 +38,14 @@ export type { TooltipProps } from "./Tooltip";
 // Tabs
 export { Root as TabsRoot, List as TabsList, Trigger as TabsTrigger, Content as TabsContent } from "./Tabs";
 
-// DropdownMenu (custom framer-motion, NOT Radix)
-export { DropdownMenu } from "./DropdownMenu";
+// DropdownMenu (Radix composable)
+export {
+	DropdownMenu,
+	DropdownMenuRoot, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
+	DropdownMenuCheckboxItem, DropdownMenuRadioItem, DropdownMenuLabel,
+	DropdownMenuSeparator, DropdownMenuGroup, DropdownMenuPortal,
+	DropdownMenuSub, DropdownMenuSubTrigger, DropdownMenuSubContent, DropdownMenuRadioGroup,
+} from "./DropdownMenu";
 
 // ContextMenu (Radix with custom object API)
 export { ContextMenu, ContextMenuDivItem, useContextMenuContext, contextMenuClassNames, contextMenuItemClassNames, contextMenuSeparatorClassNames } from "./ContextMenu";
@@ -90,7 +96,10 @@ export { ShinyToggle } from "./ShinyToggle";
 export { InfoBanner, InfoBannerText, InfoBannerSubtext } from "./InfoBanner";
 
 // Layout
-export { Card, GridLayout } from "./Layout";
+export { Card as LayoutCard, GridLayout } from "./Layout";
+
+// Card (Spacebot-origin)
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "./Card";
 
 // Typography
 export { CategoryHeading, ScreenHeading } from "./Typography";
