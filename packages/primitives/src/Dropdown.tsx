@@ -1,92 +1,173 @@
-import { clsx } from 'clsx';
-import { forwardRef, useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+"use client";
 
-interface DropdownProps {
-  trigger: React.ReactNode;
-  children: React.ReactNode;
-  className?: string;
-  align?: 'start' | 'center' | 'end';
+import { Menu, Transition } from "@headlessui/react";
+import { cva, type VariantProps } from "class-variance-authority";
+import clsx from "clsx";
+import { forwardRef, Fragment, type PropsWithChildren } from "react";
+
+import { Button as UIButton, type ButtonProps as UIButtonProps } from "./Button";
+
+const CaretDown = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg width="29" height="18" viewBox="0 0 29 18" fill="none" {...props}>
+		<path
+			d="M0.214203 3.80705L4.02126 0L17.9805 13.9592L14.1734 17.7663L0.214203 3.80705Z"
+			fill="#D9D9D9"
+		/>
+		<path
+			d="M28.1356 3.80705L24.3286 0L10.3694 13.9592L14.1764 17.7663L28.1356 3.80705Z"
+			fill="#D9D9D9"
+		/>
+	</svg>
+);
+
+export const Section = ({
+	className,
+	...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+	<div className={clsx("space-y-0.5 px-1 py-1", className)} {...props} />
+);
+
+const itemStyles = cva(
+	"group flex w-full shrink-0 grow items-center whitespace-nowrap rounded px-2 py-1 text-sm font-medium disabled:opacity-50",
+	{
+		variants: {
+			selected: {
+				true: "bg-accent text-white hover:!bg-accent",
+				undefined: "hover:bg-sidebar-selected/40",
+				false: "hover:bg-sidebar-selected/40",
+			},
+			active: {
+				true: "bg-sidebar-selected/40 text-sidebar-ink",
+			},
+		},
+	},
+);
+
+const itemIconStyles = cva("mr-2 size-4", {
+	variants: {},
+});
+
+type DropdownItemProps = PropsWithChildren<{
+	to?: string;
+	className?: string;
+	icon?: any;
+	iconClassName?: string;
+	onClick?: () => void;
+}> &
+	VariantProps<typeof itemStyles>;
+
+export const Item = ({
+	to,
+	className,
+	icon: Icon,
+	children,
+	...props
+}: DropdownItemProps) => {
+	const content = (
+		<>
+			{Icon && (
+				<Icon
+					weight="bold"
+					className={clsx(itemIconStyles(props), props.iconClassName)}
+				/>
+			)}
+			<span className="text-left">{children}</span>
+		</>
+	);
+	return (
+		<Menu.Item>
+			{to ? (
+				<a
+					{...(props as any)}
+					href={to}
+					className={clsx(itemStyles(props), className)}
+				>
+					{content}
+				</a>
+			) : (
+				<button
+					{...(props as any)}
+					className={clsx(itemStyles(props), className)}
+				>
+					{content}
+				</button>
+			)}
+		</Menu.Item>
+	);
+};
+
+export const Button = forwardRef<HTMLButtonElement, UIButtonProps>(
+	({ children, className, ...props }, ref) => {
+		return (
+			<UIButton
+				size="sm"
+				ref={ref as any}
+				className={clsx("group flex text-left", className)}
+				{...props}
+			>
+				{children}
+				<span className="grow" />
+				<CaretDown
+					className="ml-2 w-[12px] shrink-0 translate-y-px text-ink-dull transition-transform ui-open:-translate-y-px ui-open:rotate-180 group-radix-state-open:-translate-y-px group-radix-state-open:rotate-180"
+					aria-hidden="true"
+				/>
+			</UIButton>
+		);
+	},
+);
+
+Button.displayName = "DropdownButton";
+
+export interface DropdownRootProps {
+	button: React.ReactNode;
+	className?: string;
+	itemsClassName?: string;
+	align?: "left" | "right";
 }
 
-const Dropdown = forwardRef<HTMLDivElement, DropdownProps>(
-  ({ trigger, children, className, align = 'center' }, forwardedRef) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const containerRef = useRef<HTMLDivElement>(null);
+export const Root = (props: PropsWithChildren<DropdownRootProps>) => {
+	return (
+		<div className={props.className}>
+			<Menu
+				as="div"
+				className={clsx(
+					"relative flex w-full justify-end text-left",
+				)}
+			>
+				<Menu.Button role="button" as="div" className="outline-none">
+					{props.button}
+				</Menu.Button>
+				<Transition
+					as={Fragment}
+					enter="transition duration-100 ease-out"
+					enterFrom="transform -translate-y-2 opacity-0"
+					enterTo="transform translate-y-0 opacity-100"
+					leave="transition duration-75 ease-out"
+					leaveFrom="transform translate-y-0 opacity-100"
+					leaveTo="transform -translate-y-2 opacity-0"
+				>
+					<Menu.Items
+						className={clsx(
+							"absolute top-full z-50 w-full min-w-fit space-y-0.5 divide-y divide-menu-line rounded-md border border-menu-line bg-menu text-menu-ink shadow-xl shadow-menu-shade/30 focus:outline-none",
+							props.itemsClassName,
+							{ "left-0": props.align === "left" },
+							{ "right-0": props.align === "right" },
+						)}
+					>
+						{props.children}
+					</Menu.Items>
+				</Transition>
+			</Menu>
+		</div>
+	);
+};
 
-    useEffect(() => {
-      const handleClickOutside = (event: MouseEvent) => {
-        if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-          setIsOpen(false);
-        }
-      };
-
-      document.addEventListener('mousedown', handleClickOutside);
-      return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    const alignClasses = {
-      start: 'left-0',
-      center: 'left-1/2 -translate-x-1/2',
-      end: 'right-0',
-    };
-
-    return (
-      <div ref={forwardedRef} className="relative inline-block">
-        <div onClick={() => setIsOpen(!isOpen)}>{trigger}</div>
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -8, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.95 }}
-              transition={{ duration: 0.1 }}
-              className={clsx(
-                'absolute z-50 mt-1 min-w-[8rem] rounded-md border border-menu-line bg-menu shadow-md',
-                alignClasses[align],
-                className
-              )}
-            >
-              {children}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  }
+export const Separator = ({
+	className,
+	...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+	<div
+		className={clsx("border-b border-menu-line", className)}
+		{...props}
+	/>
 );
-
-Dropdown.displayName = 'Dropdown';
-
-const DropdownItem = forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, children, ...props }, ref) => (
-  <button
-    ref={ref}
-    className={clsx(
-      'flex w-full items-center rounded-sm px-2 py-1.5 text-sm text-menu-ink',
-      'hover:bg-menu-hover focus:bg-menu-hover focus:outline-none',
-      className
-    )}
-    {...props}
-  >
-    {children}
-  </button>
-));
-
-DropdownItem.displayName = 'DropdownItem';
-
-const DropdownSeparator = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
-    <div
-      ref={ref}
-      className={clsx('my-1 h-px bg-menu-line', className)}
-      {...props}
-    />
-  )
-);
-
-DropdownSeparator.displayName = 'DropdownSeparator';
-
-export { Dropdown, DropdownItem, DropdownSeparator };

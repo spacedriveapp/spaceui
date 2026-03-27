@@ -1,34 +1,74 @@
-import * as PopoverPrimitive from '@radix-ui/react-popover';
-import { clsx } from 'clsx';
-import { forwardRef } from 'react';
+"use client";
 
-const Popover = PopoverPrimitive.Root;
-const PopoverTrigger = PopoverPrimitive.Trigger;
-const PopoverAnchor = PopoverPrimitive.Anchor;
+import * as Radix from "@radix-ui/react-popover";
+import clsx from "clsx";
+import React, { useEffect, useRef, useState } from "react";
 
-const PopoverContent = forwardRef<
-  React.ElementRef<typeof PopoverPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Content>
->(({ className, align = 'center', sideOffset = 4, ...props }, ref) => (
-  <PopoverPrimitive.Portal>
-    <PopoverPrimitive.Content
-      ref={ref}
-      align={align}
-      sideOffset={sideOffset}
-      className={clsx(
-        'z-50 w-72 rounded-md border border-menu-line bg-menu p-4 shadow-md outline-none',
-        'data-[state=open]:animate-in data-[state=closed]:animate-out',
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-        'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2',
-        'data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-        className
-      )}
-      {...props}
-    />
-  </PopoverPrimitive.Portal>
-));
+interface PopoverProps extends Radix.PopoverContentProps {
+	trigger: React.ReactNode;
+	disabled?: boolean;
+	keybind?: string[];
+	popover: ReturnType<typeof usePopover>;
+}
 
-PopoverContent.displayName = PopoverPrimitive.Content.displayName;
+export function usePopover() {
+	const [open, setOpen] = useState(false);
 
-export { Popover, PopoverTrigger, PopoverContent, PopoverAnchor };
+	return { open, setOpen };
+}
+
+export const Popover = ({
+	popover,
+	trigger,
+	children,
+	disabled,
+	className,
+	...props
+}: PopoverProps) => {
+	const triggerRef = useRef<HTMLButtonElement>(null);
+
+	const { setOpen } = popover;
+
+	useEffect(() => {
+		const onResize = () => {
+			if (triggerRef.current && triggerRef.current.offsetWidth === 0)
+				setOpen(false);
+		};
+
+		window.addEventListener("resize", onResize);
+		return () => {
+			window.removeEventListener("resize", onResize);
+		};
+	}, [setOpen]);
+
+	return (
+		<Radix.Root open={popover.open} onOpenChange={setOpen}>
+			<Radix.Trigger ref={triggerRef} disabled={disabled} asChild>
+				{trigger}
+			</Radix.Trigger>
+
+			<Radix.Portal>
+				<Radix.Content
+					onOpenAutoFocus={(event) => event.preventDefault()}
+					onCloseAutoFocus={(event) => event.preventDefault()}
+					className={clsx(
+						"flex flex-col",
+						"z-[9999] m-2 min-w-44",
+						"cursor-default select-none rounded-lg",
+						"text-left text-sm text-ink",
+						"bg-app-overlay",
+						"border border-app-line",
+						"shadow-2xl",
+						"radix-state-closed:animate-out radix-state-closed:fade-out-0",
+						className,
+					)}
+					{...props}
+				>
+					{children}
+				</Radix.Content>
+			</Radix.Portal>
+		</Radix.Root>
+	);
+};
+
+export { Close as PopoverClose } from "@radix-ui/react-popover";

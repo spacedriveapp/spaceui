@@ -1,44 +1,48 @@
-import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
-import { clsx } from 'clsx';
-import { forwardRef } from 'react';
+"use client";
 
-const RadioGroup = forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Root>
->(({ className, ...props }, ref) => {
-  return (
-    <RadioGroupPrimitive.Root
-      ref={ref}
-      className={clsx('grid gap-2', className)}
-      {...props}
-    />
-  );
-});
+import * as RadioGroupPrimitive from "@radix-ui/react-radio-group";
+import clsx from "clsx";
+import { forwardRef } from "react";
 
-RadioGroup.displayName = RadioGroupPrimitive.Root.displayName;
+export type RootProps = RadioGroupPrimitive.RadioGroupProps;
 
-const RadioGroupItem = forwardRef<
-  React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
->(({ className, ...props }, ref) => {
-  return (
-    <RadioGroupPrimitive.Item
-      ref={ref}
-      className={clsx(
-        'aspect-square size-4 rounded-full border border-app-line bg-app-box',
-        'text-accent ring-offset-app focus:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-        'disabled:cursor-not-allowed disabled:opacity-50',
-        className
-      )}
-      {...props}
-    >
-      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <span className="size-2 rounded-full bg-accent" />
-      </RadioGroupPrimitive.Indicator>
-    </RadioGroupPrimitive.Item>
-  );
-});
+export const Root = forwardRef<HTMLDivElement, RootProps>(
+	({ children, className, ...props }, ref) => {
+		return (
+			<RadioGroupPrimitive.Root {...props} ref={ref}>
+				<div className={clsx("space-y-3", className)}>{children}</div>
+			</RadioGroupPrimitive.Root>
+		);
+	},
+);
 
-RadioGroupItem.displayName = RadioGroupPrimitive.Item.displayName;
+Root.displayName = "RadioGroupRoot";
 
-export { RadioGroup, RadioGroupItem };
+export type ItemProps = RadioGroupPrimitive.RadioGroupItemProps;
+
+export const Item = ({ children, ...props }: ItemProps) => {
+	return (
+		<div
+			className={clsx(
+				"flex max-w-sm space-x-2 rounded-md border border-app-line bg-app-box/50 px-4 py-3",
+				props.disabled && "opacity-30",
+			)}
+		>
+			<RadioGroupPrimitive.Item
+				id={"radio" + props.value}
+				className={clsx(
+					"peer relative mr-1 mt-1 size-4 shrink-0 rounded-full border border-app-line",
+					"radix-state-checked:bg-accent",
+					"radix-state-unchecked:bg-app-input",
+					"focus:outline-none focus:ring-0 focus:ring-offset-0 focus-visible:ring focus-visible:ring-accent focus-visible:ring-opacity-75 focus-visible:ring-offset-2",
+				)}
+				{...props}
+			>
+				<RadioGroupPrimitive.Indicator className="leading-0 absolute inset-0 flex items-center justify-center">
+					<div className="size-1.5 rounded-full bg-white" />
+				</RadioGroupPrimitive.Indicator>
+			</RadioGroupPrimitive.Item>
+			<label htmlFor={"radio" + props.value}>{children}</label>
+		</div>
+	);
+};

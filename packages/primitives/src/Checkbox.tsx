@@ -1,44 +1,64 @@
-import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
-import { clsx } from 'clsx';
-import { forwardRef } from 'react';
+"use client";
 
-const Checkbox = forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <CheckboxPrimitive.Root
-    ref={ref}
-    className={clsx(
-      'peer h-4 w-4 shrink-0 rounded-sm border border-app-line bg-app-box',
-      'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-      'disabled:cursor-not-allowed disabled:opacity-50',
-      'data-[state=checked]:bg-accent data-[state=checked]:border-accent',
-      className
-    )}
-    {...props}
-  >
-    <CheckboxPrimitive.Indicator
-      className={clsx('flex items-center justify-center text-white')}
-    >
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 12 12"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M2.5 6L5 8.5L9.5 4"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </CheckboxPrimitive.Indicator>
-  </CheckboxPrimitive.Root>
-));
+import { Check } from "@phosphor-icons/react";
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import { cva, type VariantProps } from "class-variance-authority";
+import clsx from "clsx";
+import { type ComponentProps, forwardRef } from "react";
 
-Checkbox.displayName = CheckboxPrimitive.Root.displayName;
+const styles = cva(
+	[
+		"form-check-input float-left mr-2 mt-1 size-4 appearance-none rounded-sm border border-gray-300 bg-white bg-contain bg-center bg-no-repeat align-top transition duration-200",
+		"checked:border-accent checked:bg-accent checked:hover:bg-accent/80 focus:outline-none",
+	],
+	{ variants: {} },
+);
 
-export { Checkbox };
+export interface CheckBoxProps
+	extends ComponentProps<"input">,
+		VariantProps<typeof styles> {}
+
+export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
+	({ className, ...props }, ref) => (
+		<input
+			{...props}
+			type="checkbox"
+			ref={ref}
+			className={styles({ className })}
+		/>
+	),
+);
+
+CheckBox.displayName = "CheckBox";
+
+export interface RadixCheckboxProps
+	extends ComponentProps<typeof CheckboxPrimitive.Root> {
+	label?: string;
+	labelClassName?: string;
+}
+
+export const RadixCheckbox = ({
+	className,
+	labelClassName,
+	...props
+}: RadixCheckboxProps) => (
+	<div className={clsx("flex items-center", className)}>
+		<CheckboxPrimitive.Root
+			className="flex size-[15px] shrink-0 items-center justify-center rounded-[4px] border border-gray-300/10 bg-app-selected radix-state-checked:bg-accent"
+			id={props.name}
+			{...props}
+		>
+			<CheckboxPrimitive.Indicator className="text-white">
+				<Check weight="bold" size={12} />
+			</CheckboxPrimitive.Indicator>
+		</CheckboxPrimitive.Root>
+		{props.label && (
+			<label
+				className={clsx("ml-2 text-sm font-medium", labelClassName)}
+				htmlFor={props.name}
+			>
+				{props.label}
+			</label>
+		)}
+	</div>
+);

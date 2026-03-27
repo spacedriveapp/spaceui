@@ -1,51 +1,48 @@
-import { clsx } from 'clsx';
-import { forwardRef } from 'react';
+"use client";
 
-interface ProgressBarProps extends React.HTMLAttributes<HTMLDivElement> {
-  value: number;
-  max?: number;
-  variant?: 'default' | 'success' | 'warning' | 'error';
-  showLabel?: boolean;
-  size?: 'sm' | 'md';
-}
+import * as ProgressPrimitive from "@radix-ui/react-progress";
+import clsx from "clsx";
+import { memo } from "react";
 
-const ProgressBar = forwardRef<HTMLDivElement, ProgressBarProps>(
-  ({ value, max = 100, variant = 'default', showLabel = false, size = 'md', className, ...props }, ref) => {
-    const percentage = Math.min(100, Math.max(0, (value / max) * 100));
-
-    const variantClasses = {
-      default: 'bg-accent',
-      success: 'bg-status-success',
-      warning: 'bg-status-warning',
-      error: 'bg-status-error',
-    };
-
-    const sizeClasses = {
-      sm: 'h-1.5',
-      md: 'h-2',
-    };
-
-    return (
-      <div ref={ref} className={clsx('w-full', className)} {...props}>
-        <div className={clsx('w-full overflow-hidden rounded-full bg-app-line', sizeClasses[size])}>
-          <div
-            className={clsx('h-full transition-all duration-300', variantClasses[variant])}
-            style={{ width: `${percentage}%` }}
-          />
-        </div>
-        {showLabel && (
-          <div className="mt-1 flex justify-between text-xs text-ink-dull">
-            <span>{Math.round(percentage)}%</span>
-            <span>
-              {value} / {max}
-            </span>
-          </div>
-        )}
-      </div>
-    );
-  }
+export type ProgressBarProps = {
+	pending?: boolean;
+} & (
+	| {
+			value: number;
+			total: number;
+	  }
+	| {
+			percent: number;
+	  }
 );
 
-ProgressBar.displayName = 'ProgressBar';
+export const ProgressBar = memo((props: ProgressBarProps) => {
+	const percentage = props.pending
+		? 0
+		: "percent" in props
+			? props.percent
+			: Math.round((props.value / props.total) * 100);
 
-export { ProgressBar };
+	if (props.pending) {
+		return (
+			<div className="indeterminate-progress-bar h-1 bg-app-button">
+				<div className="indeterminate-progress-bar__progress bg-accent" />
+			</div>
+		);
+	}
+	return (
+		<ProgressPrimitive.Root
+			value={percentage}
+			className={clsx(
+				"h-1 w-[94%] overflow-hidden rounded-full bg-app-button",
+			)}
+		>
+			<ProgressPrimitive.Indicator
+				style={{ width: `${percentage}%` }}
+				className={clsx("h-full bg-accent duration-500 ease-in-out")}
+			/>
+		</ProgressPrimitive.Root>
+	);
+});
+
+ProgressBar.displayName = "ProgressBar";

@@ -1,121 +1,445 @@
-import * as DialogPrimitive from '@radix-ui/react-dialog';
-import { clsx } from 'clsx';
-import { X } from '@phosphor-icons/react';
-import { forwardRef } from 'react';
+"use client";
 
-const Dialog = DialogPrimitive.Root;
-const DialogTrigger = DialogPrimitive.Trigger;
-const DialogPortal = DialogPrimitive.Portal;
-const DialogClose = DialogPrimitive.Close;
+import * as RDialog from "@radix-ui/react-dialog";
+import { animated, useTransition } from "@react-spring/web";
+import clsx from "clsx";
+import {
+	type ReactElement,
+	type ReactNode,
+	useEffect,
+	useState,
+} from "react";
+import { type FieldValues, type UseFormHandleSubmit } from "react-hook-form";
 
-const DialogOverlay = forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Overlay>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Overlay>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Overlay
-    ref={ref}
-    className={clsx(
-      'fixed inset-0 z-50 bg-black/50 backdrop-blur-sm',
-      'data-[state=open]:animate-in data-[state=closed]:animate-out',
-      'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-      className
-    )}
-    {...props}
-  />
-));
+import { Button } from "./Button";
+import { Loader } from "./Loader";
+import { Form, type FormProps } from "./forms/Form";
 
-DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
+export interface DialogState {
+	open: boolean;
+}
 
-const DialogContent = forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DialogPortal>
-    <DialogOverlay />
-    <DialogPrimitive.Content
-      ref={ref}
-      className={clsx(
-        'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%]',
-        'gap-4 border border-app-line bg-app p-6 shadow-lg rounded-lg',
-        'data-[state=open]:animate-in data-[state=closed]:animate-out',
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-        'data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%]',
-        'data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%]',
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <DialogPrimitive.Close className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none">
-        <X className="size-4 text-ink-dull" />
-        <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
-    </DialogPrimitive.Content>
-  </DialogPortal>
-));
+export interface DialogOptions {
+	onSubmit?(): void;
+}
 
-DialogContent.displayName = DialogPrimitive.Content.displayName;
+export interface UseDialogProps extends DialogOptions {
+	id: number;
+}
 
-const DialogHeader = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div className={clsx('flex flex-col gap-1.5 text-center sm:text-left', className)} {...props} />
-);
+class DialogManager {
+	private idGenerator = 0;
+	private listeners = new Map<number, Set<(state: DialogState) => void>>();
+	private states = new Map<number, DialogState>();
+	private components = new Map<number, React.FC>();
 
-DialogHeader.displayName = 'DialogHeader';
+	create(
+		dialog: (props: UseDialogProps) => ReactElement,
+		options?: DialogOptions,
+	) {
+		const id = this.getId();
 
-const DialogFooter = ({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
-  <div
-    className={clsx(
-      'flex flex-col-reverse sm:flex-row sm:justify-end sm:gap-2',
-      className
-    )}
-    {...props}
-  />
-);
+		this.components.set(id, () => dialog({ id, ...options }));
+		this.states.set(id, { open: true });
+		this.listeners.set(id, new Set());
 
-DialogFooter.displayName = 'DialogFooter';
+		this.notifyGlobalListeners();
 
-const DialogTitle = forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Title>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Title>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Title
-    ref={ref}
-    className={clsx('text-lg font-semibold leading-none tracking-tight text-ink', className)}
-    {...props}
-  />
-));
+		return new Promise<void>((res) => {
+			const checkInterval = setInterval(() => {
+				if (!this.components.has(id)) {
+					clearInterval(checkInterval);
+					res();
+				}
+			}, 100);
+		});
+	}
 
-DialogTitle.displayName = DialogPrimitive.Title.displayName;
+	getId() {
+		return ++this.idGenerator;
+	}
 
-const DialogDescription = forwardRef<
-  React.ElementRef<typeof DialogPrimitive.Description>,
-  React.ComponentPropsWithoutRef<typeof DialogPrimitive.Description>
->(({ className, ...props }, ref) => (
-  <DialogPrimitive.Description
-    ref={ref}
-    className={clsx('text-sm text-ink-dull', className)}
-    {...props}
-  />
-));
+	getState(id: number): DialogState | undefined {
+		return this.states.get(id);
+	}
 
-DialogDescription.displayName = DialogPrimitive.Description.displayName;
+	setState(id: number, state: Partial<DialogState>) {
+		const current = this.states.get(id);
+		if (!current) return;
 
-export {
-  Dialog,
-  DialogPortal,
-  DialogOverlay,
-  DialogTrigger,
-  DialogClose,
-  DialogContent,
-  DialogHeader,
-  DialogFooter,
-  DialogTitle,
-  DialogDescription,
-};
+		const newState = { ...current, ...state };
+		this.states.set(id, newState);
+
+		const listeners = this.listeners.get(id);
+		if (listeners) {
+			listeners.forEach((listener) => listener(newState));
+		}
+	}
+
+	subscribe(id: number, listener: (state: DialogState) => void) {
+		const listeners = this.listeners.get(id);
+		if (listeners) {
+			listeners.add(listener);
+		}
+
+		return () => {
+			const listeners = this.listeners.get(id);
+			if (listeners) {
+				listeners.delete(listener);
+			}
+		};
+	}
+
+	private globalListeners = new Set<() => void>();
+
+	subscribeGlobal(listener: () => void) {
+		this.globalListeners.add(listener);
+		return () => {
+			this.globalListeners.delete(listener);
+		};
+	}
+
+	private notifyGlobalListeners() {
+		this.globalListeners.forEach((listener) => listener());
+	}
+
+	getComponents() {
+		return Array.from(this.components.entries());
+	}
+
+	isAnyDialogOpen() {
+		return Array.from(this.states.values()).some((s) => s.open);
+	}
+
+	remove(id: number) {
+		const state = this.getState(id);
+
+		if (!state) {
+			console.error(new Error(`Dialog ${id} not registered!`));
+		} else if (state.open === false) {
+			this.components.delete(id);
+			this.states.delete(id);
+			this.listeners.delete(id);
+			this.notifyGlobalListeners();
+		}
+	}
+}
+
+export const dialogManager = new DialogManager();
+
+function Remover({ id }: { id: number }) {
+	useEffect(
+		() => () => {
+			dialogManager.remove(id);
+		},
+		[id],
+	);
+
+	return null;
+}
+
+export function useDialog(props: UseDialogProps) {
+	const [state, setState] = useState<DialogState>(() => {
+		const initialState = dialogManager.getState(props.id);
+		if (!initialState)
+			throw new Error(`Dialog ${props.id} does not exist!`);
+		return initialState;
+	});
+
+	useEffect(() => {
+		return dialogManager.subscribe(props.id, setState);
+	}, [props.id]);
+
+	return {
+		...props,
+		state,
+	};
+}
+
+export function Dialogs() {
+	const [, forceUpdate] = useState({});
+
+	useEffect(() => {
+		return dialogManager.subscribeGlobal(() => {
+			forceUpdate({});
+		});
+	}, []);
+
+	const dialogs = dialogManager.getComponents();
+
+	return (
+		<>
+			{dialogs.map(([id, Dialog]) => (
+				<Dialog key={id} />
+			))}
+		</>
+	);
+}
+
+const AnimatedDialogContent = animated(RDialog.Content);
+const AnimatedDialogOverlay = animated(RDialog.Overlay);
+
+export interface DialogProps<S extends FieldValues>
+	extends RDialog.DialogProps,
+		Omit<FormProps<S>, "onSubmit"> {
+	title?: string;
+	dialog: ReturnType<typeof useDialog>;
+	loading?: boolean;
+	trigger?: ReactNode;
+	ctaLabel?: string;
+	ctaSecondLabel?: string;
+	onSubmit?: ReturnType<UseFormHandleSubmit<S>>;
+	onSubmitSecond?: ReturnType<UseFormHandleSubmit<S>>;
+	children?: ReactNode;
+	ctaDanger?: boolean;
+	cancelDanger?: boolean;
+	closeLabel?: string;
+	cancelLabel?: string;
+	cancelBtn?: boolean;
+	description?: ReactNode;
+	onCancelled?: boolean | (() => void);
+	submitDisabled?: boolean;
+	transformOrigin?: string;
+	buttonsSideContent?: ReactNode;
+	invertButtonFocus?: boolean;
+	errorMessageException?: string;
+	formClassName?: string;
+	icon?: ReactNode;
+	hideButtons?: boolean;
+	hideHeader?: boolean;
+	ignoreClickOutside?: boolean;
+}
+
+export function Dialog<S extends FieldValues>({
+	form,
+	dialog,
+	onSubmit,
+	onSubmitSecond,
+	onCancelled = true,
+	invertButtonFocus,
+	...props
+}: DialogProps<S>) {
+	const transitions = useTransition(dialog.state.open, {
+		from: {
+			opacity: 0,
+			transform: "translateY(20px)",
+			transformOrigin: props.transformOrigin || "bottom",
+		},
+		enter: { opacity: 1, transform: "translateY(0px)" },
+		leave: { opacity: 0, transform: "translateY(20px)" },
+		config: { mass: 0.4, tension: 200, friction: 10, bounce: 0 },
+	});
+
+	const setOpen = (v: boolean) =>
+		dialogManager.setState(dialog.id, { open: v });
+
+	const cancelButton = (
+		<RDialog.Close asChild>
+			<Button
+				size="sm"
+				variant={props.cancelDanger ? "colored" : "gray"}
+				onClick={
+					typeof onCancelled === "function" ? onCancelled : undefined
+				}
+				className={clsx(
+					props.cancelDanger && "border-red-500 bg-red-500",
+				)}
+			>
+				{props.cancelLabel || "Cancel"}
+			</Button>
+		</RDialog.Close>
+	);
+
+	const closeButton = (
+		<RDialog.Close asChild>
+			<Button
+				disabled={props.loading}
+				size="sm"
+				variant="gray"
+				onClick={
+					typeof onCancelled === "function" ? onCancelled : undefined
+				}
+			>
+				{props.closeLabel || "Close"}
+			</Button>
+		</RDialog.Close>
+	);
+
+	const disableCheck = props.errorMessageException
+		? !form.formState.isValid &&
+			!form.formState.errors.root?.serverError?.message?.startsWith(
+				props.errorMessageException as string,
+			)
+		: !form.formState.isValid;
+
+	const submitButton = props.ctaLabel ? (
+		!props.ctaSecondLabel ? (
+			<Button
+				type="submit"
+				size="sm"
+				disabled={
+					form.formState.isSubmitting ||
+					props.submitDisabled ||
+					disableCheck
+				}
+				variant={props.ctaDanger ? "colored" : "accent"}
+				onClick={async (e: React.MouseEvent<HTMLElement>) => {
+					e.preventDefault();
+					await onSubmit?.(e);
+					dialog.onSubmit?.();
+				}}
+			>
+				{props.ctaLabel}
+			</Button>
+		) : (
+			<div className="flex flex-row gap-x-2">
+				<Button
+					type="submit"
+					size="sm"
+					disabled={
+						form.formState.isSubmitting ||
+						props.submitDisabled ||
+						disableCheck
+					}
+					variant={props.ctaDanger ? "colored" : "accent"}
+					className={clsx(
+						props.ctaDanger && "border-red-500 bg-red-500",
+					)}
+					onClick={async (e: React.MouseEvent<HTMLElement>) => {
+						e.preventDefault();
+						await onSubmit?.(e);
+						dialog.onSubmit?.();
+					}}
+				>
+					{props.ctaLabel}
+				</Button>
+				<Button
+					type="submit"
+					size="sm"
+					disabled={
+						form.formState.isSubmitting ||
+						props.submitDisabled ||
+						disableCheck
+					}
+					variant="accent"
+					onClick={async (e: React.MouseEvent<HTMLElement>) => {
+						e.preventDefault();
+						await onSubmitSecond?.(e);
+						dialog.onSubmit?.();
+					}}
+				>
+					{props.ctaSecondLabel}
+				</Button>
+			</div>
+		)
+	) : null;
+
+	return (
+		<RDialog.Root open={dialog.state.open} onOpenChange={setOpen}>
+			{props.trigger && (
+				<RDialog.Trigger asChild>{props.trigger}</RDialog.Trigger>
+			)}
+			{transitions((styles, show) =>
+				show ? (
+					<RDialog.Portal forceMount>
+						<AnimatedDialogOverlay
+							className="fixed inset-0 z-[102] m-px grid place-items-center overflow-y-auto rounded-xl bg-app/50"
+							style={{
+								opacity: styles.opacity,
+							}}
+						/>
+
+						<AnimatedDialogContent
+							className="!pointer-events-none fixed inset-0 z-[103] grid place-items-center overflow-y-auto"
+							style={styles}
+							onInteractOutside={(e) =>
+								props.ignoreClickOutside && e.preventDefault()
+							}
+						>
+							<Form
+								form={form}
+								onSubmit={async (e) => {
+									e?.preventDefault();
+									if (onSubmit) {
+										await onSubmit(e);
+									}
+								}}
+								className={clsx(
+									"!pointer-events-auto my-8 min-w-[300px] max-w-[400px] rounded-xl",
+									"border border-app-line bg-app-box text-ink shadow-app-shade",
+									props.formClassName,
+								)}
+							>
+								{!props.hideHeader && (
+									<RDialog.Title className="flex items-center gap-2.5 border-b border-app-line bg-app-input/60 p-3 font-bold">
+										{props.icon && props.icon}
+										{props.title}
+									</RDialog.Title>
+								)}
+								<div className="flex-1 overflow-auto p-5">
+									{props.description && (
+										<RDialog.Description className="mb-2 text-sm text-ink-dull">
+											{props.description}
+										</RDialog.Description>
+									)}
+
+									{props.children}
+								</div>
+								{(props.buttonsSideContent ||
+									(!props.hideButtons &&
+										(submitButton ||
+											props.cancelBtn ||
+											onCancelled))) && (
+									<div
+										className={clsx(
+											"flex items-center justify-end space-x-2 border-t border-app-line bg-app-input/60 p-3",
+										)}
+									>
+										{form.formState.isSubmitting && (
+											<Loader />
+										)}
+										{props.buttonsSideContent && (
+											<div>
+												{props.buttonsSideContent}
+											</div>
+										)}
+										<div className="grow" />
+										{!props.hideButtons && (
+											<div
+												className={clsx(
+													invertButtonFocus
+														? "flex-row-reverse"
+														: "flex-row",
+													"flex gap-2",
+												)}
+											>
+												{invertButtonFocus ? (
+													<>
+														{submitButton}
+														{props.cancelBtn &&
+															cancelButton}
+														{onCancelled &&
+															closeButton}
+													</>
+												) : (
+													<>
+														{onCancelled &&
+															closeButton}
+														{props.cancelBtn &&
+															cancelButton}
+														{submitButton}
+													</>
+												)}
+											</div>
+										)}
+									</div>
+								)}
+							</Form>
+							<Remover id={dialog.id} />
+						</AnimatedDialogContent>
+					</RDialog.Portal>
+				) : null,
+			)}
+		</RDialog.Root>
+	);
+}

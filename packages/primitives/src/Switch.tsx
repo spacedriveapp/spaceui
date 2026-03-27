@@ -1,49 +1,67 @@
-import * as SwitchPrimitive from '@radix-ui/react-switch';
-import { clsx } from 'clsx';
-import { forwardRef } from 'react';
+"use client";
 
-const Switch = forwardRef<
-  React.ElementRef<typeof SwitchPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof SwitchPrimitive.Root> & {
-    size?: 'sm' | 'md' | 'lg';
-  }
->(({ className, size = 'md', ...props }, ref) => {
-  const sizeClasses = {
-    sm: 'w-8 h-4',
-    md: 'w-10 h-5',
-    lg: 'w-12 h-6',
-  };
+import * as SwitchPrimitive from "@radix-ui/react-switch";
+import { cva, type VariantProps } from "class-variance-authority";
+import { forwardRef } from "react";
 
-  const thumbSizes = {
-    sm: 'size-3 data-[state=checked]:translate-x-4',
-    md: 'size-4 data-[state=checked]:translate-x-5',
-    lg: 'size-5 data-[state=checked]:translate-x-6',
-  };
+export interface SwitchProps
+	extends VariantProps<typeof switchStyles>,
+		SwitchPrimitive.SwitchProps {
+	thumbClassName?: string;
+}
 
-  return (
-    <SwitchPrimitive.Root
-      ref={ref}
-      className={clsx(
-        'peer inline-flex shrink-0 cursor-pointer items-center rounded-full border-2 border-transparent transition-colors',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-        'disabled:cursor-not-allowed disabled:opacity-50',
-        'data-[state=checked]:bg-accent data-[state=unchecked]:bg-app-line',
-        sizeClasses[size],
-        className
-      )}
-      {...props}
-    >
-      <SwitchPrimitive.Thumb
-        className={clsx(
-          'pointer-events-none block rounded-full bg-white shadow-lg ring-0 transition-transform',
-          'translate-x-0.5',
-          thumbSizes[size]
-        )}
-      />
-    </SwitchPrimitive.Root>
-  );
-});
+const switchStyles = cva(
+	[
+		"relative inline-flex shrink-0 transition",
+		"items-center rounded-full p-1",
+		"bg-app-line focus:outline-none focus:ring-1 focus:ring-accent focus:ring-offset-2 focus:ring-offset-app-selected radix-state-checked:bg-accent",
+	],
+	{
+		variants: {
+			size: {
+				sm: "h-[20px] w-[34px]",
+				md: "h-[25px] w-[47px]",
+				lg: "h-[30px] w-[55px]",
+			},
+		},
+		defaultVariants: {
+			size: "md",
+		},
+	},
+);
 
-Switch.displayName = SwitchPrimitive.Root.displayName;
+const thumbStyles = cva(
+	[
+		"inline-block size-4 transition",
+		"rounded-full bg-white",
+		"shadow-sm shadow-app-shade/40",
+	],
+	{
+		variants: {
+			size: {
+				sm: "size-[12px] radix-state-checked:translate-x-[14px]",
+				md: "size-[19px] radix-state-checked:translate-x-[20px]",
+				lg: "size-6 radix-state-checked:translate-x-[23px]",
+			},
+		},
+		defaultVariants: {
+			size: "md",
+		},
+	},
+);
 
-export { Switch };
+export const Switch = forwardRef<HTMLButtonElement, SwitchProps>(
+	({ size, className, thumbClassName, ...props }, ref) => (
+		<SwitchPrimitive.Root
+			{...props}
+			ref={ref}
+			className={switchStyles({ size, className })}
+		>
+			<SwitchPrimitive.Thumb
+				className={thumbStyles({ size, className: thumbClassName })}
+			/>
+		</SwitchPrimitive.Root>
+	),
+);
+
+Switch.displayName = "Switch";

@@ -1,207 +1,259 @@
-import * as ContextMenuPrimitive from '@radix-ui/react-context-menu';
-import { clsx } from 'clsx';
-import { Check, CaretRight } from '@phosphor-icons/react';
-import { forwardRef } from 'react';
+"use client";
 
-const ContextMenu = ContextMenuPrimitive.Root;
-const ContextMenuTrigger = ContextMenuPrimitive.Trigger;
-const ContextMenuGroup = ContextMenuPrimitive.Group;
-const ContextMenuPortal = ContextMenuPrimitive.Portal;
-const ContextMenuSub = ContextMenuPrimitive.Sub;
-const ContextMenuRadioGroup = ContextMenuPrimitive.RadioGroup;
+import { CaretRight, Check, type Icon, type IconProps } from "@phosphor-icons/react";
+import * as RadixCM from "@radix-ui/react-context-menu";
+import { cva, type VariantProps } from "class-variance-authority";
+import clsx from "clsx";
+import {
+	type ContextType,
+	createContext,
+	type PropsWithChildren,
+	Suspense,
+	useContext,
+} from "react";
 
-const ContextMenuSubTrigger = forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.SubTrigger>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubTrigger> & {
-    inset?: boolean;
-  }
->(({ className, inset, children, ...props }, ref) => (
-  <ContextMenuPrimitive.SubTrigger
-    ref={ref}
-    className={clsx(
-      'flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
-      'focus:bg-menu-hover data-[state=open]:bg-menu-hover',
-      inset && 'pl-8',
-      className
-    )}
-    {...props}
-  >
-    {children}
-    <CaretRight className="ml-auto size-4" />
-  </ContextMenuPrimitive.SubTrigger>
-));
+interface ContextMenuProps extends RadixCM.MenuContentProps {
+	trigger: React.ReactNode;
+	onOpenChange?: (open: boolean) => void;
+	disabled?: boolean;
+}
 
-ContextMenuSubTrigger.displayName = ContextMenuPrimitive.SubTrigger.displayName;
+export const contextMenuClassNames = clsx(
+	"z-50 max-h-[calc(100vh-20px)] overflow-y-auto",
+	"my-2 min-w-48 max-w-64 py-0.5",
+	"cool-shadow bg-menu/95 backdrop-blur-lg",
+	"border border-menu-line",
+	"cursor-default select-none rounded-md",
+	"animate-in fade-in",
+);
 
-const ContextMenuSubContent = forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.SubContent>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.SubContent>
->(({ className, ...props }, ref) => (
-  <ContextMenuPrimitive.SubContent
-    ref={ref}
-    className={clsx(
-      'z-50 min-w-[8rem] overflow-hidden rounded-md border border-menu-line bg-menu p-1 shadow-md',
-      'data-[state=open]:animate-in data-[state=closed]:animate-out',
-      'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-      'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-      'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2',
-      'data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      className
-    )}
-    {...props}
-  />
-));
+const ContextMenuContext = createContext<boolean | null>(null);
 
-ContextMenuSubContent.displayName = ContextMenuPrimitive.SubContent.displayName;
+export const useContextMenuContext = <T extends boolean>({
+	suspense,
+}: { suspense?: T } = {}) => {
+	const ctx = useContext(ContextMenuContext);
 
-const ContextMenuContent = forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <ContextMenuPrimitive.Portal>
-    <ContextMenuPrimitive.Content
-      ref={ref}
-      className={clsx(
-        'z-50 min-w-[8rem] overflow-hidden rounded-md border border-menu-line bg-menu p-1 shadow-md',
-        'data-[state=open]:animate-in data-[state=closed]:animate-out',
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-        'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2',
-        'data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-        className
-      )}
-      {...props}
-    />
-  </ContextMenuPrimitive.Portal>
-));
+	if (suspense && ctx === null)
+		throw new Error("ContextMenuContext.Provider not found!");
 
-ContextMenuContent.displayName = ContextMenuPrimitive.Content.displayName;
-
-const ContextMenuItem = forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Item> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
-  <ContextMenuPrimitive.Item
-    ref={ref}
-    className={clsx(
-      'relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none',
-      'transition-colors focus:bg-menu-hover focus:text-ink',
-      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      inset && 'pl-8',
-      className
-    )}
-    {...props}
-  />
-));
-
-ContextMenuItem.displayName = ContextMenuPrimitive.Item.displayName;
-
-const ContextMenuCheckboxItem = forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.CheckboxItem>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.CheckboxItem>
->(({ className, children, checked, ...props }, ref) => (
-  <ContextMenuPrimitive.CheckboxItem
-    ref={ref}
-    className={clsx(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
-      'transition-colors focus:bg-menu-hover focus:text-ink',
-      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    )}
-    checked={checked}
-    {...props}
-  >
-    <span className="absolute left-2 flex size-3.5 items-center justify-center">
-      <ContextMenuPrimitive.ItemIndicator>
-        <Check className="size-4" />
-      </ContextMenuPrimitive.ItemIndicator>
-    </span>
-    {children}
-  </ContextMenuPrimitive.CheckboxItem>
-));
-
-ContextMenuCheckboxItem.displayName = ContextMenuPrimitive.CheckboxItem.displayName;
-
-const ContextMenuRadioItem = forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.RadioItem>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.RadioItem>
->(({ className, children, ...props }, ref) => (
-  <ContextMenuPrimitive.RadioItem
-    ref={ref}
-    className={clsx(
-      'relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none',
-      'transition-colors focus:bg-menu-hover focus:text-ink',
-      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    )}
-    {...props}
-  >
-    <span className="absolute left-2 flex size-3.5 items-center justify-center">
-      <ContextMenuPrimitive.ItemIndicator>
-        <span className="size-2 rounded-full bg-accent" />
-      </ContextMenuPrimitive.ItemIndicator>
-    </span>
-    {children}
-  </ContextMenuPrimitive.RadioItem>
-));
-
-ContextMenuRadioItem.displayName = ContextMenuPrimitive.RadioItem.displayName;
-
-const ContextMenuLabel = forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Label> & {
-    inset?: boolean;
-  }
->(({ className, inset, ...props }, ref) => (
-  <ContextMenuPrimitive.Label
-    ref={ref}
-    className={clsx('px-2 py-1.5 text-sm font-semibold text-ink-dull', inset && 'pl-8', className)}
-    {...props}
-  />
-));
-
-ContextMenuLabel.displayName = ContextMenuPrimitive.Label.displayName;
-
-const ContextMenuSeparator = forwardRef<
-  React.ElementRef<typeof ContextMenuPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <ContextMenuPrimitive.Separator
-    ref={ref}
-    className={clsx('-mx-1 my-1 h-px bg-menu-line', className)}
-    {...props}
-  />
-));
-
-ContextMenuSeparator.displayName = ContextMenuPrimitive.Separator.displayName;
-
-const ContextMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
-  return (
-    <span
-      className={clsx('ml-auto text-xs tracking-widest opacity-60', className)}
-      {...props}
-    />
-  );
+	return ctx as T extends true
+		? NonNullable<ContextType<typeof ContextMenuContext>>
+		: NonNullable<ContextType<typeof ContextMenuContext>> | undefined;
 };
 
-ContextMenuShortcut.displayName = 'ContextMenuShortcut';
+const Root = ({
+	trigger,
+	children,
+	className,
+	onOpenChange,
+	disabled,
+	...props
+}: ContextMenuProps) => {
+	return (
+		<RadixCM.Root onOpenChange={onOpenChange}>
+			<RadixCM.Trigger
+				asChild
+				onContextMenu={(e) => disabled && e.preventDefault()}
+			>
+				{trigger}
+			</RadixCM.Trigger>
+			<RadixCM.Portal>
+				<RadixCM.Content
+					className={clsx(contextMenuClassNames, className)}
+					{...props}
+				>
+					<ContextMenuContext.Provider value={true}>
+						{children}
+					</ContextMenuContext.Provider>
+				</RadixCM.Content>
+			</RadixCM.Portal>
+		</RadixCM.Root>
+	);
+};
 
-export {
-  ContextMenu,
-  ContextMenuTrigger,
-  ContextMenuContent,
-  ContextMenuItem,
-  ContextMenuCheckboxItem,
-  ContextMenuRadioItem,
-  ContextMenuLabel,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuGroup,
-  ContextMenuPortal,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-  ContextMenuRadioGroup,
+export const contextMenuSeparatorClassNames =
+	"border-b-menu-line mx-1 my-0.5 border-b";
+
+const Separator = (props: { className?: string }) => (
+	<RadixCM.Separator
+		className={clsx(contextMenuSeparatorClassNames, props.className)}
+	/>
+);
+
+const SubMenu = ({
+	label,
+	icon,
+	className,
+	...props
+}: RadixCM.MenuSubContentProps & ContextMenuItemProps) => {
+	return (
+		<RadixCM.Sub>
+			<RadixCM.SubTrigger className={contextMenuItemClassNames}>
+				<ContextMenuDivItem rightArrow {...{ label, icon }} />
+			</RadixCM.SubTrigger>
+			<RadixCM.Portal>
+				<Suspense fallback={null}>
+					<RadixCM.SubContent
+						className={clsx(
+							contextMenuClassNames,
+							"-mt-2",
+							className,
+						)}
+						{...props}
+					/>
+				</Suspense>
+			</RadixCM.Portal>
+		</RadixCM.Sub>
+	);
+};
+
+const contextMenuItemStyles = cva(
+	[
+		"flex max-h-fit min-h-[26px] items-center space-x-2 overflow-hidden rounded px-2",
+		"text-sm text-menu-ink",
+		"group-radix-highlighted:text-white",
+		"group-radix-disabled:pointer-events-none group-radix-disabled:text-menu-ink/50",
+		"group-radix-state-open:bg-accent group-radix-state-open:text-white",
+	],
+	{
+		variants: {
+			variant: {
+				default: "group-radix-highlighted:bg-accent",
+				dull: "group-radix-highlighted:bg-app-selected/50 group-radix-highlighted:!text-menu-ink group-radix-state-open:bg-app-selected/50 group-radix-state-open:!text-ink",
+				danger: [
+					"text-red-600 dark:text-red-400",
+					"group-radix-highlighted:text-white",
+					"group-radix-highlighted:bg-red-500",
+				],
+			},
+		},
+		defaultVariants: {
+			variant: "default",
+		},
+	},
+);
+
+export interface ContextMenuItemProps
+	extends RadixCM.MenuItemProps,
+		VariantProps<typeof contextMenuItemStyles>,
+		Pick<
+			ContextMenuInnerItemProps,
+			"label" | "keybind" | "icon" | "iconProps"
+		> {}
+
+export const contextMenuItemClassNames =
+	"group py-0.5 outline-none px-1";
+
+const Item = ({
+	icon,
+	label,
+	children,
+	keybind,
+	variant,
+	iconProps,
+	onClick,
+	...props
+}: ContextMenuItemProps) => {
+	return (
+		<RadixCM.Item
+			{...props}
+			className={clsx(contextMenuItemClassNames, props.className)}
+			onClick={(e) => !props.disabled && onClick?.(e)}
+		>
+			<ContextMenuDivItem
+				{...{ icon, iconProps, label, keybind, variant, children }}
+			/>
+		</RadixCM.Item>
+	);
+};
+
+export interface ContextMenuCheckboxItemProps
+	extends RadixCM.MenuCheckboxItemProps,
+		VariantProps<typeof contextMenuItemStyles>,
+		Pick<ContextMenuInnerItemProps, "label" | "keybind"> {}
+
+const CheckboxItem = ({
+	variant,
+	className,
+	label,
+	keybind,
+	children,
+	...props
+}: ContextMenuCheckboxItemProps) => {
+	return (
+		<RadixCM.CheckboxItem
+			className={contextMenuItemClassNames}
+			{...props}
+		>
+			<ContextMenuDivItem variant={variant} className={className}>
+				<span className="flex size-3.5 items-center justify-center">
+					<RadixCM.ItemIndicator>
+						<Check weight="bold" />
+					</RadixCM.ItemIndicator>
+				</span>
+
+				<ItemInternals {...{ label, keybind, children }} />
+			</ContextMenuDivItem>
+		</RadixCM.CheckboxItem>
+	);
+};
+
+interface ContextMenuInnerItemProps {
+	icon?: Icon;
+	iconProps?: IconProps;
+	label?: string;
+	keybind?: string;
+	rightArrow?: boolean;
+}
+
+export const ContextMenuDivItem = ({
+	variant,
+	children,
+	className,
+	...props
+}: ContextMenuInnerItemProps &
+	VariantProps<typeof contextMenuItemStyles> &
+	PropsWithChildren<{ className?: string }>) => (
+	<div className={contextMenuItemStyles({ variant, className })}>
+		{children || <ItemInternals {...props} />}
+	</div>
+);
+
+const ItemInternals = ({
+	icon,
+	label,
+	rightArrow,
+	keybind,
+	iconProps,
+}: ContextMenuInnerItemProps) => {
+	const ItemIcon = icon;
+
+	return (
+		<>
+			{ItemIcon && <ItemIcon size={18} {...iconProps} />}
+			{label && <span className="flex-1 truncate">{label}</span>}
+
+			{keybind && (
+				<span className="text-xs font-medium group-radix-highlighted:text-white">
+					{keybind}
+				</span>
+			)}
+			{rightArrow && (
+				<CaretRight
+					weight="fill"
+					size={12}
+					className="text-menu-faint group-radix-highlighted:text-white group-radix-state-open:text-white"
+				/>
+			)}
+		</>
+	);
+};
+
+export const ContextMenu = {
+	Root,
+	Item,
+	CheckboxItem,
+	Separator,
+	SubMenu,
 };

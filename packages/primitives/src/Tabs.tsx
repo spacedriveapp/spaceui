@@ -1,58 +1,44 @@
-import * as TabsPrimitive from '@radix-ui/react-tabs';
-import { clsx } from 'clsx';
-import { forwardRef } from 'react';
+"use client";
 
-const Tabs = TabsPrimitive.Root;
+import * as TabsPrimitive from "@radix-ui/react-tabs";
+import clsx from "clsx";
 
-const TabsList = forwardRef<
-  React.ElementRef<typeof TabsPrimitive.List>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.List
-    ref={ref}
-    className={clsx(
-      'inline-flex h-9 items-center justify-center rounded-lg bg-app-box p-1 text-ink-dull',
-      className
-    )}
-    {...props}
-  />
-));
+export const Root = ({
+	className,
+	...props
+}: TabsPrimitive.TabsProps) => (
+	<TabsPrimitive.Root className={clsx("flex flex-col", className)} {...props} />
+);
 
-TabsList.displayName = TabsPrimitive.List.displayName;
+export const Content = ({
+	className,
+	...props
+}: TabsPrimitive.TabsContentProps) => (
+	<TabsPrimitive.Content className={clsx("outline-none", className)} {...props} />
+);
 
-const TabsTrigger = forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Trigger
-    ref={ref}
-    className={clsx(
-      'inline-flex items-center justify-center whitespace-nowrap rounded-md px-3 py-1 text-sm font-medium',
-      'ring-offset-app transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-      'disabled:pointer-events-none disabled:opacity-50',
-      'data-[state=active]:bg-app data-[state=active]:text-ink data-[state=active]:shadow',
-      className
-    )}
-    {...props}
-  />
-));
+export const List = ({
+	className,
+	...props
+}: TabsPrimitive.TabsListProps) => (
+	<TabsPrimitive.List
+		className={clsx(
+			"flex flex-row items-center space-x-1 border-b border-app-line/70 p-2",
+			className,
+		)}
+		{...props}
+	/>
+);
 
-TabsTrigger.displayName = TabsPrimitive.Trigger.displayName;
-
-const TabsContent = forwardRef<
-  React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => (
-  <TabsPrimitive.Content
-    ref={ref}
-    className={clsx(
-      'mt-2 ring-offset-app focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
-      className
-    )}
-    {...props}
-  />
-));
-
-TabsContent.displayName = TabsPrimitive.Content.displayName;
-
-export { Tabs, TabsList, TabsTrigger, TabsContent };
+export const Trigger = ({
+	className,
+	...props
+}: TabsPrimitive.TabsTriggerProps) => (
+	<TabsPrimitive.Trigger
+		className={clsx(
+			"rounded-full px-2 py-0.5 text-sm font-medium radix-state-active:bg-app-selected",
+			className,
+		)}
+		{...props}
+	/>
+);

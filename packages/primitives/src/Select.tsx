@@ -1,128 +1,121 @@
-import * as SelectPrimitive from '@radix-ui/react-select';
-import { clsx } from 'clsx';
-import { CaretDown, Check } from '@phosphor-icons/react';
-import { forwardRef } from 'react';
+"use client";
 
-const Select = SelectPrimitive.Root;
-const SelectGroup = SelectPrimitive.Group;
-const SelectValue = SelectPrimitive.Value;
+import { Check } from "@phosphor-icons/react";
+import * as RS from "@radix-ui/react-select";
+import { cva, type VariantProps } from "class-variance-authority";
+import clsx from "clsx";
+import { forwardRef, type PropsWithChildren } from "react";
 
-const SelectTrigger = forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={clsx(
-      'flex h-9 w-full items-center justify-between rounded-md border border-app-line bg-app-box px-3 py-2 text-sm text-ink',
-      'placeholder:text-ink-faint',
-      'focus:outline-none focus:ring-2 focus:ring-accent/20 focus:border-accent',
-      'disabled:cursor-not-allowed disabled:opacity-50',
-      className
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <CaretDown className="size-4 opacity-50" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-));
+const ChevronDouble = (props: React.SVGProps<SVGSVGElement>) => (
+	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" {...props}>
+		<path
+			fillRule="evenodd"
+			clipRule="evenodd"
+			d="M6.29289 14.2929C6.68342 13.9024 7.31658 13.9024 7.70711 14.2929L12 18.5858L16.2929 14.2929C16.6834 13.9024 17.3166 13.9024 17.7071 14.2929C18.0976 14.6834 18.0976 15.3166 17.7071 15.7071L12.7071 20.7071C12.3166 21.0976 11.6834 21.0976 11.2929 20.7071L6.29289 15.7071C5.90237 15.3166 5.90237 14.6834 6.29289 14.2929Z"
+			fill="currentColor"
+		/>
+		<path
+			fillRule="evenodd"
+			clipRule="evenodd"
+			d="M6.29289 9.70711C6.68342 10.0976 7.31658 10.0976 7.70711 9.70711L12 5.41421L16.2929 9.70711C16.6834 10.0976 17.3166 10.0976 17.7071 9.70711C18.0976 9.31658 18.0976 8.68342 17.7071 8.29289L12.7071 3.29289C12.3166 2.90237 11.6834 2.90237 11.2929 3.29289L6.29289 8.29289C5.90237 8.68342 5.90237 9.31658 6.29289 9.70711Z"
+			fill="currentColor"
+		/>
+	</svg>
+);
 
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
+export const selectStyles = cva(
+	[
+		"flex items-center justify-between whitespace-nowrap rounded-md border py-0.5 pl-3 pr-[10px] text-sm",
+		"shadow-sm outline-none transition-all focus:ring-2",
+		"text-ink radix-placeholder:text-ink-faint",
+	],
+	{
+		variants: {
+			variant: {
+				default: ["bg-app-input", "border-app-line"],
+			},
+			size: {
+				sm: "h-[25px] text-xs font-normal",
+				md: "h-[34px]",
+				lg: "h-[38px]",
+			},
+		},
+		defaultVariants: {
+			variant: "default",
+			size: "sm",
+		},
+	},
+);
 
-const SelectContent = forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = 'popper', ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={clsx(
-        'relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-menu-line bg-menu shadow-md',
-        'data-[state=open]:animate-in data-[state=closed]:animate-out',
-        'data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0',
-        'data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95',
-        'data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2',
-        'data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-        position === 'popper' && 'data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1',
-        className
-      )}
-      position={position}
-      {...props}
-    >
-      <SelectPrimitive.Viewport
-        className={clsx(
-          'p-1',
-          position === 'popper' && 'h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]'
-        )}
-      >
-        {children}
-      </SelectPrimitive.Viewport>
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-));
+export interface SelectProps<TValue extends string = string>
+	extends VariantProps<typeof selectStyles> {
+	value: TValue;
+	onChange: (value: TValue) => void;
+	placeholder?: string;
+	className?: string;
+	disabled?: boolean;
+	containerClassName?: string;
+}
 
-SelectContent.displayName = SelectPrimitive.Content.displayName;
+export const Select = forwardRef(
+	<TValue extends string = string>(
+		props: PropsWithChildren<SelectProps<TValue>>,
+		ref: React.ForwardedRef<HTMLDivElement>,
+	) => (
+		<div className={props.containerClassName} ref={ref}>
+			<RS.Root
+				defaultValue={props.value}
+				value={props.value}
+				onValueChange={props.onChange}
+				disabled={props.disabled}
+			>
+				<RS.Trigger
+					className={selectStyles({
+						size: props.size,
+						className: props.className,
+					})}
+				>
+					<span className="truncate">
+						<RS.Value placeholder={props.placeholder} />
+					</span>
+					<RS.Icon className="ml-2">
+						<ChevronDouble className="text-ink-dull" />
+					</RS.Icon>
+				</RS.Trigger>
 
-const SelectLabel = forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Label
-    ref={ref}
-    className={clsx('px-2 py-1.5 text-sm font-semibold text-ink-dull', className)}
-    {...props}
-  />
-));
+				<RS.Portal>
+					<RS.Content className="z-[100] rounded-md border border-app-line bg-app-box shadow-2xl shadow-app-shade/20">
+						<RS.Viewport className="p-1">
+							{props.children}
+						</RS.Viewport>
+					</RS.Content>
+				</RS.Portal>
+			</RS.Root>
+		</div>
+	),
+) as <TValue extends string = string>(
+	props: PropsWithChildren<SelectProps<TValue>> & {
+		ref?: React.ForwardedRef<HTMLDivElement>;
+	},
+) => JSX.Element;
 
-SelectLabel.displayName = SelectPrimitive.Label.displayName;
-
-const SelectItem = forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Item
-    ref={ref}
-    className={clsx(
-      'relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-2 pr-8 text-sm text-menu-ink outline-none',
-      'focus:bg-menu-hover focus:text-ink',
-      'data-[disabled]:pointer-events-none data-[disabled]:opacity-50',
-      className
-    )}
-    {...props}
-  >
-    <span className="absolute right-2 flex size-3.5 items-center justify-center">
-      <SelectPrimitive.ItemIndicator>
-        <Check className="size-4" />
-      </SelectPrimitive.ItemIndicator>
-    </span>
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
-));
-
-SelectItem.displayName = SelectPrimitive.Item.displayName;
-
-const SelectSeparator = forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator
-    ref={ref}
-    className={clsx('-mx-1 my-1 h-px bg-menu-line', className)}
-    {...props}
-  />
-));
-
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
-
-export {
-  Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectLabel,
-  SelectItem,
-  SelectSeparator,
-};
+export function SelectOption(
+	props: PropsWithChildren<{ value: string; default?: boolean }>,
+) {
+	return (
+		<RS.Item
+			value={props.value}
+			defaultChecked={props.default}
+			className={clsx(
+				"relative flex h-6 cursor-pointer select-none items-center rounded pl-6 pr-3",
+				"text-sm text-ink radix-highlighted:text-white",
+				"focus:outline-none radix-disabled:opacity-50 radix-highlighted:bg-accent",
+			)}
+		>
+			<RS.ItemText>{props.children}</RS.ItemText>
+			<RS.ItemIndicator className="absolute left-1 inline-flex items-center">
+				<Check className="size-4" />
+			</RS.ItemIndicator>
+		</RS.Item>
+	);
+}

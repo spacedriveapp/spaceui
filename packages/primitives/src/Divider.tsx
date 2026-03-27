@@ -1,27 +1,11 @@
-import { clsx } from 'clsx';
-import { forwardRef } from 'react';
+"use client";
 
-export interface DividerProps extends React.HTMLAttributes<HTMLDivElement> {
-  orientation?: 'horizontal' | 'vertical';
-}
-
-const Divider = forwardRef<HTMLDivElement, DividerProps>(
-  ({ orientation = 'horizontal', className, ...props }, ref) => {
-    return (
-      <div
-        ref={ref}
-        role="separator"
-        className={clsx(
-          'shrink-0 bg-app-line',
-          orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',
-          className
-        )}
-        {...props}
-      />
-    );
-  }
+export const Divider = ({
+	className,
+	...props
+}: React.HTMLAttributes<HTMLDivElement>) => (
+	<div
+		className={`bg-app-line/60 my-1 h-[1px] w-full ${className ?? ""}`}
+		{...props}
+	/>
 );
-
-Divider.displayName = 'Divider';
-
-export { Divider };
