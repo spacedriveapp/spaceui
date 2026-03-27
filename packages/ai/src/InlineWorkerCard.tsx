@@ -1,125 +1,164 @@
+import { useMemo, useState } from 'react';
 import { clsx } from 'clsx';
-import { forwardRef, useState } from 'react';
-import { CaretDown, CaretRight, Copy, X, Terminal } from '@phosphor-icons/react';
-import { Card, CardContent, Badge, Button } from '@spaceui/primitives';
+import {
+	CaretDown,
+	CheckCircle,
+	ClockCounterClockwise,
+	Copy,
+	Stop,
+	Wrench
+} from '@phosphor-icons/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ToolCall } from './ToolCall';
-import type { ToolCallPair, TranscriptStep, TaskInfo } from './types';
+import type { TranscriptStep } from './types';
 import { pairTranscriptSteps } from './types';
 
 interface InlineWorkerCardProps {
-  task: TaskInfo;
-  transcript: TranscriptStep[];
-  onCopyLogs?: () => void;
-  onCancel?: () => void;
-  expanded?: boolean;
-  onExpandedChange?: (expanded: boolean) => void;
-  className?: string;
+	title: string;
+	status: string;
+	toolCallCount: number;
+	liveStatus?: string | null;
+	transcript: TranscriptStep[];
+	onCopyLogs?: () => void;
+	onCancel?: () => void;
+	className?: string;
 }
 
-const InlineWorkerCard = forwardRef<HTMLDivElement, InlineWorkerCardProps>(
-  ({ task, transcript, onCopyLogs, onCancel, expanded: expandedProp, onExpandedChange, className }, ref) => {
-    const [uncontrolledExpanded, setUncontrolledExpanded] = useState(false);
-    const [expandedTools, setExpandedTools] = useState<Set<string>>(new Set());
-    const expanded = expandedProp ?? uncontrolledExpanded;
+function InlineWorkerCard({
+	title,
+	status,
+	toolCallCount,
+	liveStatus,
+	transcript,
+	onCopyLogs,
+	onCancel,
+	className,
+}: InlineWorkerCardProps) {
+	const [expanded, setExpanded] = useState(false);
 
-    const pairs = pairTranscriptSteps(transcript);
-    const toolCallCount = transcript.filter(t => t.type === 'action').length;
+	const items = useMemo(() => pairTranscriptSteps(transcript), [transcript]);
 
-    const toggleTool = (id: string) => {
-      const newSet = new Set(expandedTools);
-      if (newSet.has(id)) {
-        newSet.delete(id);
-      } else {
-        newSet.add(id);
-      }
-      setExpandedTools(newSet);
-    };
+	const toolItems = useMemo(
+		() => items.filter((item) => item.kind === 'tool'),
+		[items]
+	);
 
-    const setExpanded = (nextExpanded: boolean) => {
-      if (expandedProp === undefined) {
-        setUncontrolledExpanded(nextExpanded);
-      }
-      onExpandedChange?.(nextExpanded);
-    };
+	const isRunning = status === 'running';
+	const isDone = status === 'completed';
 
-    const statusColors: Record<string, string> = {
-      pending: 'bg-accent/10 text-accent',
-      running: 'bg-accent/10 text-accent',
-      completed: 'bg-status-success/10 text-status-success',
-      failed: 'bg-status-error/10 text-status-error',
-    };
+	return (
+		<div className={clsx('group flex flex-col items-start', className)}>
+			<div className="overflow-hidden rounded-2xl border border-app-line/50 bg-app-box/30 backdrop-blur-sm">
+				<button
+					onClick={() => setExpanded((v) => !v)}
+					className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-app-box/30"
+				>
+					<div className="mt-0.5 shrink-0">
+						{isRunning ? (
+							<div className="flex size-7 items-center justify-center rounded-full bg-accent/15 text-accent">
+								<ClockCounterClockwise
+									className="size-4 animate-spin"
+									weight="bold"
+								/>
+							</div>
+						) : isDone ? (
+							<div className="flex size-7 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400">
+								<CheckCircle className="size-4" weight="fill" />
+							</div>
+						) : (
+							<div className="flex size-7 items-center justify-center rounded-full bg-app-hover text-ink-dull">
+								<Wrench className="size-4" weight="bold" />
+							</div>
+						)}
+					</div>
 
-    return (
-      <Card ref={ref} className={clsx('overflow-hidden', className)}>
-        <CardContent className="p-3">
-          <button
-            onClick={() => setExpanded(!expanded)}
-            className="flex w-full items-center justify-between text-left"
-          >
-            <div className="flex items-center gap-2">
-              {expanded ? (
-                <CaretDown className="size-4 text-ink-dull" />
-              ) : (
-                <CaretRight className="size-4 text-ink-dull" />
-              )}
-              <span className="font-medium text-ink">{task.title}</span>
-              <Badge variant="outline" className={statusColors[task.status] || ''}>
-                {task.status}
-              </Badge>
-            </div>
-            <div className="flex items-center gap-2 text-xs text-ink-dull">
-              <Terminal className="size-3.5" />
-              <span>{toolCallCount} tool calls</span>
-            </div>
-          </button>
+					<div className="min-w-0 flex-1">
+						<div className="flex items-center gap-2">
+							<div className="line-clamp-2 min-w-0 flex-1 text-sm font-medium leading-5 text-ink">
+								{title}
+							</div>
+							<span
+								className={clsx(
+									'rounded-full px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.12em]',
+									isRunning
+										? 'bg-accent/12 text-accent'
+										: isDone
+											? 'bg-emerald-500/12 text-emerald-400'
+											: 'bg-app-hover text-ink-dull'
+								)}
+							>
+								{status}
+							</span>
+						</div>
+						<div className="mt-1 flex items-center gap-2 text-xs text-ink-dull">
+							<span>{toolCallCount} tool calls</span>
+							{liveStatus ? (
+								<span className="truncate text-ink-faint">{liveStatus}</span>
+							) : null}
+						</div>
+					</div>
 
-          {expanded && (
-            <div className="mt-3 space-y-2 border-t border-app-line pt-3">
-              {pairs.map(([action, result], _index) => {
-                if (!action) return null;
-                
-                const toolCall: ToolCallPair = {
-                  id: action.call_id,
-                  name: action.name,
-                  argsRaw: JSON.stringify(action.content),
-                  args: action.content.reduce((acc, item) => ({ ...acc, [item.name]: item.args }), {}),
-                  resultRaw: result?.text || null,
-                  result: result ? { text: result.text } : null,
-                  status: result ? (result.text.includes('error') ? 'error' : 'completed') : 'running',
-                };
+					<CaretDown
+						className={clsx(
+							'mt-1 size-4 shrink-0 text-ink-faint transition-transform',
+							expanded ? 'rotate-180' : ''
+						)}
+						weight="bold"
+					/>
+				</button>
 
-                return (
-                  <ToolCall
-                    key={action.call_id}
-                    toolCall={toolCall}
-                    expanded={expandedTools.has(action.call_id)}
-                    onToggle={() => toggleTool(action.call_id)}
-                  />
-                );
-              })}
+				<AnimatePresence initial={false}>
+					{expanded ? (
+						<motion.div
+							initial={{ height: 0, opacity: 0 }}
+							animate={{ height: 'auto', opacity: 1 }}
+							exit={{ height: 0, opacity: 0 }}
+							transition={{ duration: 0.18, ease: 'easeOut' }}
+							className="overflow-hidden"
+						>
+							<div className="flex flex-col gap-2 border-t border-app-line/30 px-4 py-3">
+								{toolItems.length > 0 ? (
+									toolItems.map((item) =>
+										item.kind === 'tool' ? (
+											<ToolCall key={item.pair.id} pair={item.pair} />
+										) : null
+									)
+								) : (
+									<div className="text-xs text-ink-faint">
+										No tool calls yet.
+									</div>
+								)}
+							</div>
+						</motion.div>
+					) : null}
+				</AnimatePresence>
+			</div>
 
-              <div className="flex items-center justify-end gap-2 pt-2">
-                {onCopyLogs && (
-                  <Button variant="ghost" size="sm" onClick={onCopyLogs}>
-                    <Copy className="mr-1 size-3.5" />
-                    Copy logs
-                  </Button>
-                )}
-                {onCancel && task.status === 'running' && (
-                  <Button variant="ghost" size="sm" onClick={onCancel}>
-                    <X className="mr-1 size-3.5" />
-                    Cancel
-                  </Button>
-                )}
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    );
-  }
-);
-
-InlineWorkerCard.displayName = 'InlineWorkerCard';
+			<div className="mt-2 flex opacity-0 transition-opacity duration-150 group-focus-within:opacity-100 group-hover:opacity-100">
+				{onCopyLogs && (
+					<button
+						onClick={onCopyLogs}
+						className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-ink-dull hover:bg-app-hover hover:text-ink"
+						title="Copy logs"
+					>
+						<Copy className="size-3.5" />
+						Copy
+					</button>
+				)}
+				{onCancel && isRunning && (
+					<button
+						onClick={onCancel}
+						className="flex items-center gap-1 rounded-md px-2 py-1 text-xs text-ink-dull hover:bg-app-hover hover:text-ink"
+						title="Cancel"
+					>
+						<Stop className="size-3.5" />
+						Cancel
+					</button>
+				)}
+			</div>
+		</div>
+	);
+}
 
 export { InlineWorkerCard };
+export type { InlineWorkerCardProps };

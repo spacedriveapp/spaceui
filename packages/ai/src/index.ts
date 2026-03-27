@@ -4,7 +4,9 @@
 export type {
 	ToolCallStatus,
 	ToolCallPair,
+	ActionContent,
 	TranscriptStep,
+	TranscriptItem,
 	TaskInfo,
 	MemoryInfo,
 	CronJobInfo,
@@ -12,22 +14,12 @@ export type {
 	ModelOption,
 } from "./types";
 
-export {pairTranscriptSteps} from "./types";
+export {pairTranscriptSteps, tryParseJson, isErrorResult} from "./types";
 
 // Components
 export {ToolCall} from "./ToolCall";
 export {Markdown} from "./Markdown";
 export {InlineWorkerCard} from "./InlineWorkerCard";
+export type {InlineWorkerCardProps} from "./InlineWorkerCard";
 export {ModelSelector} from "./ModelSelector";
 export type {ModelSelectorProps} from "./ModelSelector";
-export {ProfileAvatar} from "./ProfileAvatar";
-export {AgentSelector} from "./AgentSelector";
-export {ConnectionStatus} from "./ConnectionStatus";
-
-// Placeholder components - to be implemented in Phase 4
-export {TaskBoard} from "./TaskBoard";
-export {TaskCard} from "./TaskCard";
-export {MemoryGraph} from "./MemoryGraph";
-export {MemoryList} from "./MemoryList";
-export {CronJobList} from "./CronJobList";
-export {AutonomyPanel} from "./AutonomyPanel";

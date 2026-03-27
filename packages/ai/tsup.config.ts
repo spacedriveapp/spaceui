@@ -17,6 +17,7 @@ export default defineConfig({
     'react-markdown',
     'remark-gfm',
     'rehype-raw',
+    'framer-motion',
     '@react-sigma/core',
     'sigma',
     'graphology',
