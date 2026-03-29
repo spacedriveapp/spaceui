@@ -97,15 +97,6 @@ export function TaskDetail({
 				</span>
 			</div>
 
-			{/* Description */}
-			<div>
-				{task.description ? (
-					<Markdown content={task.description} className="prose-sm prose-p:my-1 prose-headings:text-sm prose-headings:mt-3 prose-headings:mb-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0" />
-				) : (
-					<p className="text-sm italic text-ink-faint">No description</p>
-				)}
-			</div>
-
 			{/* Subtasks */}
 			{task.subtasks.length > 0 && (
 				<div className="flex flex-col gap-1">
@@ -155,6 +146,15 @@ export function TaskDetail({
 					</div>
 				</div>
 			)}
+
+			{/* Description */}
+			<div>
+				{task.description ? (
+					<Markdown content={task.description} className="prose-sm prose-p:my-1 prose-headings:text-sm prose-headings:mt-3 prose-headings:mb-1 prose-ul:my-1 prose-ol:my-1 prose-li:my-0" />
+				) : (
+					<p className="text-sm italic text-ink-faint">No description</p>
+				)}
+			</div>
 
 			{/* Timestamps */}
 			<div className="flex flex-col gap-1 text-xs text-ink-faint">
