@@ -93,6 +93,10 @@ export type { CircleButtonProps } from "./CircleButton";
 export { CircleButtonGroup } from "./CircleButtonGroup";
 export type { CircleButtonGroupProps } from "./CircleButtonGroup";
 
+// TabBar
+export { TabBar, TabBarItem } from "./TabBar";
+export type { TabBarProps, TabBarItemProps } from "./TabBar";
+
 // Backward-compat aliases
 export { CircleButton as TopBarButton } from "./CircleButton";
 export { CircleButtonGroup as TopBarButtonGroup } from "./CircleButtonGroup";
