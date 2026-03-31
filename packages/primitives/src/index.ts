@@ -12,6 +12,7 @@ export type { InputProps, TextareaProps, InputBaseProps, LabelProps } from "./In
 // Checkbox
 export { CheckBox, RadixCheckbox } from "./Checkbox";
 export type { CheckBoxProps, RadixCheckboxProps } from "./Checkbox";
+export { CheckboxRoot, CheckboxIndicator } from "./Checkbox";
 
 // Switch
 export { Switch } from "./Switch";
@@ -27,6 +28,18 @@ export type { RootProps as RadioGroupRootProps, ItemProps as RadioGroupItemProps
 // Dialog
 export { Dialog, dialogManager, useDialog, Dialogs } from "./Dialog";
 export type { DialogProps, DialogState, DialogOptions, UseDialogProps } from "./Dialog";
+export {
+	DialogRoot,
+	DialogTrigger,
+	DialogPortal,
+	DialogClose,
+	DialogOverlay,
+	DialogContent,
+	DialogHeader,
+	DialogFooter,
+	DialogTitle,
+	DialogDescription,
+} from "./Dialog";
 
 // Popover (Radix composable)
 export { Popover, usePopover, PopoverRoot, PopoverTrigger, PopoverContent, PopoverAnchor, PopoverClose, PopoverPortal } from "./Popover";
@@ -34,6 +47,7 @@ export { Popover, usePopover, PopoverRoot, PopoverTrigger, PopoverContent, Popov
 // Tooltip
 export { Tooltip, TooltipProvider, Kbd } from "./Tooltip";
 export type { TooltipProps } from "./Tooltip";
+export { TooltipRoot, TooltipTrigger, TooltipPortal, TooltipContent } from "./Tooltip";
 
 // Tabs
 export { Root as TabsRoot, List as TabsList, Trigger as TabsTrigger, Content as TabsContent } from "./Tabs";
@@ -57,6 +71,18 @@ export * as Dropdown from "./Dropdown";
 // Select
 export { Select, SelectOption, selectStyles } from "./Select";
 export type { SelectProps } from "./Select";
+export {
+	SelectRoot,
+	SelectGroup,
+	SelectValue,
+	SelectTrigger,
+	SelectContent,
+	SelectLabel,
+	SelectItem,
+	SelectSeparator,
+	SelectScrollUpButton,
+	SelectScrollDownButton,
+} from "./Select";
 
 // SelectPill
 export { SelectPill, selectPillStyles } from "./SelectPill";

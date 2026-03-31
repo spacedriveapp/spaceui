@@ -119,3 +119,134 @@ export function SelectOption(
 		</RS.Item>
 	);
 }
+
+export const SelectRoot = RS.Root;
+export const SelectGroup = RS.Group;
+export const SelectValue = RS.Value;
+
+export const SelectTrigger = ({
+	className,
+	children,
+	...props
+}: RS.SelectTriggerProps) => (
+	<RS.Trigger
+		className={clsx(
+			"flex h-8 w-full items-center justify-between rounded-md border border-app-line bg-app-darkBox px-3 py-1.5 text-sm transition-colors placeholder:text-ink-faint focus:border-accent/50 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+			className,
+		)}
+		{...props}
+	>
+		{children}
+		<RS.Icon asChild>
+			<ChevronDouble className="size-4 opacity-50" />
+		</RS.Icon>
+	</RS.Trigger>
+);
+
+SelectTrigger.displayName = "SelectTrigger";
+
+export const SelectScrollUpButton = ({
+	className,
+	...props
+}: RS.SelectScrollUpButtonProps) => (
+	<RS.ScrollUpButton
+		className={clsx("flex cursor-default items-center justify-center py-1", className)}
+		{...props}
+	>
+		<ChevronDouble className="size-4 rotate-180" />
+	</RS.ScrollUpButton>
+);
+
+SelectScrollUpButton.displayName = "SelectScrollUpButton";
+
+export const SelectScrollDownButton = ({
+	className,
+	...props
+}: RS.SelectScrollDownButtonProps) => (
+	<RS.ScrollDownButton
+		className={clsx("flex cursor-default items-center justify-center py-1", className)}
+		{...props}
+	>
+		<ChevronDouble className="size-4" />
+	</RS.ScrollDownButton>
+);
+
+SelectScrollDownButton.displayName = "SelectScrollDownButton";
+
+export const SelectContent = ({
+	className,
+	children,
+	position = "popper",
+	...props
+}: RS.SelectContentProps) => (
+	<RS.Portal>
+		<RS.Content
+			className={clsx(
+				"relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border border-app-line bg-app-box text-ink shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+				position === "popper" &&
+					"data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
+				className,
+			)}
+			position={position}
+			{...props}
+		>
+			<SelectScrollUpButton />
+			<RS.Viewport
+				className={clsx(
+					"p-1",
+					position === "popper" &&
+						"h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]",
+				)}
+			>
+				{children}
+			</RS.Viewport>
+			<SelectScrollDownButton />
+		</RS.Content>
+	</RS.Portal>
+);
+
+SelectContent.displayName = "SelectContent";
+
+export const SelectLabel = ({
+	className,
+	...props
+}: RS.SelectLabelProps) => (
+	<RS.Label
+		className={clsx("py-1.5 pl-8 pr-2 text-sm font-semibold text-ink-dull", className)}
+		{...props}
+	/>
+);
+
+SelectLabel.displayName = "SelectLabel";
+
+export const SelectItem = ({
+	className,
+	children,
+	...props
+}: RS.SelectItemProps) => (
+	<RS.Item
+		className={clsx(
+			"relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-app-hover focus:text-ink data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
+			className,
+		)}
+		{...props}
+	>
+		<span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
+			<RS.ItemIndicator>
+				<Check className="size-4" />
+			</RS.ItemIndicator>
+		</span>
+		<RS.ItemText>{children}</RS.ItemText>
+	</RS.Item>
+);
+
+SelectItem.displayName = "SelectItem";
+
+export const SelectSeparator = ({
+	className,
+	...props
+}: RS.SelectSeparatorProps) => (
+	<RS.Separator className={clsx("-mx-1 my-1 h-px bg-app-divider", className)} {...props} />
+);
+
+SelectSeparator.displayName = "SelectSeparator";

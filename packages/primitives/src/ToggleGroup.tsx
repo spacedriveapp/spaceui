@@ -4,8 +4,10 @@ import { forwardRef } from 'react';
 
 export interface ToggleOption {
   value: string;
-  label: string;
+  label: React.ReactNode;
   icon?: React.ComponentType<{ className?: string }>;
+  title?: string;
+  className?: string;
 }
 
 export interface ToggleGroupProps {
@@ -14,10 +16,11 @@ export interface ToggleGroupProps {
   onChange: (value: string) => void;
   className?: string;
   disabled?: boolean;
+  itemClassName?: string;
 }
 
 const ToggleGroup = forwardRef<React.ElementRef<typeof ToggleGroupPrimitive.Root>, ToggleGroupProps>(
-  ({ options, value, onChange, className, disabled }, ref) => {
+  ({ options, value, onChange, className, disabled, itemClassName }, ref) => {
     return (
       <ToggleGroupPrimitive.Root
         ref={ref}
@@ -34,11 +37,14 @@ const ToggleGroup = forwardRef<React.ElementRef<typeof ToggleGroupPrimitive.Root
           <ToggleGroupPrimitive.Item
             key={option.value}
             value={option.value}
+            title={option.title}
             className={clsx(
               'inline-flex items-center gap-1.5 rounded-sm px-3 py-1 text-sm font-medium',
               'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent',
               'data-[state=on]:bg-app data-[state=on]:text-ink text-ink-dull hover:text-ink',
-              disabled && 'cursor-not-allowed opacity-50'
+              disabled && 'cursor-not-allowed opacity-50',
+              itemClassName,
+              option.className,
             )}
           >
             {option.icon && <option.icon className="size-4" />}

@@ -62,3 +62,6 @@ export const RadixCheckbox = ({
 		)}
 	</div>
 );
+
+export const CheckboxRoot = CheckboxPrimitive.Root;
+export const CheckboxIndicator = CheckboxPrimitive.Indicator;
