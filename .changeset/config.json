@@ -6,7 +6,7 @@
   "linked": [
     ["@spaceui/primitives", "@spaceui/forms", "@spaceui/ai", "@spaceui/explorer"]
   ],
-  "access": "restricted",
+  "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": []

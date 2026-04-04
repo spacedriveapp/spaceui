@@ -158,6 +158,10 @@ export { tw } from "./utils";
 export { Form, ErrorMessage, errorStyles, z } from "./forms/Form";
 export type { FormProps, ErrorMessageProps } from "./forms/Form";
 
+// SpaceItem (sidebar/list item with polymorphic icon)
+export { SpaceItem } from "./SpaceItem";
+export type { SpaceItemProps } from "./SpaceItem";
+
 // Spacebot-origin components (kept from original extraction, audit pending)
 export { Badge, badgeVariants } from "./Badge";
 export { Banner, bannerVariants } from "./Banner";

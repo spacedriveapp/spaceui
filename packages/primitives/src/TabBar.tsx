@@ -91,18 +91,14 @@ export const TabBarItem = forwardRef<HTMLButtonElement, TabBarItemProps>(
 						}}
 					/>
 				)}
-				{showClose && (
+				{showClose && active && (
 					<span
 						onClick={(e) => {
 							e.stopPropagation();
 							onClose?.();
 						}}
-						className={clsx(
-							"absolute left-1.5 z-10 flex size-5 cursor-pointer items-center justify-center rounded-full transition-all",
-							active
-								? "opacity-60 hover:bg-app-hover hover:opacity-100"
-								: "opacity-0 hover:bg-app-hover hover:!opacity-100 group-hover:opacity-60",
-						)}
+						className="z-10 flex cursor-pointer items-center justify-center rounded-full opacity-60 transition-all hover:bg-app-hover hover:opacity-100"
+						style={{ position: "absolute", left: 6, top: "50%", transform: "translateY(-50%)", width: 20, height: 20 }}
 						title="Close tab"
 					>
 						{closeIcon ?? (

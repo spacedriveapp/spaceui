@@ -4,7 +4,7 @@ import { forwardRef } from 'react';
 
 export interface ToggleOption {
   value: string;
-  label: React.ReactNode;
+  label: string;
   icon?: React.ComponentType<{ className?: string }>;
   title?: string;
   className?: string;

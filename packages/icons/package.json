@@ -1,0 +1,31 @@
+{
+  "name": "@spaceui/icons",
+  "version": "0.0.1",
+  "description": "Spacedrive file type icons, extension badges, and icon resolution utilities",
+  "type": "module",
+  "exports": {
+    "./icons": "./icons/index.ts",
+    "./icons/*": "./icons/*",
+    "./svgs/*": "./svgs/*",
+    "./svgs/ext/icons.json": "./svgs/ext/icons.json",
+    "./util": "./util/index.ts"
+  },
+  "files": [
+    "icons",
+    "svgs",
+    "util",
+    "types.d.ts"
+  ],
+  "scripts": {
+    "gen": "node scripts/generate.mjs"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "typescript": "^5.4.0",
+    "@types/react": "^19.0.0"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0"
+  }
+}
