@@ -113,7 +113,7 @@ v4 auto-detects files to scan (excludes `.gitignore`-d files, `node_modules`, bi
 To add sources (e.g., node_modules packages):
 
 ```css
-@source "../node_modules/@spaceui/primitives";
+@source "../node_modules/@spacedrive/primitives";
 ```
 
 ### 8. Plugins
@@ -347,9 +347,9 @@ Any app consuming spaceui tokens does this in their main CSS:
 
 ```css
 @import "tailwindcss";
-@import "@spaceui/tokens/theme";       /* @theme block — generates utilities */
-@import "@spaceui/tokens/css";         /* base + default theme variables */
-@import "@spaceui/tokens/css/themes/midnight";  /* optional theme override */
+@import "@spacedrive/tokens/theme";       /* @theme block — generates utilities */
+@import "@spacedrive/tokens/css";         /* base + default theme variables */
+@import "@spacedrive/tokens/css/themes/midnight";  /* optional theme override */
 
 @custom-variant dark (&:where(.dark, .dark *));
 ```
@@ -411,8 +411,8 @@ viteFinal: async (config) => {
 **`examples/showcase/src/index.css`:**
 ```css
 @import "tailwindcss";
-@import "@spaceui/tokens/theme";
-@import "@spaceui/tokens/css";
+@import "@spacedrive/tokens/theme";
+@import "@spacedrive/tokens/css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 ```
@@ -467,14 +467,14 @@ The SCSS file uses:
 **Converted `style.css`:**
 ```css
 @import "tailwindcss";
-@import "@spaceui/tokens/theme";
-@import "@spaceui/tokens/css";
-@import "@spaceui/tokens/css/themes/light";
-@import "@spaceui/tokens/css/themes/midnight";
-@import "@spaceui/tokens/css/themes/noir";
-@import "@spaceui/tokens/css/themes/slate";
-@import "@spaceui/tokens/css/themes/nord";
-@import "@spaceui/tokens/css/themes/mocha";
+@import "@spacedrive/tokens/theme";
+@import "@spacedrive/tokens/css";
+@import "@spacedrive/tokens/css/themes/light";
+@import "@spacedrive/tokens/css/themes/midnight";
+@import "@spacedrive/tokens/css/themes/noir";
+@import "@spacedrive/tokens/css/themes/slate";
+@import "@spacedrive/tokens/css/themes/nord";
+@import "@spacedrive/tokens/css/themes/mocha";
 
 @plugin "@tailwindcss/forms";
 @plugin "tailwindcss-animate";
@@ -560,10 +560,10 @@ Remove PostCSS config file — the Vite plugin handles it.
 Since spaceui components live in `node_modules`, v4's auto-detection won't scan them. Add `@source` directives:
 
 ```css
-@source "../node_modules/@spaceui/primitives/src";
-@source "../node_modules/@spaceui/ai/src";
-@source "../node_modules/@spaceui/explorer/src";
-@source "../node_modules/@spaceui/forms/src";
+@source "../node_modules/@spacedrive/primitives/src";
+@source "../node_modules/@spacedrive/ai/src";
+@source "../node_modules/@spacedrive/explorer/src";
+@source "../node_modules/@spacedrive/forms/src";
 ```
 
 ### 2.7 Mobile App (React Native + NativeWind)
@@ -587,9 +587,9 @@ The marketing site already uses `@import "tailwindcss"`, `@tailwindcss/postcss`,
 @import "@fontsource/space-grotesk/500.css";
 @import "@fontsource/space-grotesk/600.css";
 @import "@fontsource/space-grotesk/700.css";
-@import "@spaceui/tokens/theme";
-@import "@spaceui/tokens/css";
-@import "@spaceui/tokens/css/themes/midnight";
+@import "@spacedrive/tokens/theme";
+@import "@spacedrive/tokens/css";
+@import "@spacedrive/tokens/css/themes/midnight";
 
 @theme {
   --font-sans: "Space Grotesk", system-ui, sans-serif;
@@ -606,7 +606,7 @@ The marketing site already uses `@import "tailwindcss"`, `@tailwindcss/postcss`,
 ### 3.4 Add @source for spaceui
 
 ```css
-@source "../node_modules/@spaceui/primitives/src";
+@source "../node_modules/@spacedrive/primitives/src";
 ```
 
 ---

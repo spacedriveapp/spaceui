@@ -9,7 +9,7 @@ import {
 	OptionList,
 	OptionListItem,
 	type SelectPillProps,
-} from "@spaceui/primitives";
+} from "@spacedrive/primitives";
 import clsx from "clsx";
 import {forwardRef, useMemo, useState} from "react";
 

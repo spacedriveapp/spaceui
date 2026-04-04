@@ -1,4 +1,4 @@
-// @spaceui/explorer — presentational file management components
+// @spacedrive/explorer — presentational file management components
 //
 // These are dumb components: props-in, callbacks-out, no data fetching,
 // no context, no business logic. Consumers wire up their own state.

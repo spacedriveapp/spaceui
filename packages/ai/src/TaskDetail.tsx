@@ -1,5 +1,5 @@
 import { Check, X } from "@phosphor-icons/react";
-import { Button } from "@spaceui/primitives";
+import { Button } from "@spacedrive/primitives";
 import clsx from "clsx";
 
 import { Markdown } from "./Markdown";

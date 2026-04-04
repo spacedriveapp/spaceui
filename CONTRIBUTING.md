@@ -54,10 +54,10 @@ spaceui/
 ### Adding a New Component
 
 1. **Choose the right package**
-   - `@spaceui/primitives` - Base building blocks (buttons, inputs)
-   - `@spaceui/forms` - Form field wrappers
-   - `@spaceui/ai` - Agent/AI components
-   - `@spaceui/explorer` - File management components
+   - `@spacedrive/primitives` - Base building blocks (buttons, inputs)
+   - `@spacedrive/forms` - Form field wrappers
+   - `@spacedrive/ai` - Agent/AI components
+   - `@spacedrive/explorer` - File management components
 
 2. **Create the component file**
    ```typescript
@@ -127,7 +127,7 @@ spaceui/
    bun link
    
    # In consuming app
-   bun link @spaceui/primitives
+   bun link @spacedrive/primitives
    ```
 
 ## Making Changes

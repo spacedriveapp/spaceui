@@ -1,13 +1,13 @@
-# @spaceui/ai
+# @spacedrive/ai
 
 AI agent interaction components for SpaceUI.
 
 ## Installation
 
 ```bash
-bun add @spaceui/ai @spaceui/primitives
+bun add @spacedrive/ai @spacedrive/primitives
 # or
-npm install @spaceui/ai @spaceui/primitives
+npm install @spacedrive/ai @spacedrive/primitives
 ```
 
 Peer dependencies:
@@ -23,8 +23,8 @@ Optional dependencies:
 ## Usage
 
 ```tsx
-import { ToolCall, Markdown, ChatComposer, TaskCard, ConnectionStatus } from '@spaceui/ai';
-import type { ToolCallPair, TaskInfo } from '@spaceui/ai';
+import { ToolCall, Markdown, ChatComposer, TaskCard, ConnectionStatus } from '@spacedrive/ai';
+import type { ToolCallPair, TaskInfo } from '@spacedrive/ai';
 
 function AgentInterface() {
   const toolCall: ToolCallPair = {
@@ -64,8 +64,8 @@ function AgentInterface() {
 Display tool invocations with arguments and results:
 
 ```tsx
-import { ToolCall } from '@spaceui/ai';
-import type { ToolCallPair } from '@spaceui/ai';
+import { ToolCall } from '@spacedrive/ai';
+import type { ToolCallPair } from '@spacedrive/ai';
 
 const toolCall: ToolCallPair = {
   id: '1',
@@ -89,7 +89,7 @@ const toolCall: ToolCallPair = {
 Render agent responses with proper styling:
 
 ```tsx
-import { Markdown } from '@spaceui/ai';
+import { Markdown } from '@spacedrive/ai';
 
 <Markdown content={`# Response
 
@@ -117,8 +117,8 @@ Message input with model selection:
 
 ```tsx
 import { useState } from 'react';
-import { ChatComposer, ModelSelect } from '@spaceui/ai';
-import type { ModelOption } from '@spaceui/ai';
+import { ChatComposer, ModelSelect } from '@spacedrive/ai';
+import type { ModelOption } from '@spacedrive/ai';
 
 const models: ModelOption[] = [
   {
@@ -168,8 +168,8 @@ LLM model picker with search:
 Individual task display:
 
 ```tsx
-import { TaskCard } from '@spaceui/ai';
-import type { TaskInfo } from '@spaceui/ai';
+import { TaskCard } from '@spacedrive/ai';
+import type { TaskInfo } from '@spacedrive/ai';
 
 const task: TaskInfo = {
   id: '1',
@@ -191,7 +191,7 @@ const task: TaskInfo = {
 Kanban board with columns:
 
 ```tsx
-import { TaskBoard } from '@spaceui/ai';
+import { TaskBoard } from '@spacedrive/ai';
 
 const tasks: TaskInfo[] = [
   { id: '1', title: 'Task 1', status: 'backlog', priority: 'medium', assignees: [] },
@@ -216,8 +216,8 @@ const tasks: TaskInfo[] = [
 List view of agent memories:
 
 ```tsx
-import { MemoryList } from '@spaceui/ai';
-import type { MemoryInfo } from '@spaceui/ai';
+import { MemoryList } from '@spacedrive/ai';
+import type { MemoryInfo } from '@spacedrive/ai';
 
 const memories: MemoryInfo[] = [
   {
@@ -241,7 +241,7 @@ const memories: MemoryInfo[] = [
 Graph visualization (lazy-loaded):
 
 ```tsx
-import { MemoryGraph } from '@spaceui/ai';
+import { MemoryGraph } from '@spacedrive/ai';
 
 <MemoryGraph
   memories={memories}
@@ -256,8 +256,8 @@ import { MemoryGraph } from '@spaceui/ai';
 Agent switching dropdown:
 
 ```tsx
-import { AgentSelector } from '@spaceui/ai';
-import type { AgentInfo } from '@spaceui/ai';
+import { AgentSelector } from '@spacedrive/ai';
+import type { AgentInfo } from '@spacedrive/ai';
 
 const agents: AgentInfo[] = [
   { id: '1', name: 'Dev Assistant', detail: 'Code review', status: 'online' },
@@ -276,7 +276,7 @@ const agents: AgentInfo[] = [
 Deterministic avatar from seed:
 
 ```tsx
-import { ProfileAvatar } from '@spaceui/ai';
+import { ProfileAvatar } from '@spacedrive/ai';
 
 // Generates gradient based on seed
 <ProfileAvatar seed="user123" name="John Doe" size="md" />
@@ -297,7 +297,7 @@ import { ProfileAvatar } from '@spaceui/ai';
 Connection state indicator:
 
 ```tsx
-import { ConnectionStatus } from '@spaceui/ai';
+import { ConnectionStatus } from '@spacedrive/ai';
 
 <ConnectionStatus status="connected" />
 <ConnectionStatus status="connecting" />
@@ -312,8 +312,8 @@ import { ConnectionStatus } from '@spaceui/ai';
 Cron job management:
 
 ```tsx
-import { CronJobList } from '@spaceui/ai';
-import type { CronJobInfo } from '@spaceui/ai';
+import { CronJobList } from '@spacedrive/ai';
+import type { CronJobInfo } from '@spacedrive/ai';
 
 const jobs: CronJobInfo[] = [
   {
@@ -338,7 +338,7 @@ const jobs: CronJobInfo[] = [
 Autonomy level control:
 
 ```tsx
-import { AutonomyPanel } from '@spaceui/ai';
+import { AutonomyPanel } from '@spacedrive/ai';
 
 <AutonomyPanel
   currentLevel="assisted"
@@ -365,7 +365,7 @@ import type {
   CronJobInfo,
   AgentInfo,
   ModelOption,
-} from '@spaceui/ai';
+} from '@spacedrive/ai';
 ```
 
 ### Utility Functions
@@ -375,8 +375,8 @@ import type {
 Pairs action and result steps for display:
 
 ```typescript
-import { pairTranscriptSteps } from '@spaceui/ai';
-import type { TranscriptStep } from '@spaceui/ai';
+import { pairTranscriptSteps } from '@spacedrive/ai';
+import type { TranscriptStep } from '@spacedrive/ai';
 
 const steps: TranscriptStep[] = [
   { type: 'action', call_id: '1', name: 'read', content: [], text: '' },

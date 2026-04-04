@@ -1,6 +1,6 @@
 {
-	"name": "@spaceui/tokens",
-	"version": "0.0.1",
+	"name": "@spacedrive/tokens",
+	"version": "0.1.0",
 	"description": "Design tokens for SpaceUI - Pure CSS for Tailwind v4",
 	"type": "module",
 	"exports": {

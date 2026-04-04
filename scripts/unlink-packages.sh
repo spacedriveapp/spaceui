@@ -16,7 +16,7 @@ NC='\033[0m' # No Color
 for pkg in packages/*; do
   if [ -d "$pkg" ]; then
     pkg_name=$(basename "$pkg")
-    echo -e "${YELLOW}Unlinking @spaceui/$pkg_name...${NC}"
+    echo -e "${YELLOW}Unlinking @spacedrive/$pkg_name...${NC}"
     cd "$pkg"
     bun unlink 2>/dev/null || true
     cd - > /dev/null
@@ -28,4 +28,4 @@ echo -e "${GREEN}✅ All packages unlinked!${NC}"
 echo ""
 echo "To restore npm versions in your projects:"
 echo "  cd /path/to/project"
-echo "  bun install @spaceui/primitives@latest"
+echo "  bun install @spacedrive/primitives@latest"

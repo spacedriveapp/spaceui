@@ -7,7 +7,7 @@ export default defineConfig({
   splitting: true,
   sourcemap: true,
   clean: true,
-  external: ['react', 'react-dom', 'react-hook-form', 'zod', '@spaceui/primitives'],
+  external: ['react', 'react-dom', 'react-hook-form', 'zod', '@spacedrive/primitives'],
   esbuildOptions(options) {
     options.banner = {
       js: '"use client";',

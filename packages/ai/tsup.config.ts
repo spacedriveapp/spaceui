@@ -10,7 +10,7 @@ export default defineConfig({
   external: [
     'react',
     'react-dom',
-    '@spaceui/primitives',
+    '@spacedrive/primitives',
     '@phosphor-icons/react',
     '@tanstack/react-query',
     '@tanstack/react-virtual',

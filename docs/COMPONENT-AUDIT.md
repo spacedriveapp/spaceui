@@ -10,7 +10,7 @@ Use this to track migration progress as components are faithfully rebuilt from t
 
 ---
 
-## Primitives (`@spaceui/primitives`)
+## Primitives (`@spacedrive/primitives`)
 
 ### Good — Worth keeping, minor fixes needed
 
@@ -64,7 +64,7 @@ Use this to track migration progress as components are faithfully rebuilt from t
 
 ---
 
-## Explorer (`@spaceui/explorer`)
+## Explorer (`@spacedrive/explorer`)
 
 ### Done — faithful to real Spacedrive
 
@@ -90,7 +90,7 @@ Use this to track migration progress as components are faithfully rebuilt from t
 
 ---
 
-## AI (`@spaceui/ai`)
+## AI (`@spacedrive/ai`)
 
 Not audited yet. These components were extracted from the Spacebot interface and may be more accurate since they were built recently. Audit when ready to integrate.
 

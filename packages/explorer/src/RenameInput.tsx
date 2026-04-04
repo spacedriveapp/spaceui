@@ -1,4 +1,4 @@
-import { Input } from "@spaceui/primitives";
+import { Input } from "@spacedrive/primitives";
 import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 

@@ -1,6 +1,6 @@
 {
-  "name": "@spaceui/ai",
-  "version": "0.0.1",
+  "name": "@spacedrive/ai",
+  "version": "0.1.0",
   "description": "AI agent interaction components for SpaceUI",
   "type": "module",
   "main": "./dist/index.js",
@@ -22,7 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@spaceui/primitives": "^0.0.1",
+    "@spacedrive/primitives": "^0.1.0",
     "@phosphor-icons/react": "^2.1.0",
     "react-markdown": "^9.0.0",
     "remark-gfm": "^4.0.0",

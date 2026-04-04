@@ -11,11 +11,11 @@ SpaceUI is a standalone repository that houses all shared UI components, design 
 ```
 spaceui/
 ├── packages/
-│   ├── tokens/         # @spaceui/tokens - Design tokens & Tailwind preset
-│   ├── primitives/     # @spaceui/primitives - Base UI components (40+)
-│   ├── forms/          # @spaceui/forms - react-hook-form wrappers
-│   ├── ai/             # @spaceui/ai - AI agent components (18)
-│   └── explorer/       # @spaceui/explorer - File management (14)
+│   ├── tokens/         # @spacedrive/tokens - Design tokens & Tailwind preset
+│   ├── primitives/     # @spacedrive/primitives - Base UI components (40+)
+│   ├── forms/          # @spacedrive/forms - react-hook-form wrappers
+│   ├── ai/             # @spacedrive/ai - AI agent components (18)
+│   └── explorer/       # @spacedrive/explorer - File management (14)
 ├── examples/
 │   └── showcase/       # Interactive demo app
 ├── .storybook/         # Component documentation
@@ -68,7 +68,7 @@ bun run link
 
 # Then in consuming app:
 cd /path/to/spacedrive
-bun link @spaceui/primitives @spaceui/tokens
+bun link @spacedrive/primitives @spacedrive/tokens
 
 # When done, unlink:
 bun run unlink
@@ -80,26 +80,26 @@ bun run unlink
 
 ```typescript
 // Import tokens and preset
-import { spaceUiPreset, colors } from '@spaceui/tokens';
+import { spaceUiPreset, colors } from '@spacedrive/tokens';
 
 // Import primitives
-import { Button, Card, Dialog } from '@spaceui/primitives';
+import { Button, Card, Dialog } from '@spacedrive/primitives';
 
 // Import form fields
-import { InputField, SelectField } from '@spaceui/forms';
+import { InputField, SelectField } from '@spacedrive/forms';
 
 // Import AI components
-import { ToolCall, ChatComposer, Markdown } from '@spaceui/ai';
+import { ToolCall, ChatComposer, Markdown } from '@spacedrive/ai';
 
 // Import explorer components
-import { FileGrid, PathBar, Inspector } from '@spaceui/explorer';
+import { FileGrid, PathBar, Inspector } from '@spacedrive/explorer';
 ```
 
 ### Tailwind Configuration
 
 ```typescript
 // tailwind.config.ts
-import { spaceUiPreset } from '@spaceui/tokens';
+import { spaceUiPreset } from '@spacedrive/tokens';
 
 export default {
   presets: [spaceUiPreset],
@@ -112,12 +112,12 @@ export default {
 
 ```css
 /* In your app's base CSS */
-@import '@spaceui/tokens/css';
+@import '@spacedrive/tokens/css';
 ```
 
 ## Packages
 
-### @spaceui/tokens
+### @spacedrive/tokens
 
 Design tokens and Tailwind preset. The foundation everything else builds on.
 
@@ -128,7 +128,7 @@ Design tokens and Tailwind preset. The foundation everything else builds on.
 
 [Read more →](./packages/tokens/README.md)
 
-### @spaceui/primitives
+### @spacedrive/primitives
 
 Base UI components built on Radix UI primitives.
 
@@ -143,7 +143,7 @@ Base UI components built on Radix UI primitives.
 
 [Read more →](./packages/primitives/README.md)
 
-### @spaceui/forms
+### @spacedrive/forms
 
 Form field wrappers built on react-hook-form.
 
@@ -153,7 +153,7 @@ Form field wrappers built on react-hook-form.
 
 [Read more →](./packages/forms/README.md)
 
-### @spaceui/ai
+### @spacedrive/ai
 
 AI agent interaction components.
 
@@ -173,7 +173,7 @@ AI agent interaction components.
 
 [Read more →](./packages/ai/README.md)
 
-### @spaceui/explorer
+### @spacedrive/explorer
 
 File management and explorer components.
 
@@ -225,7 +225,7 @@ bun run link
 
 # In consuming app
 cd spacedrive/apps/web
-bun link @spaceui/primitives
+bun link @spacedrive/primitives
 ```
 
 ### Creating a Changeset

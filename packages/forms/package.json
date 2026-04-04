@@ -1,6 +1,6 @@
 {
-  "name": "@spaceui/forms",
-  "version": "0.0.1",
+  "name": "@spacedrive/forms",
+  "version": "0.1.0",
   "description": "Form field wrappers for SpaceUI built on react-hook-form",
   "type": "module",
   "main": "./dist/index.js",
@@ -22,7 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@spaceui/primitives": "^0.0.1",
+    "@spacedrive/primitives": "^0.1.0",
     "clsx": "^2.1.0"
   },
   "devDependencies": {

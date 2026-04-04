@@ -1,5 +1,5 @@
 {
-  "name": "@spaceui/storybook",
+  "name": "@spacedrive/storybook",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -28,10 +28,10 @@
     "tailwindcss": "^4.1.0"
   },
   "dependencies": {
-    "@spaceui/tokens": "workspace:*",
-    "@spaceui/primitives": "workspace:*",
-    "@spaceui/forms": "workspace:*",
-    "@spaceui/ai": "workspace:*",
-    "@spaceui/explorer": "workspace:*"
+    "@spacedrive/tokens": "workspace:*",
+    "@spacedrive/primitives": "workspace:*",
+    "@spacedrive/forms": "workspace:*",
+    "@spacedrive/ai": "workspace:*",
+    "@spacedrive/explorer": "workspace:*"
   }
 }

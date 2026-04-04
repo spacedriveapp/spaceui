@@ -1,5 +1,5 @@
 import { CaretRight } from "@phosphor-icons/react";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@spaceui/primitives";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@spacedrive/primitives";
 import clsx from "clsx";
 import { useMemo } from "react";
 

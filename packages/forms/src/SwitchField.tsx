@@ -1,4 +1,4 @@
-import { Switch } from '@spaceui/primitives';
+import { Switch } from '@spacedrive/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
 export interface SwitchFieldProps {

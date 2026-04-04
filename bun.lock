@@ -11,11 +11,11 @@
       },
     },
     "packages/ai": {
-      "name": "@spaceui/ai",
+      "name": "@spacedrive/ai",
       "version": "0.0.1",
       "dependencies": {
         "@phosphor-icons/react": "^2.1.0",
-        "@spaceui/primitives": "^0.0.1",
+        "@spacedrive/primitives": "^0.0.1",
         "clsx": "^2.1.0",
         "framer-motion": "^11.0.0",
         "react-markdown": "^9.0.0",
@@ -44,11 +44,11 @@
       },
     },
     "packages/explorer": {
-      "name": "@spaceui/explorer",
+      "name": "@spacedrive/explorer",
       "version": "0.0.1",
       "dependencies": {
         "@phosphor-icons/react": "^2.1.0",
-        "@spaceui/primitives": "^0.0.1",
+        "@spacedrive/primitives": "^0.0.1",
         "clsx": "^2.1.0",
       },
       "devDependencies": {
@@ -64,10 +64,10 @@
       },
     },
     "packages/forms": {
-      "name": "@spaceui/forms",
+      "name": "@spacedrive/forms",
       "version": "0.0.1",
       "dependencies": {
-        "@spaceui/primitives": "^0.0.1",
+        "@spacedrive/primitives": "^0.0.1",
         "clsx": "^2.1.0",
       },
       "devDependencies": {
@@ -84,7 +84,7 @@
       },
     },
     "packages/icons": {
-      "name": "@spaceui/icons",
+      "name": "@spacedrive/icons",
       "version": "0.0.1",
       "devDependencies": {
         "@types/react": "^19.0.0",
@@ -96,7 +96,7 @@
       },
     },
     "packages/primitives": {
-      "name": "@spaceui/primitives",
+      "name": "@spacedrive/primitives",
       "version": "0.0.1",
       "dependencies": {
         "@headlessui/react": "^1.7.0",
@@ -137,7 +137,7 @@
       },
     },
     "packages/tokens": {
-      "name": "@spaceui/tokens",
+      "name": "@spacedrive/tokens",
       "version": "0.0.1",
     },
   },
@@ -418,17 +418,17 @@
 
     "@rollup/rollup-win32-x64-msvc": ["@rollup/rollup-win32-x64-msvc@4.60.0", "", { "os": "win32", "cpu": "x64" }, "sha512-PrsWNQ8BuE00O3Xsx3ALh2Df8fAj9+cvvX9AIA6o4KpATR98c9mud4XtDWVvsEuyia5U4tVSTKygawyJkjm60w=="],
 
-    "@spaceui/ai": ["@spaceui/ai@workspace:packages/ai"],
+    "@spacedrive/ai": ["@spacedrive/ai@workspace:packages/ai"],
 
-    "@spaceui/explorer": ["@spaceui/explorer@workspace:packages/explorer"],
+    "@spacedrive/explorer": ["@spacedrive/explorer@workspace:packages/explorer"],
 
-    "@spaceui/forms": ["@spaceui/forms@workspace:packages/forms"],
+    "@spacedrive/forms": ["@spacedrive/forms@workspace:packages/forms"],
 
-    "@spaceui/icons": ["@spaceui/icons@workspace:packages/icons"],
+    "@spacedrive/icons": ["@spacedrive/icons@workspace:packages/icons"],
 
-    "@spaceui/primitives": ["@spaceui/primitives@workspace:packages/primitives"],
+    "@spacedrive/primitives": ["@spacedrive/primitives@workspace:packages/primitives"],
 
-    "@spaceui/tokens": ["@spaceui/tokens@workspace:packages/tokens"],
+    "@spacedrive/tokens": ["@spacedrive/tokens@workspace:packages/tokens"],
 
     "@tanstack/query-core": ["@tanstack/query-core@5.95.2", "", {}, "sha512-o4T8vZHZET4Bib3jZ/tCW9/7080urD4c+0/AUaYVpIqOsr7y0reBc1oX3ttNaSW5mYyvZHctiQ/UOP2PfdmFEQ=="],
 

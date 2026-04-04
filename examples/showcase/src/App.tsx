@@ -28,12 +28,12 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from '@spaceui/primitives'
-import { ToolCall, Markdown, ChatComposer, ModelSelect, ConnectionStatus, ProfileAvatar, AgentSelector, TaskCard, MemoryList, CronJobList, AutonomyPanel } from '@spaceui/ai'
-import { FileGrid, FileList, PathBar, KindIcon, TagPill, FileThumb, Inspector } from '@spaceui/explorer'
-import { InputField, CheckboxField, SelectField } from '@spaceui/forms'
-import type { ToolCallPair, TaskInfo, MemoryInfo, CronJobInfo, AgentInfo, ModelOption } from '@spaceui/ai'
-import type { FileInfo, TagInfo } from '@spaceui/explorer'
+} from '@spacedrive/primitives'
+import { ToolCall, Markdown, ChatComposer, ModelSelect, ConnectionStatus, ProfileAvatar, AgentSelector, TaskCard, MemoryList, CronJobList, AutonomyPanel } from '@spacedrive/ai'
+import { FileGrid, FileList, PathBar, KindIcon, TagPill, FileThumb, Inspector } from '@spacedrive/explorer'
+import { InputField, CheckboxField, SelectField } from '@spacedrive/forms'
+import type { ToolCallPair, TaskInfo, MemoryInfo, CronJobInfo, AgentInfo, ModelOption } from '@spacedrive/ai'
+import type { FileInfo, TagInfo } from '@spacedrive/explorer'
 
 function App() {
   const [activeTab, setActiveTab] = useState('primitives')

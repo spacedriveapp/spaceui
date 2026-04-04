@@ -1,6 +1,6 @@
 @import "tailwindcss";
-@import "@spaceui/tokens/theme";
-@import "@spaceui/tokens/css";
+@import "@spacedrive/tokens/theme";
+@import "@spacedrive/tokens/css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

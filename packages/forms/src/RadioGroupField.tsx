@@ -1,4 +1,4 @@
-import { RadioGroup, RadioGroupItem } from '@spaceui/primitives';
+import { RadioGroupRoot as RadioGroup, RadioGroupItem } from '@spacedrive/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
 export interface RadioOption {

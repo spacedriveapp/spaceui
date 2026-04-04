@@ -1,13 +1,13 @@
-# @spaceui/tokens
+# @spacedrive/tokens
 
 Design tokens and Tailwind CSS preset for the SpaceUI design system.
 
 ## Installation
 
 ```bash
-bun add @spaceui/tokens
+bun add @spacedrive/tokens
 # or
-npm install @spaceui/tokens
+npm install @spacedrive/tokens
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ npm install @spaceui/tokens
 
 ```typescript
 // tailwind.config.ts
-import { spaceUiPreset } from '@spaceui/tokens';
+import { spaceUiPreset } from '@spacedrive/tokens';
 
 export default {
   presets: [spaceUiPreset],
@@ -28,13 +28,13 @@ export default {
 
 ```css
 /* In your base CSS file */
-@import '@spaceui/tokens/css';
+@import '@spacedrive/tokens/css';
 ```
 
 ### Programmatic Access
 
 ```typescript
-import { colors, spaceUiPreset } from '@spaceui/tokens';
+import { colors, spaceUiPreset } from '@spacedrive/tokens';
 
 // Access color values
 console.log(colors.accent.DEFAULT); // "200, 100%, 60%"
@@ -118,13 +118,13 @@ Works with Tailwind's opacity syntax:
 ### Dark Theme (Default)
 
 ```css
-@import '@spaceui/tokens/css/themes/dark';
+@import '@spacedrive/tokens/css/themes/dark';
 ```
 
 ### Light Theme
 
 ```css
-@import '@spaceui/tokens/css/themes/light';
+@import '@spacedrive/tokens/css/themes/light';
 ```
 
 Or toggle via class:

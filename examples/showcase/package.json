@@ -1,5 +1,5 @@
 {
-  "name": "@spaceui/showcase",
+  "name": "@spacedrive/showcase",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,11 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@spaceui/ai": "workspace:*",
-    "@spaceui/explorer": "workspace:*",
-    "@spaceui/forms": "workspace:*",
-    "@spaceui/primitives": "workspace:*",
-    "@spaceui/tokens": "workspace:*",
+    "@spacedrive/ai": "workspace:*",
+    "@spacedrive/explorer": "workspace:*",
+    "@spacedrive/forms": "workspace:*",
+    "@spacedrive/primitives": "workspace:*",
+    "@spacedrive/tokens": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",

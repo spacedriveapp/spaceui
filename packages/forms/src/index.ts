@@ -1,4 +1,4 @@
-// @spaceui/forms - Form field wrappers built on react-hook-form
+// @spacedrive/forms - Form field wrappers built on react-hook-form
 
 export {
   useFormField,

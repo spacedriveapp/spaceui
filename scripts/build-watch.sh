@@ -12,7 +12,7 @@ if [ -z "$PKG" ]; then
   bun run dev
 else
   if [ -d "packages/$PKG" ]; then
-    echo "📦 Building @spaceui/$PKG in watch mode..."
+    echo "📦 Building @spacedrive/$PKG in watch mode..."
     cd "packages/$PKG"
     bun run dev
   else

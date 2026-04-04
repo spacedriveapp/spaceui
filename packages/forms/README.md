@@ -1,13 +1,13 @@
-# @spaceui/forms
+# @spacedrive/forms
 
 Form field wrappers built on react-hook-form for SpaceUI.
 
 ## Installation
 
 ```bash
-bun add @spaceui/forms @spaceui/primitives react-hook-form zod
+bun add @spacedrive/forms @spacedrive/primitives react-hook-form zod
 # or
-npm install @spaceui/forms @spaceui/primitives react-hook-form zod
+npm install @spacedrive/forms @spacedrive/primitives react-hook-form zod
 ```
 
 Peer dependencies:
@@ -24,7 +24,7 @@ Peer dependencies:
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Form, InputField, SelectField, CheckboxField } from '@spaceui/forms';
+import { Form, InputField, SelectField, CheckboxField } from '@spacedrive/forms';
 
 const schema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -238,7 +238,7 @@ function DynamicForm() {
 ### Manual Error Display
 
 ```tsx
-import { FormMessage } from '@spaceui/forms';
+import { FormMessage } from '@spacedrive/forms';
 
 // Inside a custom component
 <FormMessage>

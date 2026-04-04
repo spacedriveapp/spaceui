@@ -16,7 +16,7 @@ NC='\033[0m' # No Color
 for pkg in packages/*; do
   if [ -d "$pkg" ]; then
     pkg_name=$(basename "$pkg")
-    echo -e "${YELLOW}Linking @spaceui/$pkg_name...${NC}"
+    echo -e "${YELLOW}Linking @spacedrive/$pkg_name...${NC}"
     cd "$pkg"
     bun link
     cd - > /dev/null
@@ -28,8 +28,8 @@ echo -e "${GREEN}✅ All packages linked!${NC}"
 echo ""
 echo "To use in another project:"
 echo "  cd /path/to/project"
-echo "  bun link @spaceui/tokens"
-echo "  bun link @spaceui/primitives"
-echo "  bun link @spaceui/forms"
-echo "  bun link @spaceui/ai"
-echo "  bun link @spaceui/explorer"
+echo "  bun link @spacedrive/tokens"
+echo "  bun link @spacedrive/primitives"
+echo "  bun link @spacedrive/forms"
+echo "  bun link @spacedrive/ai"
+echo "  bun link @spacedrive/explorer"

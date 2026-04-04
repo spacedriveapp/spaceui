@@ -1,4 +1,4 @@
-import { Checkbox } from '@spaceui/primitives';
+import { CheckBox as Checkbox } from '@spacedrive/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
 export interface CheckboxFieldProps {
@@ -17,7 +17,7 @@ function CheckboxField({ name, label, description, disabled }: CheckboxFieldProp
           <FormControl>
             <Checkbox
               checked={field.value}
-              onCheckedChange={field.onChange}
+              onChange={field.onChange}
               disabled={disabled}
             />
           </FormControl>

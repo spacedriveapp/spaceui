@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@spaceui/primitives';
+import { SelectRoot, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@spacedrive/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
 export interface SelectOption {
@@ -22,7 +22,7 @@ function SelectField({ name, label, description, placeholder, options, disabled 
       render={({ field }) => (
         <FormItem>
           {label && <FormLabel>{label}</FormLabel>}
-          <Select onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
+          <SelectRoot onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
             <FormControl>
               <SelectTrigger>
                 <SelectValue placeholder={placeholder} />
@@ -35,7 +35,7 @@ function SelectField({ name, label, description, placeholder, options, disabled 
                 </SelectItem>
               ))}
             </SelectContent>
-          </Select>
+          </SelectRoot>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>

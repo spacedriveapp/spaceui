@@ -1,6 +1,6 @@
 {
-  "name": "@spaceui/explorer",
-  "version": "0.0.1",
+  "name": "@spacedrive/explorer",
+  "version": "0.1.0",
   "description": "File management and explorer components for SpaceUI",
   "type": "module",
   "main": "./dist/index.js",
@@ -22,7 +22,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@spaceui/primitives": "^0.0.1",
+    "@spacedrive/primitives": "^0.1.0",
     "@phosphor-icons/react": "^2.1.0",
     "clsx": "^2.1.0"
   },

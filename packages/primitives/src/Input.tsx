@@ -36,7 +36,7 @@ export const inputSizes = {
 export const inputStyles = cva(
 	[
 		"rounded-lg border text-sm leading-4",
-		"outline-none transition-all focus-within:ring-2",
+		"outline-none transition-all focus-within:ring-2 focus-within:ring-accent",
 		"text-ink",
 	],
 	{
@@ -57,7 +57,7 @@ export const inputStyles = cva(
 		},
 		defaultVariants: {
 			variant: "default",
-			size: "sm",
+			size: "md",
 		},
 	},
 );
@@ -144,6 +144,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = "Input";
 
+/** @deprecated Use `SearchBar` instead. */
 export const SearchInput = forwardRef<HTMLInputElement, InputProps>(
 	(props, ref) => <Input {...props} ref={ref} icon={MagnifyingGlass} />,
 );

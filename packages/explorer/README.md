@@ -1,13 +1,13 @@
-# @spaceui/explorer
+# @spacedrive/explorer
 
 File management and explorer components for SpaceUI.
 
 ## Installation
 
 ```bash
-bun add @spaceui/explorer @spaceui/primitives
+bun add @spacedrive/explorer @spacedrive/primitives
 # or
-npm install @spaceui/explorer @spaceui/primitives
+npm install @spacedrive/explorer @spacedrive/primitives
 ```
 
 Peer dependencies:
@@ -18,8 +18,8 @@ Peer dependencies:
 ## Usage
 
 ```tsx
-import { FileGrid, PathBar, Inspector, KindIcon, TagPill } from '@spaceui/explorer';
-import type { FileInfo, TagInfo } from '@spaceui/explorer';
+import { FileGrid, PathBar, Inspector, KindIcon, TagPill } from '@spacedrive/explorer';
+import type { FileInfo, TagInfo } from '@spacedrive/explorer';
 
 const file: FileInfo = {
   id: '1',
@@ -67,8 +67,8 @@ function FileBrowser() {
 File type icons:
 
 ```tsx
-import { KindIcon } from '@spaceui/explorer';
-import type { FileKind } from '@spaceui/explorer';
+import { KindIcon } from '@spacedrive/explorer';
+import type { FileKind } from '@spacedrive/explorer';
 
 <KindIcon kind="document" />      {/* Document icon */}
 <KindIcon kind="image" />         {/* Image icon */}
@@ -90,8 +90,8 @@ Sizes: `sm` | `md` | `lg`
 Colored tag pill:
 
 ```tsx
-import { TagPill } from '@spaceui/explorer';
-import type { TagInfo } from '@spaceui/explorer';
+import { TagPill } from '@spacedrive/explorer';
+import type { TagInfo } from '@spacedrive/explorer';
 
 const tag: TagInfo = {
   id: '1',
@@ -110,8 +110,8 @@ const tag: TagInfo = {
 File thumbnail renderer:
 
 ```tsx
-import { FileThumb } from '@spaceui/explorer';
-import type { FileInfo } from '@spaceui/explorer';
+import { FileThumb } from '@spacedrive/explorer';
+import type { FileInfo } from '@spacedrive/explorer';
 
 const file: FileInfo = {
   id: '1',
@@ -135,7 +135,7 @@ For images with `thumbnailUrl`, displays the image. Otherwise shows kind icon.
 Breadcrumb navigation:
 
 ```tsx
-import { PathBar } from '@spaceui/explorer';
+import { PathBar } from '@spacedrive/explorer';
 
 <PathBar
   path={['Home', 'Documents', 'Projects', 'MyProject']}
@@ -159,8 +159,8 @@ Features:
 Grid layout of files:
 
 ```tsx
-import { FileGrid } from '@spaceui/explorer';
-import type { FileInfo } from '@spaceui/explorer';
+import { FileGrid } from '@spacedrive/explorer';
+import type { FileInfo } from '@spacedrive/explorer';
 
 const files: FileInfo[] = [
   { id: '1', name: 'file1.txt', kind: 'document', /* ... */ },
@@ -193,7 +193,7 @@ Features:
 Table/list layout:
 
 ```tsx
-import { FileList } from '@spaceui/explorer';
+import { FileList } from '@spacedrive/explorer';
 
 <FileList
   files={files}
@@ -220,7 +220,7 @@ Click column headers to sort.
 Single row (used internally by FileList):
 
 ```tsx
-import { FileRow } from '@spaceui/explorer';
+import { FileRow } from '@spacedrive/explorer';
 
 <FileRow
   file={file}
@@ -237,7 +237,7 @@ import { FileRow } from '@spaceui/explorer';
 File metadata panel:
 
 ```tsx
-import { Inspector } from '@spaceui/explorer';
+import { Inspector } from '@spacedrive/explorer';
 
 <Inspector
   file={file}
@@ -257,7 +257,7 @@ Displays:
 Collapsible section for inspector:
 
 ```tsx
-import { InspectorPanel } from '@spaceui/explorer';
+import { InspectorPanel } from '@spacedrive/explorer';
 
 <InspectorPanel title="EXIF Data" defaultOpen={true}>
   <dl>
@@ -276,7 +276,7 @@ import { InspectorPanel } from '@spaceui/explorer';
 Inline file rename:
 
 ```tsx
-import { RenameInput } from '@spaceui/explorer';
+import { RenameInput } from '@spacedrive/explorer';
 
 <RenameInput
   initialValue="old-filename.txt"
@@ -296,7 +296,7 @@ Features:
 Visual feedback during drag:
 
 ```tsx
-import { DragOverlay } from '@spaceui/explorer';
+import { DragOverlay } from '@spacedrive/explorer';
 
 <DragOverlay files={draggedFiles} />
 ```
@@ -311,7 +311,7 @@ Shows:
 Spacebar preview modal:
 
 ```tsx
-import { QuickPreview } from '@spaceui/explorer';
+import { QuickPreview } from '@spacedrive/explorer';
 
 <QuickPreview
   file={selectedFile}
@@ -346,7 +346,7 @@ import type {
   SortDirection,
   SortState,
   SelectionState,
-} from '@spaceui/explorer';
+} from '@spacedrive/explorer';
 ```
 
 ### FileKind

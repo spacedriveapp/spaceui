@@ -1,5 +1,5 @@
 {
-  "name": "@spaceui/icons",
+  "name": "@spacedrive/icons",
   "version": "0.0.1",
   "description": "Spacedrive file type icons, extension badges, and icon resolution utilities",
   "type": "module",

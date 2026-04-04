@@ -1,7 +1,7 @@
 "use client";
 
 import {Copy} from '@phosphor-icons/react';
-import {CircleButton} from '@spaceui/primitives';
+import {CircleButton} from '@spacedrive/primitives';
 import clsx from 'clsx';
 
 import {Markdown} from './Markdown';

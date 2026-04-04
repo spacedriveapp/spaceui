@@ -1,4 +1,4 @@
-// @spaceui/primitives
+// @spacedrive/primitives
 // Faithful extraction of Spacedrive's @sd/ui components
 
 // Button

@@ -1,4 +1,4 @@
-import { Input } from '@spaceui/primitives';
+import { Input } from '@spacedrive/primitives';
 import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from './Form';
 
 export interface InputFieldProps {

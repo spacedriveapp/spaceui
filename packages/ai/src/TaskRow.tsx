@@ -1,5 +1,5 @@
 import { DotsThree } from "@phosphor-icons/react";
-import { DropdownMenu } from "@spaceui/primitives";
+import { DropdownMenu } from "@spacedrive/primitives";
 import clsx from "clsx";
 
 import { TaskPriorityIcon } from "./TaskPriorityIcon";
