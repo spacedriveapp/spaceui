@@ -1,4 +1,4 @@
-import { Button } from "@spacedrive/primitives";
+import { Button, Select, SelectOption } from "@spacedrive/primitives";
 import clsx from "clsx";
 import { useCallback, useState } from "react";
 
@@ -58,18 +58,18 @@ export function TaskCreateForm({
 					disabled={isSubmitting}
 					autoFocus
 				/>
-				<select
+				<Select
 					value={priority}
-					onChange={(e) => setPriority(e.target.value as TaskPriority)}
-					className="rounded border border-app-line bg-app-box px-2 py-1 text-xs text-ink"
+					size="sm"
+					onChange={(value) => setPriority(value as TaskPriority)}
 					disabled={isSubmitting}
 				>
 					{PRIORITIES.map((p) => (
-						<option key={p} value={p}>
+						<SelectOption key={p} value={p}>
 							{TASK_PRIORITY_LABEL[p]}
-						</option>
+						</SelectOption>
 					))}
-				</select>
+				</Select>
 				<Button
 					variant="accent"
 					size="sm"

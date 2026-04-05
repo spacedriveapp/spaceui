@@ -33,17 +33,13 @@ const Content = forwardRef<
 				className={clsx(
 					"flex flex-col",
 					"cursor-default select-none rounded-2xl",
-					"px-1.5 py-1.5",
 					"text-left text-sm text-ink",
 					"bg-app-overlay",
 					"border border-app-line",
 					"shadow-2xl",
 					className,
 				)}
-				style={{
-					width: "var(--radix-popover-trigger-width)",
-					...style,
-				}}
+				style={style}
 			>
 				{children}
 			</div>

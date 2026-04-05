@@ -1,5 +1,5 @@
 import { Check, X } from "@phosphor-icons/react";
-import { Button } from "@spacedrive/primitives";
+import { Button, Select, SelectOption } from "@spacedrive/primitives";
 import clsx from "clsx";
 
 import { Markdown } from "./Markdown";
@@ -66,19 +66,17 @@ export function TaskDetail({
 				{onStatusChange ? (
 					<label className="flex items-center gap-2 text-ink-dull">
 						Status
-						<select
+						<Select
 							value={task.status}
-							onChange={(e) =>
-								onStatusChange(task, e.target.value as TaskStatus)
-							}
-							className="rounded border border-app-line bg-app-box px-2 py-0.5 text-sm text-ink"
+							size="sm"
+							onChange={(value) => onStatusChange(task, value as TaskStatus)}
 						>
 							{TASK_STATUS_ORDER.map((s) => (
-								<option key={s} value={s}>
+								<SelectOption key={s} value={s}>
 									{TASK_STATUS_LABEL[s]}
-								</option>
+								</SelectOption>
 							))}
-						</select>
+						</Select>
 					</label>
 				) : (
 					<span className="text-ink-dull">

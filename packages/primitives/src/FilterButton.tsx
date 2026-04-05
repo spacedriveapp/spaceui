@@ -3,11 +3,11 @@ import { forwardRef } from 'react';
 
 export interface FilterButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   active?: boolean;
-  label: string;
+  label?: string;
 }
 
 const FilterButton = forwardRef<HTMLButtonElement, FilterButtonProps>(
-  ({ className, active, label, ...props }, ref) => {
+  ({ className, active, label, children, ...props }, ref) => {
     return (
       <button
         ref={ref}
@@ -21,7 +21,7 @@ const FilterButton = forwardRef<HTMLButtonElement, FilterButtonProps>(
         )}
         {...props}
       >
-        {label}
+        {label ?? children}
       </button>
     );
   }

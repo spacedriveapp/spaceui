@@ -2,20 +2,24 @@ import { clsx } from 'clsx';
 import { type VariantProps, cva } from 'class-variance-authority';
 
 const badgeVariants = cva(
-  'inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2',
+  'inline-flex items-center rounded-full border font-medium transition-colors',
   {
     variants: {
       variant: {
         default: 'border-transparent bg-accent/10 text-accent',
         secondary: 'border-transparent bg-app-box text-ink-dull',
-        destructive: 'border-transparent bg-status-error/10 text-status-error',
-        outline: 'text-ink',
-        success: 'border-transparent bg-status-success/10 text-status-success',
-        warning: 'border-transparent bg-status-warning/10 text-status-warning',
+        outline: 'border-app-line text-ink-dull',
+        accent: 'border-transparent bg-accent/10 text-accent',
+        blue: 'border-transparent bg-blue-500/10 text-blue-400',
+        green: 'border-transparent bg-green-500/10 text-green-400',
+        red: 'border-transparent bg-red-500/10 text-red-400',
+        amber: 'border-transparent bg-amber-500/10 text-amber-400',
+        violet: 'border-transparent bg-violet-500/10 text-violet-400',
       },
       size: {
-        default: 'px-2.5 py-0.5',
-        sm: 'px-2 py-0.5 text-[10px]',
+        sm: 'px-1.5 py-px text-[10px]',
+        default: 'px-2 py-0.5 text-xs',
+        md: 'px-2.5 py-1 text-xs',
       },
     },
     defaultVariants: {
