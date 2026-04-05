@@ -26,7 +26,7 @@ const hasHref = (
 
 export const buttonStyles = cva(
 	[
-		"cursor-default items-center border font-medium tracking-wide outline-none transition-colors duration-100",
+		"inline-flex cursor-default items-center justify-center gap-1.5 border font-medium tracking-wide outline-none transition-colors duration-100",
 		"disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70",
 		"focus:ring-none focus:ring-offset-none cursor-pointer ring-offset-app-box",
 	],

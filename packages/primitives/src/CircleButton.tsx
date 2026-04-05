@@ -17,7 +17,7 @@ export const circleButtonStyles = cva(
 			variant: {
 				default:
 					"bg-app-overlay/80 text-sidebar-inkDull hover:bg-app-box hover:text-sidebar-ink",
-				active: "bg-sidebar-box/40 text-sidebar-ink",
+				active: "bg-app-overlay text-sidebar-ink",
 				accent: "border-accent/30 bg-accent/20 text-accent",
 				solid:
 					"border-app-line bg-app-box text-ink-dull hover:bg-app-hover hover:text-ink",

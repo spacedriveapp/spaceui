@@ -28,7 +28,7 @@ export function MessageBubble({
 		>
 			<div
 				className={clsx(
-					'max-w-[80%] rounded-2xl text-base leading-7',
+					'max-w-[80%] rounded-2xl text-sm leading-6',
 					isUser
 						? 'bg-accent px-4 py-1 text-white'
 						: 'text-ink border border-none bg-transparent'
