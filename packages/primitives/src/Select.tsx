@@ -1,10 +1,10 @@
 "use client";
 
-import { Check } from "@phosphor-icons/react";
+import {Check} from "@phosphor-icons/react";
 import * as RS from "@radix-ui/react-select";
-import { cva, type VariantProps } from "class-variance-authority";
+import {cva, type VariantProps} from "class-variance-authority";
 import clsx from "clsx";
-import { forwardRef, type PropsWithChildren } from "react";
+import {forwardRef, type PropsWithChildren} from "react";
 
 const ChevronDouble = (props: React.SVGProps<SVGSVGElement>) => (
 	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" {...props}>
@@ -47,8 +47,9 @@ export const selectStyles = cva(
 	},
 );
 
-export interface SelectProps<TValue extends string = string>
-	extends VariantProps<typeof selectStyles> {
+export interface SelectProps<
+	TValue extends string = string,
+> extends VariantProps<typeof selectStyles> {
 	value: TValue;
 	onChange: (value: TValue) => void;
 	placeholder?: string;
@@ -85,9 +86,7 @@ export const Select = forwardRef(
 
 				<RS.Portal>
 					<RS.Content className="z-[100] rounded-md border border-app-line bg-app-box shadow-2xl shadow-app-shade/20">
-						<RS.Viewport className="p-1">
-							{props.children}
-						</RS.Viewport>
+						<RS.Viewport className="p-1">{props.children}</RS.Viewport>
 					</RS.Content>
 				</RS.Portal>
 			</RS.Root>
@@ -100,7 +99,7 @@ export const Select = forwardRef(
 ) => JSX.Element;
 
 export function SelectOption(
-	props: PropsWithChildren<{ value: string; default?: boolean }>,
+	props: PropsWithChildren<{value: string; default?: boolean}>,
 ) {
 	return (
 		<RS.Item
@@ -131,7 +130,7 @@ export const SelectTrigger = ({
 }: RS.SelectTriggerProps) => (
 	<RS.Trigger
 		className={clsx(
-			"flex h-8 w-full items-center justify-between rounded-md border border-app-line bg-app-darkBox px-3 py-1.5 text-sm transition-colors placeholder:text-ink-faint focus:border-accent/50 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+			"flex h-8 w-full items-center justify-between rounded-md border border-app-line bg-app-dark-box px-3 py-1.5 text-sm transition-colors placeholder:text-ink-faint focus:border-accent/50 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
 			className,
 		)}
 		{...props}
@@ -150,7 +149,10 @@ export const SelectScrollUpButton = ({
 	...props
 }: RS.SelectScrollUpButtonProps) => (
 	<RS.ScrollUpButton
-		className={clsx("flex cursor-default items-center justify-center py-1", className)}
+		className={clsx(
+			"flex cursor-default items-center justify-center py-1",
+			className,
+		)}
 		{...props}
 	>
 		<ChevronDouble className="size-4 rotate-180" />
@@ -164,7 +166,10 @@ export const SelectScrollDownButton = ({
 	...props
 }: RS.SelectScrollDownButtonProps) => (
 	<RS.ScrollDownButton
-		className={clsx("flex cursor-default items-center justify-center py-1", className)}
+		className={clsx(
+			"flex cursor-default items-center justify-center py-1",
+			className,
+		)}
 		{...props}
 	>
 		<ChevronDouble className="size-4" />
@@ -207,12 +212,12 @@ export const SelectContent = ({
 
 SelectContent.displayName = "SelectContent";
 
-export const SelectLabel = ({
-	className,
-	...props
-}: RS.SelectLabelProps) => (
+export const SelectLabel = ({className, ...props}: RS.SelectLabelProps) => (
 	<RS.Label
-		className={clsx("py-1.5 pl-8 pr-2 text-sm font-semibold text-ink-dull", className)}
+		className={clsx(
+			"py-1.5 pl-8 pr-2 text-sm font-semibold text-ink-dull",
+			className,
+		)}
 		{...props}
 	/>
 );
@@ -246,7 +251,10 @@ export const SelectSeparator = ({
 	className,
 	...props
 }: RS.SelectSeparatorProps) => (
-	<RS.Separator className={clsx("-mx-1 my-1 h-px bg-app-divider", className)} {...props} />
+	<RS.Separator
+		className={clsx("-mx-1 my-1 h-px bg-app-divider", className)}
+		{...props}
+	/>
 );
 
 SelectSeparator.displayName = "SelectSeparator";

@@ -1,20 +1,15 @@
 "use client";
 
 import * as RDialog from "@radix-ui/react-dialog";
-import { X } from "@phosphor-icons/react";
-import { animated, useTransition } from "@react-spring/web";
+import {X} from "@phosphor-icons/react";
+import {animated, useTransition} from "@react-spring/web";
 import clsx from "clsx";
-import {
-	type ReactElement,
-	type ReactNode,
-	useEffect,
-	useState,
-} from "react";
-import { type FieldValues, type UseFormHandleSubmit } from "react-hook-form";
+import {type ReactElement, type ReactNode, useEffect, useState} from "react";
+import {type FieldValues, type UseFormHandleSubmit} from "react-hook-form";
 
-import { Button } from "./Button";
-import { Loader } from "./Loader";
-import { Form, type FormProps } from "./forms/Form";
+import {Button} from "./Button";
+import {Loader} from "./Loader";
+import {Form, type FormProps} from "./forms/Form";
 
 export interface DialogState {
 	open: boolean;
@@ -40,8 +35,8 @@ class DialogManager {
 	) {
 		const id = this.getId();
 
-		this.components.set(id, () => dialog({ id, ...options }));
-		this.states.set(id, { open: true });
+		this.components.set(id, () => dialog({id, ...options}));
+		this.states.set(id, {open: true});
 		this.listeners.set(id, new Set());
 
 		this.notifyGlobalListeners();
@@ -68,7 +63,7 @@ class DialogManager {
 		const current = this.states.get(id);
 		if (!current) return;
 
-		const newState = { ...current, ...state };
+		const newState = {...current, ...state};
 		this.states.set(id, newState);
 
 		const listeners = this.listeners.get(id);
@@ -128,7 +123,7 @@ class DialogManager {
 
 export const dialogManager = new DialogManager();
 
-function Remover({ id }: { id: number }) {
+function Remover({id}: {id: number}) {
 	useEffect(
 		() => () => {
 			dialogManager.remove(id);
@@ -142,8 +137,7 @@ function Remover({ id }: { id: number }) {
 export function useDialog(props: UseDialogProps) {
 	const [state, setState] = useState<DialogState>(() => {
 		const initialState = dialogManager.getState(props.id);
-		if (!initialState)
-			throw new Error(`Dialog ${props.id} does not exist!`);
+		if (!initialState) throw new Error(`Dialog ${props.id} does not exist!`);
 		return initialState;
 	});
 
@@ -181,8 +175,7 @@ const AnimatedDialogContent = animated(RDialog.Content);
 const AnimatedDialogOverlay = animated(RDialog.Overlay);
 
 export interface DialogProps<S extends FieldValues>
-	extends RDialog.DialogProps,
-		Omit<FormProps<S>, "onSubmit"> {
+	extends RDialog.DialogProps, Omit<FormProps<S>, "onSubmit"> {
 	title?: string;
 	dialog: ReturnType<typeof useDialog>;
 	loading?: boolean;
@@ -226,25 +219,20 @@ export function Dialog<S extends FieldValues>({
 			transform: "translateY(20px)",
 			transformOrigin: props.transformOrigin || "bottom",
 		},
-		enter: { opacity: 1, transform: "translateY(0px)" },
-		leave: { opacity: 0, transform: "translateY(20px)" },
-		config: { mass: 0.4, tension: 200, friction: 10, bounce: 0 },
+		enter: {opacity: 1, transform: "translateY(0px)"},
+		leave: {opacity: 0, transform: "translateY(20px)"},
+		config: {mass: 0.4, tension: 200, friction: 10, bounce: 0},
 	});
 
-	const setOpen = (v: boolean) =>
-		dialogManager.setState(dialog.id, { open: v });
+	const setOpen = (v: boolean) => dialogManager.setState(dialog.id, {open: v});
 
 	const cancelButton = (
 		<RDialog.Close asChild>
 			<Button
 				size="sm"
 				variant={props.cancelDanger ? "colored" : "gray"}
-				onClick={
-					typeof onCancelled === "function" ? onCancelled : undefined
-				}
-				className={clsx(
-					props.cancelDanger && "border-red-500 bg-red-500",
-				)}
+				onClick={typeof onCancelled === "function" ? onCancelled : undefined}
+				className={clsx(props.cancelDanger && "border-red-500 bg-red-500")}
 			>
 				{props.cancelLabel || "Cancel"}
 			</Button>
@@ -257,9 +245,7 @@ export function Dialog<S extends FieldValues>({
 				disabled={props.loading}
 				size="sm"
 				variant="gray"
-				onClick={
-					typeof onCancelled === "function" ? onCancelled : undefined
-				}
+				onClick={typeof onCancelled === "function" ? onCancelled : undefined}
 			>
 				{props.closeLabel || "Close"}
 			</Button>
@@ -279,9 +265,7 @@ export function Dialog<S extends FieldValues>({
 				type="submit"
 				size="sm"
 				disabled={
-					form.formState.isSubmitting ||
-					props.submitDisabled ||
-					disableCheck
+					form.formState.isSubmitting || props.submitDisabled || disableCheck
 				}
 				variant={props.ctaDanger ? "colored" : "accent"}
 				onClick={async (e: React.MouseEvent<HTMLElement>) => {
@@ -298,14 +282,10 @@ export function Dialog<S extends FieldValues>({
 					type="submit"
 					size="sm"
 					disabled={
-						form.formState.isSubmitting ||
-						props.submitDisabled ||
-						disableCheck
+						form.formState.isSubmitting || props.submitDisabled || disableCheck
 					}
 					variant={props.ctaDanger ? "colored" : "accent"}
-					className={clsx(
-						props.ctaDanger && "border-red-500 bg-red-500",
-					)}
+					className={clsx(props.ctaDanger && "border-red-500 bg-red-500")}
 					onClick={async (e: React.MouseEvent<HTMLElement>) => {
 						e.preventDefault();
 						await onSubmit?.(e);
@@ -318,9 +298,7 @@ export function Dialog<S extends FieldValues>({
 					type="submit"
 					size="sm"
 					disabled={
-						form.formState.isSubmitting ||
-						props.submitDisabled ||
-						disableCheck
+						form.formState.isSubmitting || props.submitDisabled || disableCheck
 					}
 					variant="accent"
 					onClick={async (e: React.MouseEvent<HTMLElement>) => {
@@ -388,46 +366,34 @@ export function Dialog<S extends FieldValues>({
 								</div>
 								{(props.buttonsSideContent ||
 									(!props.hideButtons &&
-										(submitButton ||
-											props.cancelBtn ||
-											onCancelled))) && (
+										(submitButton || props.cancelBtn || onCancelled))) && (
 									<div
 										className={clsx(
 											"flex items-center justify-end space-x-2 border-t border-app-line bg-app-input/60 p-3",
 										)}
 									>
-										{form.formState.isSubmitting && (
-											<Loader />
-										)}
+										{form.formState.isSubmitting && <Loader />}
 										{props.buttonsSideContent && (
-											<div>
-												{props.buttonsSideContent}
-											</div>
+											<div>{props.buttonsSideContent}</div>
 										)}
 										<div className="grow" />
 										{!props.hideButtons && (
 											<div
 												className={clsx(
-													invertButtonFocus
-														? "flex-row-reverse"
-														: "flex-row",
+													invertButtonFocus ? "flex-row-reverse" : "flex-row",
 													"flex gap-2",
 												)}
 											>
 												{invertButtonFocus ? (
 													<>
 														{submitButton}
-														{props.cancelBtn &&
-															cancelButton}
-														{onCancelled &&
-															closeButton}
+														{props.cancelBtn && cancelButton}
+														{onCancelled && closeButton}
 													</>
 												) : (
 													<>
-														{onCancelled &&
-															closeButton}
-														{props.cancelBtn &&
-															cancelButton}
+														{onCancelled && closeButton}
+														{props.cancelBtn && cancelButton}
 														{submitButton}
 													</>
 												)}
@@ -456,7 +422,7 @@ export const DialogOverlay = ({
 }: RDialog.DialogOverlayProps) => (
 	<RDialog.Overlay
 		className={clsx(
-			"fixed inset-0 z-50 bg-black/50 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+			"fixed inset-0 z-50 bg-black/50 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
 			className,
 		)}
 		{...props}
@@ -474,13 +440,13 @@ export const DialogContent = ({
 		<DialogOverlay />
 		<RDialog.Content
 			className={clsx(
-				"fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-app-line bg-app-darkBox p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
+				"fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border border-app-line bg-app-dark-box p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg",
 				className,
 			)}
 			{...props}
 		>
 			{children}
-			<RDialog.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-app-darkBox transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-app-button data-[state=open]:text-ink-dull">
+			<RDialog.Close className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-app-dark-box transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-app-button data-[state=open]:text-ink-dull">
 				<X className="size-4" />
 				<span className="sr-only">Close</span>
 			</RDialog.Close>
@@ -495,7 +461,10 @@ export const DialogHeader = ({
 	...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
-		className={clsx("flex flex-col space-y-1.5 text-center sm:text-left", className)}
+		className={clsx(
+			"flex flex-col space-y-1.5 text-center sm:text-left",
+			className,
+		)}
 		{...props}
 	/>
 );
@@ -536,7 +505,10 @@ export const DialogDescription = ({
 	className,
 	...props
 }: RDialog.DialogDescriptionProps) => (
-	<RDialog.Description className={clsx("text-sm text-ink-dull", className)} {...props} />
+	<RDialog.Description
+		className={clsx("text-sm text-ink-dull", className)}
+		{...props}
+	/>
 );
 
 DialogDescription.displayName = "DialogDescription";

@@ -26,7 +26,7 @@ declare const rawColors: {
 	app: {
 		DEFAULT: string;
 		box: string;
-		darkBox: string;
+		dark-box: string;
 		darkerBox: string;
 		lightBox: string;
 		overlay: string;

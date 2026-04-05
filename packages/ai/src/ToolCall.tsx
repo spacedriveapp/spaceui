@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { clsx } from 'clsx';
-import type { ToolCallPair, ToolCallStatus } from './types';
+import {useState} from "react";
+import {clsx} from "clsx";
+import type {ToolCallPair, ToolCallStatus} from "./types";
 
 // ---------------------------------------------------------------------------
 // Tool-specific rendering
@@ -16,7 +16,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 	browser_launch: {
 		summary(pair) {
 			const headless = pair.args?.headless;
-			return headless === false ? 'Launch browser (visible)' : 'Launch browser';
+			return headless === false ? "Launch browser (visible)" : "Launch browser";
 		},
 		resultView(pair) {
 			if (!pair.resultRaw) return null;
@@ -53,12 +53,12 @@ const toolRenderers: Record<string, ToolRenderer> = {
 
 	browser_snapshot: {
 		summary(pair) {
-			if (!pair.resultRaw) return 'Taking snapshot...';
+			if (!pair.resultRaw) return "Taking snapshot...";
 			const matches = pair.resultRaw.match(/\[\d+\]/g);
 			const count = matches?.length ?? 0;
 			return count > 0
-				? `${count} interactive element${count !== 1 ? 's' : ''}`
-				: 'Page snapshot';
+				? `${count} interactive element${count !== 1 ? "s" : ""}`
+				: "Page snapshot";
 		},
 		resultView(pair) {
 			if (!pair.resultRaw) return null;
@@ -69,7 +69,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 	browser_click: {
 		summary(pair) {
 			const index = pair.args?.index;
-			return index !== undefined ? `Click element [${index}]` : 'Click';
+			return index !== undefined ? `Click element [${index}]` : "Click";
 		},
 		resultView(pair) {
 			if (!pair.resultRaw) return null;
@@ -85,7 +85,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 			if (hasSecret) {
 				return index !== undefined
 					? `Type secret into [${index}]`
-					: 'Type secret';
+					: "Type secret";
 			}
 			if (text) {
 				const display = truncate(String(text), 30);
@@ -93,7 +93,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 					? `Type "${display}" into [${index}]`
 					: `Type "${display}"`;
 			}
-			return index !== undefined ? `Type into [${index}]` : 'Type';
+			return index !== undefined ? `Type into [${index}]` : "Type";
 		},
 		resultView(pair) {
 			if (!pair.resultRaw) return null;
@@ -104,7 +104,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 	browser_press_key: {
 		summary(pair) {
 			const key = pair.args?.key;
-			return key ? `Press ${key}` : 'Press key';
+			return key ? `Press ${key}` : "Press key";
 		},
 		resultView(pair) {
 			if (!pair.resultRaw) return null;
@@ -114,12 +114,12 @@ const toolRenderers: Record<string, ToolRenderer> = {
 
 	browser_screenshot: {
 		summary() {
-			return 'Capture screenshot';
+			return "Capture screenshot";
 		},
 		resultView(pair) {
 			if (!pair.resultRaw) return null;
 			if (pair.result?.base64) {
-				const mimeType = (pair.result.mime_type as string) ?? 'image/png';
+				const mimeType = (pair.result.mime_type as string) ?? "image/png";
 				return (
 					<div className="px-3 py-2">
 						<img
@@ -137,14 +137,16 @@ const toolRenderers: Record<string, ToolRenderer> = {
 	browser_evaluate: {
 		summary(pair) {
 			const expression = pair.args?.expression;
-			return expression ? truncate(String(expression), 50) : 'Evaluate JS';
+			return expression ? truncate(String(expression), 50) : "Evaluate JS";
 		},
 		argsView(pair) {
 			const expression = pair.args?.expression;
 			if (!expression) return null;
 			return (
 				<div className="border-b border-app-line/20 px-3 py-2">
-					<p className="mb-1 text-[11px] font-medium text-ink-faint">JavaScript</p>
+					<p className="mb-1 text-[11px] font-medium text-ink-faint">
+						JavaScript
+					</p>
 					<pre className="max-h-40 overflow-auto font-mono text-[11px] text-ink-dull">
 						{String(expression)}
 					</pre>
@@ -156,26 +158,26 @@ const toolRenderers: Record<string, ToolRenderer> = {
 	browser_tab_open: {
 		summary(pair) {
 			const url = pair.args?.url;
-			return url ? `Open tab: ${truncate(String(url), 50)}` : 'Open new tab';
+			return url ? `Open tab: ${truncate(String(url), 50)}` : "Open new tab";
 		},
 	},
 
 	browser_tab_list: {
 		summary() {
-			return 'List tabs';
+			return "List tabs";
 		},
 	},
 
 	browser_tab_close: {
 		summary(pair) {
 			const tabId = pair.args?.tab_id;
-			return tabId !== undefined ? `Close tab ${tabId}` : 'Close tab';
+			return tabId !== undefined ? `Close tab ${tabId}` : "Close tab";
 		},
 	},
 
 	browser_close: {
 		summary() {
-			return 'Close browser';
+			return "Close browser";
 		},
 		resultView(pair) {
 			if (!pair.resultRaw) return null;
@@ -187,7 +189,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 		summary(pair) {
 			const command = pair.args?.command;
 			if (!command) return null;
-			if (pair.result && typeof pair.result.exit_code === 'number') {
+			if (pair.result && typeof pair.result.exit_code === "number") {
 				const code = pair.result.exit_code;
 				const cmdStr = truncate(String(command), 50);
 				return code === 0 ? cmdStr : `${cmdStr} (exit ${code})`;
@@ -227,8 +229,8 @@ const toolRenderers: Record<string, ToolRenderer> = {
 				<div className="border-b border-app-line/20 px-3 py-2">
 					<p className="font-mono text-[11px] text-ink-dull">
 						{String(path)}
-						{offset ? ` (from line ${offset})` : ''}
-						{limit ? ` (${limit} lines)` : ''}
+						{offset ? ` (from line ${offset})` : ""}
+						{limit ? ` (${limit} lines)` : ""}
 					</p>
 				</div>
 			);
@@ -332,8 +334,8 @@ const toolRenderers: Record<string, ToolRenderer> = {
 			if (Array.isArray(cmdArgs)) {
 				for (const arg of cmdArgs) parts.push(String(arg));
 			}
-			const full = parts.join(' ');
-			if (pair.result && typeof pair.result.exit_code === 'number') {
+			const full = parts.join(" ");
+			if (pair.result && typeof pair.result.exit_code === "number") {
 				const code = pair.result.exit_code;
 				const cmdStr = truncate(full, 50);
 				return code === 0 ? cmdStr : `${cmdStr} (exit ${code})`;
@@ -352,7 +354,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 				<div className="border-b border-app-line/20 px-3 py-2">
 					<pre className="max-h-40 overflow-auto font-mono text-[11px] text-ink-dull">
 						<span className="select-none text-ink-faint">$ </span>
-						{parts.join(' ')}
+						{parts.join(" ")}
 					</pre>
 				</div>
 			);
@@ -367,8 +369,10 @@ const toolRenderers: Record<string, ToolRenderer> = {
 		summary(pair) {
 			const kind = pair.args?.kind;
 			const message = pair.args?.message;
-			if (kind === 'outcome') {
-				return message ? `Outcome: ${truncate(String(message), 50)}` : 'Outcome set';
+			if (kind === "outcome") {
+				return message
+					? `Outcome: ${truncate(String(message), 50)}`
+					: "Outcome set";
 			}
 			return message ? truncate(String(message), 60) : null;
 		},
@@ -394,8 +398,8 @@ const toolRenderers: Record<string, ToolRenderer> = {
 				<div className="border-b border-app-line/20 px-3 py-2">
 					<p className="font-mono text-[11px] text-ink-dull">
 						{String(filePath)}
-						{offset ? ` (from line ${offset})` : ''}
-						{limit ? ` (${limit} lines)` : ''}
+						{offset ? ` (from line ${offset})` : ""}
+						{limit ? ` (${limit} lines)` : ""}
 					</p>
 				</div>
 			);
@@ -483,7 +487,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 			if (pair.title) return pair.title;
 			const command = pair.args?.command;
 			if (!command) return null;
-			if (pair.result && typeof pair.result.exit_code === 'number') {
+			if (pair.result && typeof pair.result.exit_code === "number") {
 				const code = pair.result.exit_code;
 				const cmdStr = truncate(String(command), 50);
 				return code === 0 ? cmdStr : `${cmdStr} (exit ${code})`;
@@ -571,7 +575,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 					: null);
 			const queryStr = query ? truncate(String(query), 50) : null;
 			if (queryStr && resultCount != null) {
-				return `${queryStr} (${resultCount} result${resultCount !== 1 ? 's' : ''})`;
+				return `${queryStr} (${resultCount} result${resultCount !== 1 ? "s" : ""})`;
 			}
 			return queryStr;
 		},
@@ -588,9 +592,9 @@ const toolRenderers: Record<string, ToolRenderer> = {
 					</p>
 					{!!(count || freshness) && (
 						<p className="mt-0.5 text-[11px] text-ink-faint">
-							{count ? `${count} results` : ''}
-							{count && freshness ? ' · ' : ''}
-							{freshness ? `${freshness}` : ''}
+							{count ? `${count} results` : ""}
+							{count && freshness ? " · " : ""}
+							{freshness ? `${freshness}` : ""}
 						</p>
 					)}
 				</div>
@@ -607,10 +611,10 @@ const toolRenderers: Record<string, ToolRenderer> = {
 			if (pair.title) return pair.title;
 			const action = pair.args?.action;
 			const docId = pair.args?.doc_id;
-			if (action === 'read' && docId) {
+			if (action === "read" && docId) {
 				return truncate(String(docId), 50);
 			}
-			return action ? String(action) : 'list';
+			return action ? String(action) : "list";
 		},
 		argsView(pair) {
 			const action = pair.args?.action;
@@ -620,7 +624,9 @@ const toolRenderers: Record<string, ToolRenderer> = {
 			return (
 				<div className="border-b border-app-line/20 px-3 py-2">
 					{!!docId && (
-						<p className="font-mono text-[11px] text-ink-dull">{String(docId)}</p>
+						<p className="font-mono text-[11px] text-ink-dull">
+							{String(docId)}
+						</p>
 					)}
 					{!!query && (
 						<p className="mt-0.5 text-[11px] text-ink-faint">
@@ -639,7 +645,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 	todowrite: {
 		summary(pair) {
 			if (pair.title) return pair.title;
-			return 'Update tasks';
+			return "Update tasks";
 		},
 		resultView() {
 			return null;
@@ -661,7 +667,7 @@ const toolRenderers: Record<string, ToolRenderer> = {
 
 const defaultRenderer: ToolRenderer = {
 	summary(pair) {
-		if (!pair.argsRaw || pair.argsRaw === '{}') return null;
+		if (!pair.argsRaw || pair.argsRaw === "{}") return null;
 		return truncate(pair.argsRaw, 60);
 	},
 };
@@ -674,11 +680,11 @@ function getRenderer(name: string): ToolRenderer {
 // Shared sub-components
 // ---------------------------------------------------------------------------
 
-function ResultLine({ text }: { text: string }) {
+function ResultLine({text}: {text: string}) {
 	return <p className="px-3 py-2 text-[11px] text-ink-dull">{text}</p>;
 }
 
-function ResultText({ text }: { text: string | null }) {
+function ResultText({text}: {text: string | null}) {
 	if (!text) return null;
 	return (
 		<pre className="max-h-60 overflow-auto whitespace-pre-wrap px-3 py-2 font-mono text-[11px] text-ink-dull">
@@ -687,13 +693,19 @@ function ResultText({ text }: { text: string | null }) {
 	);
 }
 
-function CollapsiblePre({ text, maxLines = 20 }: { text: string; maxLines?: number }) {
+function CollapsiblePre({
+	text,
+	maxLines = 20,
+}: {
+	text: string;
+	maxLines?: number;
+}) {
 	const [expanded, setExpanded] = useState(false);
-	const lines = text.split('\n');
+	const lines = text.split("\n");
 	const needsCollapse = lines.length > maxLines;
 	const displayText =
 		needsCollapse && !expanded
-			? lines.slice(0, maxLines).join('\n') + '\n...'
+			? lines.slice(0, maxLines).join("\n") + "\n..."
 			: text;
 
 	return (
@@ -706,7 +718,7 @@ function CollapsiblePre({ text, maxLines = 20 }: { text: string; maxLines?: numb
 					onClick={() => setExpanded(!expanded)}
 					className="w-full border-t border-app-line/20 px-3 py-1 text-center text-[11px] text-ink-faint hover:text-ink-dull"
 				>
-					{expanded ? 'Show less' : `Show all ${lines.length} lines`}
+					{expanded ? "Show less" : `Show all ${lines.length} lines`}
 				</button>
 			)}
 		</div>
@@ -717,16 +729,16 @@ function CollapsiblePre({ text, maxLines = 20 }: { text: string; maxLines?: numb
 // Shell result rendering
 // ---------------------------------------------------------------------------
 
-function ShellResultView({ pair }: { pair: ToolCallPair }) {
+function ShellResultView({pair}: {pair: ToolCallPair}) {
 	const r = pair.result;
 
-	if (!r || typeof r.exit_code !== 'number') {
+	if (!r || typeof r.exit_code !== "number") {
 		return <CollapsiblePre text={pair.resultRaw!} maxLines={30} />;
 	}
 
 	const exitCode = r.exit_code as number;
-	const stdout = typeof r.stdout === 'string' ? r.stdout : '';
-	const stderr = typeof r.stderr === 'string' ? r.stderr : '';
+	const stdout = typeof r.stdout === "string" ? r.stdout : "";
+	const stderr = typeof r.stderr === "string" ? r.stderr : "";
 	const hasStdout = stdout.trim().length > 0;
 	const hasStderr = stderr.trim().length > 0;
 	const isError = exitCode !== 0;
@@ -746,8 +758,8 @@ function ShellResultView({ pair }: { pair: ToolCallPair }) {
 			)}
 
 			{hasStdout && (
-				<div className={hasStderr ? 'border-b border-app-line/20' : ''}>
-					<CollapsiblePre text={stdout.replace(/\n$/, '')} maxLines={30} />
+				<div className={hasStderr ? "border-b border-app-line/20" : ""}>
+					<CollapsiblePre text={stdout.replace(/\n$/, "")} maxLines={30} />
 				</div>
 			)}
 
@@ -756,8 +768,8 @@ function ShellResultView({ pair }: { pair: ToolCallPair }) {
 					<div className="flex items-center gap-1.5 border-b border-app-line/10 px-3 pt-1.5 pb-1">
 						<span
 							className={clsx(
-								'text-[11px] font-medium',
-								isError ? 'text-red-400/70' : 'text-yellow-500/70'
+								"text-[11px] font-medium",
+								isError ? "text-red-400/70" : "text-yellow-500/70",
 							)}
 						>
 							stderr
@@ -765,11 +777,11 @@ function ShellResultView({ pair }: { pair: ToolCallPair }) {
 					</div>
 					<pre
 						className={clsx(
-							'max-h-40 overflow-auto whitespace-pre-wrap px-3 py-2 font-mono text-[11px]',
-							isError ? 'text-red-300/60' : 'text-yellow-300/50'
+							"max-h-40 overflow-auto whitespace-pre-wrap px-3 py-2 font-mono text-[11px]",
+							isError ? "text-red-300/60" : "text-yellow-300/50",
 						)}
 					>
-						{stderr.replace(/\n$/, '')}
+						{stderr.replace(/\n$/, "")}
 					</pre>
 				</div>
 			)}
@@ -782,41 +794,41 @@ function ShellResultView({ pair }: { pair: ToolCallPair }) {
 // ---------------------------------------------------------------------------
 
 const STATUS_ICONS: Record<ToolCallStatus, string> = {
-	running: '\u25B6',
-	completed: '\u2713',
-	error: '\u2717',
+	running: "\u25B6",
+	completed: "\u2713",
+	error: "\u2717",
 };
 
 const STATUS_COLORS: Record<ToolCallStatus, string> = {
-	running: 'text-accent',
-	completed: 'text-emerald-500',
-	error: 'text-red-400',
+	running: "text-accent",
+	completed: "text-emerald-500",
+	error: "text-red-400",
 };
 
 function formatToolName(name: string): string {
 	const overrides: Record<string, string> = {
-		webfetch: 'Web Fetch',
-		todowrite: 'Todo',
-		read_skill: 'Read Skill',
-		web_search: 'Web Search',
-		spacebot_docs: 'Docs',
+		webfetch: "Web Fetch",
+		todowrite: "Todo",
+		read_skill: "Read Skill",
+		web_search: "Web Search",
+		spacebot_docs: "Docs",
 	};
 	if (overrides[name]) return overrides[name];
 
 	const stripped = name
-		.replace(/^browser_/, '')
-		.replace(/^file_/, '')
-		.replace(/^tab_/, 'Tab ');
+		.replace(/^browser_/, "")
+		.replace(/^file_/, "")
+		.replace(/^tab_/, "Tab ");
 
 	return stripped
-		.split('_')
+		.split("_")
 		.map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-		.join(' ');
+		.join(" ");
 }
 
 function toolCategory(name: string): string | null {
-	if (name.startsWith('browser_')) return 'Browser';
-	if (name.startsWith('file_')) return 'File';
+	if (name.startsWith("browser_")) return "Browser";
+	if (name.startsWith("file_")) return "File";
 	return null;
 }
 
@@ -824,7 +836,7 @@ function toolCategory(name: string): string | null {
 // Main component
 // ---------------------------------------------------------------------------
 
-export function ToolCall({ pair }: { pair: ToolCallPair }) {
+export function ToolCall({pair}: {pair: ToolCallPair}) {
 	const [expanded, setExpanded] = useState(false);
 	const renderer = getRenderer(pair.name);
 	const summary = renderer.summary(pair);
@@ -834,8 +846,8 @@ export function ToolCall({ pair }: { pair: ToolCallPair }) {
 	return (
 		<div
 			className={clsx(
-				'rounded-md border bg-app-darkBox/30',
-				pair.status === 'error' ? 'border-red-500/30' : 'border-app-line/50'
+				"rounded-md border bg-app-dark-box/30",
+				pair.status === "error" ? "border-red-500/30" : "border-app-line/50",
 			)}
 		>
 			<button
@@ -845,7 +857,7 @@ export function ToolCall({ pair }: { pair: ToolCallPair }) {
 				<span
 					className={clsx(
 						STATUS_COLORS[pair.status],
-						pair.status === 'running' ? 'animate-pulse' : ''
+						pair.status === "running" ? "animate-pulse" : "",
 					)}
 				>
 					{STATUS_ICONS[pair.status]}
@@ -857,7 +869,7 @@ export function ToolCall({ pair }: { pair: ToolCallPair }) {
 				{summary && !expanded && (
 					<span className="flex-1 truncate text-ink-faint">{summary}</span>
 				)}
-				{pair.status === 'running' && (
+				{pair.status === "running" && (
 					<span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
 				)}
 			</button>
@@ -872,7 +884,10 @@ export function ToolCall({ pair }: { pair: ToolCallPair }) {
 	);
 }
 
-function renderArgs(pair: ToolCallPair, renderer: ToolRenderer): React.ReactNode {
+function renderArgs(
+	pair: ToolCallPair,
+	renderer: ToolRenderer,
+): React.ReactNode {
 	if (renderer.argsView) {
 		const custom = renderer.argsView(pair);
 		if (custom) return custom;
@@ -885,7 +900,9 @@ function renderArgs(pair: ToolCallPair, renderer: ToolRenderer): React.ReactNode
 					{Object.entries(pair.args).map(([key, value]) => (
 						<p key={key} className="text-[11px]">
 							<span className="text-ink-faint">{key}: </span>
-							<span className="text-ink-dull">{formatArgValue(key, value)}</span>
+							<span className="text-ink-dull">
+								{formatArgValue(key, value)}
+							</span>
 						</p>
 					))}
 				</div>
@@ -893,7 +910,7 @@ function renderArgs(pair: ToolCallPair, renderer: ToolRenderer): React.ReactNode
 		);
 	}
 
-	if (pair.argsRaw && pair.argsRaw !== '{}' && pair.argsRaw.trim().length > 0) {
+	if (pair.argsRaw && pair.argsRaw !== "{}" && pair.argsRaw.trim().length > 0) {
 		return (
 			<div className="border-b border-app-line/20 px-3 py-2">
 				<pre className="max-h-40 overflow-auto font-mono text-[11px] text-ink-dull">
@@ -906,8 +923,11 @@ function renderArgs(pair: ToolCallPair, renderer: ToolRenderer): React.ReactNode
 	return null;
 }
 
-function renderResult(pair: ToolCallPair, renderer: ToolRenderer): React.ReactNode {
-	if (pair.status === 'running') {
+function renderResult(
+	pair: ToolCallPair,
+	renderer: ToolRenderer,
+): React.ReactNode {
+	if (pair.status === "running") {
 		return (
 			<div className="flex items-center gap-2 px-3 py-2 text-[11px] text-ink-faint">
 				<span className="h-1.5 w-1.5 animate-pulse rounded-full bg-accent" />
@@ -931,7 +951,7 @@ function renderResult(pair: ToolCallPair, renderer: ToolRenderer): React.ReactNo
 						<p key={key} className="text-[11px]">
 							<span className="text-ink-faint">{key}: </span>
 							<span className="text-ink-dull">
-								{typeof value === 'string'
+								{typeof value === "string"
 									? truncate(value, 200)
 									: JSON.stringify(value)}
 							</span>
@@ -946,13 +966,13 @@ function renderResult(pair: ToolCallPair, renderer: ToolRenderer): React.ReactNo
 }
 
 function formatArgValue(key: string, value: unknown): string {
-	if (key === 'secret' && typeof value === 'string') {
-		return '***';
+	if (key === "secret" && typeof value === "string") {
+		return "***";
 	}
-	if (typeof value === 'string') {
+	if (typeof value === "string") {
 		return truncate(value, 100);
 	}
-	if (typeof value === 'boolean' || typeof value === 'number') {
+	if (typeof value === "boolean" || typeof value === "number") {
 		return String(value);
 	}
 	return JSON.stringify(value);
@@ -960,5 +980,5 @@ function formatArgValue(key: string, value: unknown): string {
 
 function truncate(text: string, maxLen: number): string {
 	if (text.length <= maxLen) return text;
-	return text.slice(0, maxLen) + '...';
+	return text.slice(0, maxLen) + "...";
 }

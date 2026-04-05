@@ -16,10 +16,10 @@ import {
 	useEffect,
 	useState,
 } from "react";
-import { toast as SonnerToast } from "sonner";
+import {toast as SonnerToast} from "sonner";
 
-import { Button } from "./Button";
-import { Loader } from "./Loader";
+import {Button} from "./Button";
+import {Loader} from "./Loader";
 
 export const TOAST_TIMEOUT = 4000;
 
@@ -29,13 +29,13 @@ const toastClassName = clsx(
 	"w-full overflow-hidden rounded-md p-3 shadow-lg",
 	"cursor-default select-none",
 	"border border-app-line",
-	"bg-app-darkBox/90 backdrop-blur",
+	"bg-app-dark-box/90 backdrop-blur",
 	"text-sm text-ink-faint",
 );
 
 export type ToastId<T = string | number> = T;
 type ToastType = "info" | "success" | "error" | "warning";
-export type ToastMessage = ReactNode | { title: ReactNode; body?: ReactNode };
+export type ToastMessage = ReactNode | {title: ReactNode; body?: ReactNode};
 type ToastPromiseData = unknown;
 type ToastPromise<T = ToastPromiseData> = Promise<T> | (() => Promise<T>);
 type ToastAction = {
@@ -61,7 +61,7 @@ interface ToastOptions {
 				onClick?: ToastAction["onClick"];
 		  })
 		| string;
-	onClose?: (data: { id: ToastId; event: ToastCloseEvent }) => void;
+	onClose?: (data: {id: ToastId; event: ToastCloseEvent}) => void;
 	onDismiss?: (id: ToastId) => void;
 	onAutoClose?: (id: ToastId) => void;
 	important?: boolean;
@@ -69,11 +69,10 @@ interface ToastOptions {
 	className?: string;
 }
 
-interface PromiseToastOptions<T = ToastPromiseData>
-	extends Omit<
-		ToastOptions,
-		"ref" | "icon" | "type" | "action" | "cancel" | "onClose"
-	> {
+interface PromiseToastOptions<T = ToastPromiseData> extends Omit<
+	ToastOptions,
+	"ref" | "icon" | "type" | "action" | "cancel" | "onClose"
+> {
 	loading: ToastMessage;
 	success: ToastMessage | ((data: T) => ToastMessage);
 	error: ToastMessage | ((error: unknown) => ToastMessage);
@@ -90,11 +89,10 @@ type CustomToastOptions = Omit<
 	"type" | "icon" | "action" | "cancel" | "onDismiss" | "onClose"
 >;
 
-interface ToastProps
-	extends Pick<
-		ToastOptions,
-		"type" | "icon" | "action" | "cancel" | "onDismiss" | "onClose"
-	> {
+interface ToastProps extends Pick<
+	ToastOptions,
+	"type" | "icon" | "action" | "cancel" | "onDismiss" | "onClose"
+> {
 	id: ToastId;
 	message: ToastMessage | ((id: ToastId) => ToastMessage);
 	closable?: boolean;
@@ -108,7 +106,7 @@ const icons: Record<ToastType, Icon> = {
 };
 
 const ToastComponent = forwardRef<HTMLDivElement, ToastProps>(
-	({ closable = true, action, cancel, ...props }, ref) => {
+	({closable = true, action, cancel, ...props}, ref) => {
 		const message =
 			typeof props.message === "function"
 				? props.message(props.id)
@@ -144,17 +142,11 @@ const ToastComponent = forwardRef<HTMLDivElement, ToastProps>(
 				ref={ref}
 				className={clsx(
 					"pointer-events-auto flex gap-2",
-					body || action || cancel
-						? "items-start"
-						: "items-center",
+					body || action || cancel ? "items-start" : "items-center",
 				)}
 			>
 				{(props.icon || props.type) && (
-					<div
-						className={clsx(
-							(body || action || cancel) && "mt-px",
-						)}
-					>
+					<div className={clsx((body || action || cancel) && "mt-px")}>
 						{props.icon || (props.type && typeIcon(props.type))}
 					</div>
 				)}
@@ -163,17 +155,14 @@ const ToastComponent = forwardRef<HTMLDivElement, ToastProps>(
 					{title && (
 						<span
 							className="font-medium text-ink"
-							style={{ wordBreak: "break-word" }}
+							style={{wordBreak: "break-word"}}
 						>
 							{title}
 						</span>
 					)}
 
 					{body && (
-						<div
-							className="mt-0.5"
-							style={{ wordBreak: "break-word" }}
-						>
+						<div className="mt-0.5" style={{wordBreak: "break-word"}}>
 							{body}
 						</div>
 					)}
@@ -191,10 +180,7 @@ const ToastComponent = forwardRef<HTMLDivElement, ToastProps>(
 										});
 										toast.dismiss(props.id);
 									}}
-									className={clsx(
-										actionButtonClassName,
-										action.className,
-									)}
+									className={clsx(actionButtonClassName, action.className)}
 								>
 									{action.label}
 								</Button>
@@ -204,8 +190,7 @@ const ToastComponent = forwardRef<HTMLDivElement, ToastProps>(
 								<Button
 									variant="gray"
 									onClick={() => {
-										if (typeof cancel === "object")
-											cancel.onClick?.();
+										if (typeof cancel === "object") cancel.onClick?.();
 										props.onClose?.({
 											id: props.id,
 											event: "on-cancel",
@@ -214,14 +199,10 @@ const ToastComponent = forwardRef<HTMLDivElement, ToastProps>(
 									}}
 									className={clsx(
 										actionButtonClassName,
-										typeof cancel === "object"
-											? cancel.className
-											: null,
+										typeof cancel === "object" ? cancel.className : null,
 									)}
 								>
-									{typeof cancel === "object"
-										? cancel.label
-										: cancel}
+									{typeof cancel === "object" ? cancel.label : cancel}
 								</Button>
 							)}
 						</div>
@@ -250,18 +231,17 @@ const ToastComponent = forwardRef<HTMLDivElement, ToastProps>(
 
 ToastComponent.displayName = "Toast";
 
-interface PromiseToastProps<T = ToastPromiseData>
-	extends Pick<
-		PromiseToastOptions<T>,
-		| "loading"
-		| "success"
-		| "error"
-		| "onDismiss"
-		| "onAutoClose"
-		| "onClose"
-		| "loader"
-		| "showLoader"
-	> {
+interface PromiseToastProps<T = ToastPromiseData> extends Pick<
+	PromiseToastOptions<T>,
+	| "loading"
+	| "success"
+	| "error"
+	| "onDismiss"
+	| "onAutoClose"
+	| "onClose"
+	| "loader"
+	| "showLoader"
+> {
 	id: ToastId;
 	promise: ToastPromise<T>;
 	duration?: number;
@@ -288,22 +268,27 @@ const PromiseToast = <T extends ToastPromiseData>({
 				setType("success");
 			} catch (err) {
 				const message =
-					typeof props.error === "function"
-						? props.error(err)
-						: props.error;
+					typeof props.error === "function" ? props.error(err) : props.error;
 				setMessage(message);
 				setType("error");
 			}
 
 			setTimeout(() => {
 				props.onAutoClose?.(props.id);
-				props.onClose?.({ id: props.id, event: "on-auto-close" });
+				props.onClose?.({id: props.id, event: "on-auto-close"});
 				toast.dismiss(props.id);
 			}, props.duration || TOAST_TIMEOUT);
 		};
 
 		resolve();
-	}, [props.id, props.promise, props.success, props.error, props.duration, props]);
+	}, [
+		props.id,
+		props.promise,
+		props.success,
+		props.error,
+		props.duration,
+		props,
+	]);
 
 	return (
 		<ToastComponent
@@ -317,9 +302,9 @@ const PromiseToast = <T extends ToastPromiseData>({
 			}
 			closable={!!type}
 			onDismiss={props.onDismiss}
-			onClose={({ id, event }) => {
+			onClose={({id, event}) => {
 				if (event === "on-action" || event === "on-cancel") return;
-				props.onClose?.({ id, event });
+				props.onClose?.({id, event});
 			}}
 		/>
 	);
@@ -356,9 +341,9 @@ const renderToast = (
 		),
 		{
 			className: clsx(toastClassName, className),
-			onAutoClose: ({ id }) => {
+			onAutoClose: ({id}) => {
 				onAutoClose?.(id);
-				onClose?.({ id, event: "on-auto-close" });
+				onClose?.({id, event: "on-auto-close"});
 			},
 			...options,
 		},
@@ -367,11 +352,11 @@ const renderToast = (
 
 const renderCustomToast = (
 	jsx: Parameters<typeof SonnerToast.custom>[0],
-	{ onAutoClose, className, ...options }: CustomToastOptions = {},
+	{onAutoClose, className, ...options}: CustomToastOptions = {},
 ) => {
 	return SonnerToast.custom(jsx, {
 		className: clsx(toastClassName, className),
-		onAutoClose: ({ id }) => onAutoClose?.(id),
+		onAutoClose: ({id}) => onAutoClose?.(id),
 		...options,
 	});
 };
@@ -421,29 +406,29 @@ export const toast = Object.assign(renderToast, {
 		message: ToastMessage | ((id: ToastId) => ToastMessage),
 		options?: Omit<ToastOptions, "type">,
 	) => {
-		return renderToast(message, { ...options, type: "info" });
+		return renderToast(message, {...options, type: "info"});
 	},
 	success: (
 		message: ToastMessage | ((id: ToastId) => ToastMessage),
 		options?: Omit<ToastOptions, "type">,
 	) => {
-		return renderToast(message, { ...options, type: "success" });
+		return renderToast(message, {...options, type: "success"});
 	},
 	error: (
 		message: ToastMessage | ((id: ToastId) => ToastMessage),
 		options?: Omit<ToastOptions, "type">,
 	) => {
-		return renderToast(message, { ...options, type: "error" });
+		return renderToast(message, {...options, type: "error"});
 	},
 	warning: (
 		message: ToastMessage | ((id: ToastId) => ToastMessage),
 		options?: Omit<ToastOptions, "type">,
 	) => {
-		return renderToast(message, { ...options, type: "warning" });
+		return renderToast(message, {...options, type: "warning"});
 	},
 	custom: renderCustomToast,
 	promise: renderPromiseToast,
 	dismiss: SonnerToast.dismiss,
 });
 
-export { Toaster } from "sonner";
+export {Toaster} from "sonner";
