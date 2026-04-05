@@ -36,6 +36,8 @@ export {InlineWorkerCard} from "./InlineWorkerCard";
 export type {InlineWorkerCardProps} from "./InlineWorkerCard";
 export {ModelSelector} from "./ModelSelector";
 export type {ModelSelectorProps} from "./ModelSelector";
+export {ChatComposer} from "./ChatComposer";
+export type {ChatComposerProps} from "./ChatComposer";
 
 // Task components
 export {TaskStatusIcon} from "./TaskStatusIcon";
