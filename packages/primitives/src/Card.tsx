@@ -1,12 +1,24 @@
 import { clsx } from 'clsx';
 import { forwardRef } from 'react';
 
-const Card = forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => (
+type CardVariant = 'default' | 'dark';
+
+const variantStyles: Record<CardVariant, string> = {
+  default: 'bg-app-box',
+  dark: 'bg-app-dark-box',
+};
+
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  variant?: CardVariant;
+}
+
+const Card = forwardRef<HTMLDivElement, CardProps>(
+  ({ className, variant = 'default', ...props }, ref) => (
     <div
       ref={ref}
       className={clsx(
-        'rounded-lg border border-app-line bg-app-box text-ink shadow-sm',
+        'rounded-lg border border-app-line text-ink shadow-sm',
+        variantStyles[variant],
         className
       )}
       {...props}
