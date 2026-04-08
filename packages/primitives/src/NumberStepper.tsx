@@ -1,5 +1,5 @@
 import {clsx} from "clsx";
-import {forwardRef} from "react";
+import {forwardRef, useState, useCallback, useEffect, useRef} from "react";
 import {Minus, Plus} from "@phosphor-icons/react";
 
 export interface NumberStepperProps {
@@ -23,7 +23,7 @@ const NumberStepper = forwardRef<HTMLDivElement, NumberStepperProps>(
 			value,
 			onChange,
 			min = 0,
-			max = 100,
+			max,
 			step = 1,
 			allowFloat = false,
 			disabled = false,
@@ -35,21 +35,50 @@ const NumberStepper = forwardRef<HTMLDivElement, NumberStepperProps>(
 		},
 		ref,
 	) => {
+		const [editing, setEditing] = useState(false);
+		const [inputValue, setInputValue] = useState("");
+		const inputRef = useRef<HTMLInputElement>(null);
+
+		useEffect(() => {
+			if (editing && inputRef.current) {
+				inputRef.current.focus();
+				inputRef.current.select();
+			}
+		}, [editing]);
+
+		const clampValue = useCallback(
+			(v: number) => {
+				let clamped = Math.max(min, v);
+				if (max !== undefined) clamped = Math.min(max, clamped);
+				return clamped;
+			},
+			[min, max],
+		);
+
 		const handleDecrement = () => {
 			const newValue = allowFloat
-				? Math.max(min, value - step)
-				: Math.max(min, Math.floor(value - step));
+				? clampValue(value - step)
+				: clampValue(Math.floor(value - step));
 			onChange(newValue);
 		};
 
 		const handleIncrement = () => {
 			const newValue = allowFloat
-				? Math.min(max, value + step)
-				: Math.min(max, Math.ceil(value + step));
+				? clampValue(value + step)
+				: clampValue(Math.ceil(value + step));
 			onChange(newValue);
 		};
 
-		const progress = ((value - min) / (max - min)) * 100;
+		const commitInput = () => {
+			const parsed = allowFloat ? parseFloat(inputValue) : parseInt(inputValue, 10);
+			if (!isNaN(parsed)) {
+				onChange(clampValue(parsed));
+			}
+			setEditing(false);
+		};
+
+		const progress =
+			max !== undefined ? ((value - min) / (max - min)) * 100 : undefined;
 
 		return (
 			<div ref={ref} className={clsx("flex flex-col gap-1", className)}>
@@ -72,13 +101,37 @@ const NumberStepper = forwardRef<HTMLDivElement, NumberStepperProps>(
 					>
 						<Minus className="size-4 text-ink" />
 					</button>
-					<span className="min-w-[3rem] text-center text-sm font-medium text-ink">
-						{allowFloat ? value.toFixed(1) : value}{suffix}
-					</span>
+					{editing ? (
+						<input
+							ref={inputRef}
+							type="text"
+							inputMode="decimal"
+							value={inputValue}
+							onChange={(e) => setInputValue(e.target.value)}
+							onBlur={commitInput}
+							onKeyDown={(e) => {
+								if (e.key === "Enter") commitInput();
+								if (e.key === "Escape") setEditing(false);
+							}}
+							className="min-w-[3rem] w-[4rem] bg-transparent text-center text-sm font-medium text-ink outline-none"
+						/>
+					) : (
+						<span
+							className="min-w-[3rem] text-center text-sm font-medium text-ink cursor-text select-none"
+							onDoubleClick={() => {
+								if (!disabled) {
+									setInputValue(String(allowFloat ? value.toFixed(1) : value));
+									setEditing(true);
+								}
+							}}
+						>
+							{allowFloat ? value.toFixed(1) : value}{suffix}
+						</span>
+					)}
 					<button
 						type="button"
 						onClick={handleIncrement}
-						disabled={disabled || value >= max}
+						disabled={disabled || (max !== undefined && value >= max)}
 						className={clsx(
 							"flex h-8 w-8 items-center justify-center rounded-md border border-app-line bg-app-box",
 							"hover:bg-app-hover disabled:opacity-50 disabled:cursor-not-allowed",
@@ -88,7 +141,7 @@ const NumberStepper = forwardRef<HTMLDivElement, NumberStepperProps>(
 						<Plus className="size-4 text-ink" />
 					</button>
 				</div>
-				{showProgress && (
+				{showProgress && progress !== undefined && (
 					<div className="h-1 w-full overflow-hidden rounded-full bg-app-line">
 						<div
 							className="h-full bg-accent transition-all duration-200"

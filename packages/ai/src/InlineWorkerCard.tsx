@@ -10,8 +10,14 @@ import {
 } from '@phosphor-icons/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ToolCall } from './ToolCall';
+import { Markdown } from './Markdown';
 import type { TranscriptStep } from './types';
 import { pairTranscriptSteps } from './types';
+
+/** Collapse runs of 3+ spaces to 2, preventing Markdown 4-space code blocks. */
+function stripExcessWhitespace(text: string): string {
+	return text.replace(/ {3,}/g, '  ');
+}
 
 interface InlineWorkerCardProps {
 	title: string;
@@ -40,17 +46,12 @@ function InlineWorkerCard({
 
 	const items = useMemo(() => pairTranscriptSteps(transcript), [transcript]);
 
-	const toolItems = useMemo(
-		() => items.filter((item) => item.kind === 'tool'),
-		[items]
-	);
-
 	const isRunning = status === 'running';
 	const isDone = status === 'completed';
 
 	return (
-		<div className={clsx('group flex flex-col items-start', className)}>
-			<div className="overflow-hidden rounded-2xl border border-app-line/50 bg-app-box/30 backdrop-blur-sm">
+		<div className={clsx('group flex min-w-0 flex-col items-start', className)}>
+			<div className="min-w-0 max-w-full overflow-hidden rounded-2xl border border-app-line/50 bg-app-box/30 backdrop-blur-sm">
 				<button
 					onClick={() => setExpanded((v) => !v)}
 					className="flex w-full items-start gap-3 px-4 py-3 text-left transition-colors hover:bg-app-box/30"
@@ -123,11 +124,17 @@ function InlineWorkerCard({
 									<div className="text-xs text-ink-faint">
 										Loading worker transcript...
 									</div>
-								) : toolItems.length > 0 ? (
-									toolItems.map((item) =>
+								) : items.length > 0 ? (
+									items.map((item, index) =>
 										item.kind === 'tool' ? (
 											<ToolCall key={item.pair.id} pair={item.pair} />
-										) : null
+										) : (
+											<Markdown
+												key={`text-${index}`}
+												content={stripExcessWhitespace(item.text)}
+												className="text-xs text-ink-dull"
+											/>
+										)
 									)
 								) : (
 									<div className="text-xs text-ink-faint">
