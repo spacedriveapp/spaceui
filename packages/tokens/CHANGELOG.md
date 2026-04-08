@@ -1,5 +1,11 @@
 # @spacedrive/tokens
 
+## 0.1.1
+
+### Patch Changes
+
+- workers, badge, card, ui updates
+
 ## 0.1.0
 
 ### Minor Changes

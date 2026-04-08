@@ -1,5 +1,13 @@
 # @spacedrive/explorer
 
+## 0.1.1
+
+### Patch Changes
+
+- workers, badge, card, ui updates
+- Updated dependencies
+  - @spacedrive/primitives@0.1.1
+
 ## 0.1.0
 
 ### Minor Changes
