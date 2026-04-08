@@ -1,6 +1,6 @@
 {
   "name": "@spacedrive/primitives",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Primitive UI components for SpaceUI",
   "type": "module",
   "main": "./dist/index.js",
