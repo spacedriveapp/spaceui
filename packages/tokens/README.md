@@ -1,6 +1,7 @@
 # @spacedrive/tokens
 
-Design tokens and Tailwind CSS preset for the SpaceUI design system.
+Design tokens for SpaceUI.
+This package is CSS-first for Tailwind v4, with optional raw color exports for programmatic consumers.
 
 ## Installation
 
@@ -12,16 +13,11 @@ npm install @spacedrive/tokens
 
 ## Usage
 
-### Tailwind Preset
+### Theme Entry Layer
 
-```typescript
-// tailwind.config.ts
-import { spaceUiPreset } from '@spacedrive/tokens';
-
-export default {
-  presets: [spaceUiPreset],
-  content: ['./src/**/*.{ts,tsx}'],
-};
+```css
+/* In your global CSS entrypoint */
+@import '@spacedrive/tokens/theme';
 ```
 
 ### CSS Import
@@ -34,7 +30,7 @@ export default {
 ### Programmatic Access
 
 ```typescript
-import { colors, spaceUiPreset } from '@spacedrive/tokens';
+import colors from '@spacedrive/tokens/raw-colors';
 
 // Access color values
 console.log(colors.accent.DEFAULT); // "200, 100%, 60%"
@@ -141,14 +137,7 @@ Or toggle via class:
 
 ## API
 
-### `spaceUiPreset`
-
-A complete Tailwind CSS preset configuration including:
-- Color theme extensions
-- Border radius (window: 10px, lg: 8px, md: 6px)
-- Font families
-
-### `colors`
+### `raw-colors`
 
 An object containing all color definitions:
 

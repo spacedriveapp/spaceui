@@ -3,7 +3,7 @@
 import { Warning } from "@phosphor-icons/react";
 import { animated, useTransition } from "@react-spring/web";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type ComponentProps } from "react";
+import { type ComponentProps, type ComponentType, type HTMLAttributes } from "react";
 import {
 	type FieldErrors,
 	type FieldValues,
@@ -65,6 +65,12 @@ export const errorStyles = cva(
 	},
 );
 
+interface AnimatedDivProps extends Omit<HTMLAttributes<HTMLDivElement>, "style"> {
+	style?: ComponentProps<typeof animated.div>["style"];
+}
+
+const AnimatedDiv = animated.div as ComponentType<AnimatedDivProps>;
+
 export interface ErrorMessageProps extends VariantProps<typeof errorStyles> {
 	name: string;
 	className: string;
@@ -93,13 +99,13 @@ export const ErrorMessage = ({
 			{transitions((styles, error) => {
 				const message = error?.message;
 				return typeof message === "string" ? (
-					<animated.div
+					<AnimatedDiv
 						style={styles}
 						className={errorStyles({ variant, className })}
 					>
 						<Warning className="size-4" />
 						<p className="whitespace-normal">{message}</p>
-					</animated.div>
+					</AnimatedDiv>
 				) : null;
 			})}
 		</>

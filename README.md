@@ -11,7 +11,7 @@ SpaceUI is a standalone repository that houses all shared UI components, design 
 ```
 spaceui/
 ├── packages/
-│   ├── tokens/         # @spacedrive/tokens - Design tokens & Tailwind preset
+│   ├── tokens/         # @spacedrive/tokens - CSS design tokens + raw colors
 │   ├── primitives/     # @spacedrive/primitives - Base UI components (40+)
 │   ├── forms/          # @spacedrive/forms - react-hook-form wrappers
 │   ├── ai/             # @spacedrive/ai - AI agent components (18)
@@ -79,8 +79,8 @@ bun run unlink
 ### In a Spacedrive/Spacebot Application
 
 ```typescript
-// Import tokens and preset
-import { spaceUiPreset, colors } from '@spacedrive/tokens';
+// Import raw semantic token values when needed
+import colors from '@spacedrive/tokens/raw-colors';
 
 // Import primitives
 import { Button, Card, Dialog } from '@spacedrive/primitives';
@@ -97,15 +97,9 @@ import { FileGrid, PathBar, Inspector } from '@spacedrive/explorer';
 
 ### Tailwind Configuration
 
-```typescript
-// tailwind.config.ts
-import { spaceUiPreset } from '@spacedrive/tokens';
-
-export default {
-  presets: [spaceUiPreset],
-  // App-specific customizations
-  content: ['./src/**/*.{ts,tsx}'],
-};
+```css
+/* Tailwind v4 CSS entrypoint */
+@import '@spacedrive/tokens/theme';
 ```
 
 ### CSS Setup
@@ -119,11 +113,12 @@ export default {
 
 ### @spacedrive/tokens
 
-Design tokens and Tailwind preset. The foundation everything else builds on.
+Design tokens package with CSS entrypoints and raw semantic color values.
 
 **Exports:**
-- `colors` - Semantic color definitions
-- `spaceUiPreset` - Tailwind preset configuration
+- `@spacedrive/tokens/css` - Base token layer
+- `@spacedrive/tokens/theme` - Theme variable layer
+- `@spacedrive/tokens/raw-colors` - Programmatic semantic color map
 - CSS files for dark/light themes
 
 [Read more →](./packages/tokens/README.md)
