@@ -98,7 +98,7 @@ import { FileGrid, PathBar, Inspector } from '@spacedrive/explorer';
 ### Tailwind Configuration
 
 ```css
-// Tailwind v4 CSS entrypoint
+/* Tailwind v4 CSS entrypoint */
 @import '@spacedrive/tokens/theme';
 ```
 
