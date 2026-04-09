@@ -1,6 +1,6 @@
 {
   "name": "@spacedrive/icons",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Spacedrive file type icons, extension badges, and icon resolution utilities",
   "type": "module",
   "exports": {

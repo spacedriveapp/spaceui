@@ -28,6 +28,17 @@
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
+    "@chromatic-com/storybook": "^5.1.1",
+    "@storybook/addon-essentials": "8.6.18",
+    "@storybook/addon-interactions": "8.6.18",
+    "@storybook/addon-onboarding": "8.6.18",
+    "@storybook/addon-themes": "8.6.18",
+    "@storybook/blocks": "8.6.18",
+    "@storybook/react": "8.6.18",
+    "@storybook/react-vite": "8.6.18",
+    "@storybook/test": "8.6.18",
+    "@storybook/theming": "8.6.18",
+    "storybook": "8.6.18",
     "turbo": "^2.0.0",
     "typescript": "^5.4.0"
   },

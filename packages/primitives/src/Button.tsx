@@ -8,11 +8,15 @@ export type ButtonBaseProps = VariantProps<typeof buttonStyles>;
 export type ButtonProps = ButtonBaseProps &
 	React.ButtonHTMLAttributes<HTMLButtonElement> & {
 		href?: undefined;
+		/** Alias for `disabled` */
+		loading?: boolean;
 	};
 
 export type LinkButtonProps = ButtonBaseProps &
 	React.AnchorHTMLAttributes<HTMLAnchorElement> & {
 		href?: string;
+		/** Alias for `disabled` (applies disabled styling via className) */
+		loading?: boolean;
 	};
 
 type Button = {
@@ -85,8 +89,10 @@ export const buttonStyles = cva(
 export const Button = forwardRef<
 	HTMLButtonElement | HTMLAnchorElement,
 	ButtonProps | LinkButtonProps
->(({className, ...props}, ref) => {
-	className = cx(buttonStyles(props), className);
+>(({className, loading, ...props}, ref) => {
+	if (loading && !hasHref(props))
+		(props as ButtonProps).disabled = true;
+	className = cx(buttonStyles(props), loading && "pointer-events-none opacity-70", className);
 	return hasHref(props) ? (
 		<a
 			{...props}

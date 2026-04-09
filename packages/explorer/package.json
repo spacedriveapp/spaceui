@@ -1,6 +1,6 @@
 {
   "name": "@spacedrive/explorer",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "File management and explorer components for SpaceUI",
   "type": "module",
   "main": "./dist/index.js",

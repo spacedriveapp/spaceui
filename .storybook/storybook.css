@@ -1,0 +1,10 @@
+@import "tailwindcss";
+@import "@spacedrive/tokens/theme";
+@import "@spacedrive/tokens/css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+body {
+	@apply bg-app text-ink;
+	font-family: 'Inter', system-ui, sans-serif;
+}
