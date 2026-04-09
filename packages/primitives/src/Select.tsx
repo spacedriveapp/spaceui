@@ -96,7 +96,7 @@ export const Select = forwardRef(
 	props: PropsWithChildren<SelectProps<TValue>> & {
 		ref?: React.ForwardedRef<HTMLDivElement>;
 	},
-) => JSX.Element;
+) => React.ReactElement;
 
 export function SelectOption(
 	props: PropsWithChildren<{value: string; default?: boolean}>,

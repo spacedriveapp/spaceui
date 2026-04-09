@@ -65,6 +65,13 @@ export const errorStyles = cva(
 	},
 );
 
+type AnimatedDivProps = React.PropsWithChildren<{
+	style?: ComponentProps<typeof animated.div>["style"];
+	className?: string;
+}>;
+
+const AnimatedDiv = animated.div as React.ComponentType<AnimatedDivProps>;
+
 export interface ErrorMessageProps extends VariantProps<typeof errorStyles> {
 	name: string;
 	className: string;
@@ -93,13 +100,13 @@ export const ErrorMessage = ({
 			{transitions((styles, error) => {
 				const message = error?.message;
 				return typeof message === "string" ? (
-					<animated.div
+					<AnimatedDiv
 						style={styles}
 						className={errorStyles({ variant, className })}
 					>
 						<Warning className="size-4" />
 						<p className="whitespace-normal">{message}</p>
-					</animated.div>
+					</AnimatedDiv>
 				) : null;
 			})}
 		</>

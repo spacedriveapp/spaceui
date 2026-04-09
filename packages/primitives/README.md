@@ -13,22 +13,13 @@ npm install @spacedrive/primitives @spacedrive/tokens
 Peer dependencies:
 - `react` ^18.0.0 || ^19.0.0
 - `react-dom` ^18.0.0 || ^19.0.0
-- `tailwindcss` ^3.4.0
+- `tailwindcss` ^4.1.0
 
 ## Setup
 
-1. **Configure Tailwind**
-   ```typescript
-   // tailwind.config.ts
-   import { spaceUiPreset } from '@spacedrive/tokens';
-   
-   export default {
-     presets: [spaceUiPreset],
-     content: [
-       './src/**/*.{ts,tsx}',
-       './node_modules/@spacedrive/primitives/dist/**/*.{js,ts}'
-     ],
-   };
+1. **Configure your CSS entrypoint**
+   ```css
+   @import '@spacedrive/tokens/theme';
    ```
 
 2. **Import CSS**
@@ -59,7 +50,7 @@ function MyComponent() {
 ## Components
 
 ### Interactive
-- **Button** - Multiple variants (default, secondary, ghost, destructive, outline)
+- **Button** - Multiple variants (default, subtle, outline, dotted, gray, accent, colored, bare)
 - **Input** - Form input with error states
 - **Checkbox** - Accessible checkbox with Radix
 - **Switch** - Toggle switch with 3 sizes
@@ -115,8 +106,8 @@ Components use `class-variance-authority` for variants:
 import { buttonVariants } from '@spacedrive/primitives';
 
 // Use variants directly
-<button className={buttonVariants({ variant: 'secondary', size: 'sm' })}>
-  Small Secondary
+<button className={buttonVariants({ variant: 'subtle', size: 'sm' })}>
+  Small Subtle
 </button>
 ```
 

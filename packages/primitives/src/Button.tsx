@@ -16,8 +16,8 @@ export type LinkButtonProps = ButtonBaseProps &
 	};
 
 type Button = {
-	(props: ButtonProps): JSX.Element;
-	(props: LinkButtonProps): JSX.Element;
+	(props: ButtonProps): React.ReactElement;
+	(props: LinkButtonProps): React.ReactElement;
 };
 
 const hasHref = (

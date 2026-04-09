@@ -15,8 +15,8 @@ const twFactory =
 type ClassnameFactory<T> = (s: TemplateStringsArray) => T;
 
 type TailwindFactory = {
-	[K in keyof JSX.IntrinsicElements]: ClassnameFactory<
-		React.ForwardRefExoticComponent<JSX.IntrinsicElements[K]>
+	[K in keyof React.JSX.IntrinsicElements]: ClassnameFactory<
+		React.ForwardRefExoticComponent<React.JSX.IntrinsicElements[K]>
 	>;
 } & {
 	<T>(c: T): ClassnameFactory<T>;

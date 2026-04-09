@@ -11,14 +11,11 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['default', 'secondary', 'ghost', 'destructive', 'outline'],
+      options: ['default', 'subtle', 'outline', 'dotted', 'gray', 'accent', 'colored', 'bare'],
     },
     size: {
       control: 'select',
-      options: ['default', 'sm', 'lg', 'icon'],
-    },
-    loading: {
-      control: 'boolean',
+      options: ['xs', 'sm', 'md', 'lg', 'icon'],
     },
     disabled: {
       control: 'boolean',
@@ -27,8 +24,7 @@ const meta = {
   args: {
     children: 'Button',
     variant: 'default',
-    size: 'default',
-    loading: false,
+    size: 'sm',
     disabled: false,
   },
 } satisfies Meta<typeof Button>;
@@ -38,15 +34,15 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
-export const Secondary: Story = {
+export const Subtle: Story = {
   args: {
-    variant: 'secondary',
+    variant: 'subtle',
   },
 };
 
-export const Destructive: Story = {
+export const Accent: Story = {
   args: {
-    variant: 'destructive',
+    variant: 'accent',
   },
 };
 
@@ -56,16 +52,16 @@ export const Outline: Story = {
   },
 };
 
-export const Ghost: Story = {
+export const Dotted: Story = {
   args: {
-    variant: 'ghost',
+    variant: 'dotted',
   },
 };
 
-export const Loading: Story = {
+export const Colored: Story = {
   args: {
-    loading: true,
-    children: 'Loading...',
+    variant: 'colored',
+    className: 'bg-status-info',
   },
 };
 
