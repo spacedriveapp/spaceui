@@ -34,6 +34,8 @@ export {MessageBubble} from "./MessageBubble";
 export type {MessageBubbleProps} from "./MessageBubble";
 export {InlineWorkerCard} from "./InlineWorkerCard";
 export type {InlineWorkerCardProps} from "./InlineWorkerCard";
+export {InlineBranchCard} from "./InlineBranchCard";
+export type {InlineBranchCardProps} from "./InlineBranchCard";
 export {ModelSelector} from "./ModelSelector";
 export type {ModelSelectorProps} from "./ModelSelector";
 export {ChatComposer} from "./ChatComposer";

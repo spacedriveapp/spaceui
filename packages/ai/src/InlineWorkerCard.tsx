@@ -3,11 +3,11 @@ import { clsx } from 'clsx';
 import {
 	CaretDown,
 	CheckCircle,
-	ClockCounterClockwise,
 	Copy,
 	Stop,
 	Wrench
 } from '@phosphor-icons/react';
+import {Grid} from 'react-loader-spinner';
 import { AnimatePresence, motion } from 'framer-motion';
 import { ToolCall } from './ToolCall';
 import { Markdown } from './Markdown';
@@ -58,12 +58,7 @@ function InlineWorkerCard({
 				>
 					<div className="mt-0.5 shrink-0">
 						{isRunning ? (
-							<div className="flex size-7 items-center justify-center rounded-full bg-accent/15 text-accent">
-								<ClockCounterClockwise
-									className="size-4 animate-spin"
-									weight="bold"
-								/>
-							</div>
+							<Grid height={16} width={16} color="currentColor" ariaLabel="loading" wrapperClass="text-accent" />
 						) : isDone ? (
 							<div className="flex size-7 items-center justify-center rounded-full bg-emerald-500/15 text-emerald-400">
 								<CheckCircle className="size-4" weight="fill" />
