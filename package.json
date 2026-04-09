@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "examples/*",
+    ".storybook"
   ],
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
-    "lint": "turbo run lint",
+    "lint": "bun run typecheck",
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
@@ -18,7 +20,11 @@
     "link": "./scripts/link-packages.sh",
     "unlink": "./scripts/unlink-packages.sh",
     "watch": "./scripts/build-watch.sh",
-    "showcase": "cd examples/showcase && bun run dev"
+    "storybook": "cd .storybook && bun run dev",
+    "storybook:build": "cd .storybook && bun run build",
+    "storybook:typecheck": "cd .storybook && bun run typecheck",
+    "showcase": "cd examples/showcase && bun run dev",
+    "showcase:build": "cd examples/showcase && bun run build"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.1",
