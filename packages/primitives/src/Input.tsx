@@ -36,7 +36,7 @@ export const inputSizes = {
 export const inputStyles = cva(
 	[
 		"rounded-lg border text-sm leading-4",
-		"outline-none transition-all focus-within:ring-2 focus-within:ring-accent",
+		"outline-none transition-[background-color,border-color,box-shadow] focus-within:ring-2 focus-within:ring-accent",
 		"text-ink",
 	],
 	{
@@ -212,6 +212,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
 						tabIndex={0}
 						onClick={() => setShowPassword(!showPassword)}
 						size="icon"
+						aria-label={showPassword ? "Hide Password" : "Show Password"}
 						className={clsx(props.buttonClassnames)}
 					>
 						<CurrentEyeIcon className="!pointer-events-none size-4" />

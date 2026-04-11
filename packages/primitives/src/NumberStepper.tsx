@@ -144,7 +144,7 @@ const NumberStepper = forwardRef<HTMLDivElement, NumberStepperProps>(
 				{showProgress && progress !== undefined && (
 					<div className="h-1 w-full overflow-hidden rounded-full bg-app-line">
 						<div
-							className="h-full bg-accent transition-all duration-200"
+							className="h-full bg-accent transition-[width] duration-200"
 							style={{width: `${progress}%`}}
 						/>
 					</div>

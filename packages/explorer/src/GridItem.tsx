@@ -49,13 +49,13 @@ export function GridItem({
 	const displayName = extension ? `${name}.${extension}` : name;
 
 	return (
-		<div
+		<button
+			type="button"
 			onClick={onClick}
 			onDoubleClick={onDoubleClick}
 			onContextMenu={onContextMenu}
-			tabIndex={-1}
 			className={clsx(
-				"cursor-default transition-colors outline-none focus:outline-none",
+				"cursor-default border-0 bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
 				"flex flex-col items-center gap-2 p-1 rounded-lg",
 				className,
 			)}
@@ -116,6 +116,6 @@ export function GridItem({
 					</div>
 				)}
 			</div>
-		</div>
+		</button>
 	);
 }

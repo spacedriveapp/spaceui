@@ -1,6 +1,6 @@
 import { Button, Select, SelectOption } from "@spacedrive/primitives";
 import clsx from "clsx";
-import { useCallback, useState } from "react";
+import { useCallback, useId, useState } from "react";
 
 import type { TaskPriority } from "./types";
 import { TASK_PRIORITY_LABEL } from "./types";
@@ -31,6 +31,8 @@ export function TaskCreateForm({
 	const [title, setTitle] = useState("");
 	const [description, setDescription] = useState("");
 	const [priority, setPriority] = useState<TaskPriority>(defaultPriority);
+	const titleInputId = useId();
+	const descriptionInputId = useId();
 
 	const canSubmit = title.trim().length > 0 && !isSubmitting;
 
@@ -45,7 +47,11 @@ export function TaskCreateForm({
 	return (
 		<div className={clsx("flex flex-col gap-2", className)}>
 			<div className="flex items-center gap-2">
+				<label htmlFor={titleInputId} className="sr-only">
+					Task Title
+				</label>
 				<input
+					id={titleInputId}
 					type="text"
 					value={title}
 					onChange={(e) => setTitle(e.target.value)}
@@ -54,7 +60,7 @@ export function TaskCreateForm({
 						if (e.key === "Escape") onCancel?.();
 					}}
 					placeholder="Task title..."
-					className="min-w-0 flex-1 bg-transparent px-2 py-1.5 text-sm text-ink placeholder:text-ink-faint focus:outline-none"
+					className="min-w-0 flex-1 rounded-md bg-transparent px-2 py-1.5 text-sm text-ink placeholder:text-ink-faint focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
 					disabled={isSubmitting}
 					autoFocus
 				/>
@@ -79,12 +85,16 @@ export function TaskCreateForm({
 					Create
 				</Button>
 			</div>
+			<label htmlFor={descriptionInputId} className="sr-only">
+				Description
+			</label>
 			<textarea
+				id={descriptionInputId}
 				value={description}
 				onChange={(e) => setDescription(e.target.value)}
 				placeholder="Description (optional)"
 				rows={2}
-				className="w-full resize-none bg-transparent px-2 py-1.5 text-sm text-ink placeholder:text-ink-faint focus:outline-none"
+				className="w-full resize-none rounded-md bg-transparent px-2 py-1.5 text-sm text-ink placeholder:text-ink-faint focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
 				disabled={isSubmitting}
 			/>
 		</div>

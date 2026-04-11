@@ -29,14 +29,32 @@ export function TaskRow({
 	const completedSubtasks = task.subtasks.filter((s) => s.completed).length;
 	const assigneeName = resolveAgentName?.(task.assigned_agent_id) ?? task.assigned_agent_id;
 	const hasActions = onStatusChange || onDelete;
+	const isRowInteractive = typeof onClick === "function";
+	const handleRowKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		if (e.repeat) return;
+		if (e.key === "Enter") {
+			e.preventDefault();
+			onClick?.(task);
+		}
+	};
+	const handleRowKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
+		if (e.repeat) return;
+		if (e.key === " ") {
+			e.preventDefault();
+			onClick?.(task);
+		}
+	};
 
 	return (
-		<button
-			type="button"
-			onClick={() => onClick?.(task)}
+		<div
+			role={isRowInteractive ? "button" : undefined}
+			tabIndex={isRowInteractive ? 0 : undefined}
+			onClick={isRowInteractive ? () => onClick(task) : undefined}
+			onKeyDown={isRowInteractive ? handleRowKeyDown : undefined}
+			onKeyUp={isRowInteractive ? handleRowKeyUp : undefined}
 			className={clsx(
 				"task-row group grid w-full items-center border-b border-app-line/40 text-left transition-colors",
-				"hover:bg-app-hover/60",
+				"hover:bg-app-hover/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent",
 				isActive
 					? "bg-app-selected/50"
 					: "bg-transparent",
@@ -75,9 +93,9 @@ export function TaskRow({
 				{hasActions ? (
 					<DropdownMenu.Root>
 						<DropdownMenu.Trigger asChild>
-							<span
-								role="button"
-								tabIndex={0}
+							<button
+								type="button"
+								aria-label="Task Actions"
 								onClick={(e) => e.stopPropagation()}
 								onKeyDown={(e) => {
 									if (e.key === "Enter" || e.key === " ") e.stopPropagation();
@@ -85,7 +103,7 @@ export function TaskRow({
 								className="flex size-5 items-center justify-center rounded opacity-0 transition-opacity hover:bg-app-hover group-hover:opacity-100"
 							>
 								<DotsThree size={16} weight="bold" className="text-ink-dull" />
-							</span>
+							</button>
 						</DropdownMenu.Trigger>
 						<DropdownMenu.Content align="end" sideOffset={4}>
 							{onStatusChange &&
@@ -117,6 +135,6 @@ export function TaskRow({
 					</DropdownMenu.Root>
 				) : null}
 			</span>
-		</button>
+		</div>
 	);
 }
