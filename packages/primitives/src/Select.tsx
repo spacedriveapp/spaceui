@@ -26,7 +26,7 @@ const ChevronDouble = (props: React.SVGProps<SVGSVGElement>) => (
 export const selectStyles = cva(
 	[
 		"flex items-center justify-between whitespace-nowrap rounded-md border py-0.5 pl-3 pr-[10px] text-sm",
-		"shadow-sm outline-none transition-all focus:ring-2",
+		"shadow-sm outline-none transition-[background-color,border-color,box-shadow] focus:ring-2",
 		"text-ink radix-placeholder:text-ink-faint",
 	],
 	{

@@ -45,7 +45,7 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
 					"flex h-8 items-center gap-2 px-3",
 					"rounded-full backdrop-blur-xl",
 					"border border-app-line/30 bg-app-overlay/80 hover:bg-app-box",
-					"transition-all focus-within:bg-sidebar-box/30",
+					"transition-colors focus-within:bg-sidebar-box/30",
 					className,
 				)}
 			>
@@ -68,7 +68,9 @@ export const SearchBar = forwardRef<HTMLInputElement, SearchBarProps>(
 				/>
 				{currentValue && (
 					<button
+						type="button"
 						onClick={handleClear}
+						aria-label="Clear Search"
 						className="flex-shrink-0 rounded-full p-0.5 transition-colors hover:bg-sidebar-selected/40"
 					>
 						<X className="size-3 text-sidebar-inkDull" weight="bold" />

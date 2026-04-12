@@ -1,5 +1,5 @@
 import { clsx } from 'clsx';
-import { createContext, useContext, useId } from 'react';
+import { cloneElement, createContext, isValidElement, useContext, useId } from 'react';
 import {
   Controller,
   FormProvider,
@@ -84,17 +84,33 @@ const FormLabel = ({ className, ...props }: React.LabelHTMLAttributes<HTMLLabelE
   );
 };
 
-const FormControl = ({ ...props }: React.HTMLAttributes<HTMLDivElement>) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+interface FormControlProps {
+  children: React.ReactElement;
+}
 
-  return (
-    <div
-      id={formItemId}
-      aria-describedby={!error ? formDescriptionId : `${formDescriptionId} ${formMessageId}`}
-      aria-invalid={!!error}
-      {...props}
-    />
-  );
+const FormControl = ({ children }: FormControlProps) => {
+  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  const describedBy = !error ? formDescriptionId : `${formDescriptionId} ${formMessageId}`;
+
+  if (!isValidElement(children)) {
+    return null;
+  }
+
+  const childProps = children.props as { 'aria-describedby'?: string };
+  const existingDescribed = childProps['aria-describedby'];
+  const mergedDescribed = Array.from(
+    new Set(
+      [existingDescribed, describedBy]
+        .filter(Boolean)
+        .flatMap((value) => value!.split(/\s+/).filter(Boolean)),
+    ),
+  ).join(' ');
+
+  return cloneElement(children, {
+    id: formItemId,
+    'aria-describedby': mergedDescribed,
+    'aria-invalid': !!error,
+  } as React.HTMLAttributes<HTMLElement>);
 };
 
 const FormDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParagraphElement>) => {

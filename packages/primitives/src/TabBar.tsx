@@ -68,36 +68,45 @@ export const TabBarItem = forwardRef<HTMLButtonElement, TabBarItemProps>(
 		const showClose = closable ?? !!onClose;
 
 		return (
-			<button
-				ref={ref}
+			<div
 				className={clsx(
-					"group relative flex min-w-0 flex-1 items-center justify-center rounded-full py-1.5 text-[13px]",
-					active
-						? "text-ink"
-						: "text-ink-dull hover:text-ink hover:bg-app-hover/50",
+					"group relative flex min-w-0 flex-1 items-center justify-center",
 					className,
 				)}
-				{...props}
 			>
-				{active && (
-					<motion.div
-						layoutId="activeTab"
-						className="absolute inset-0 rounded-full bg-app-selected shadow-sm"
-						initial={false}
-						transition={{
-							type: "spring",
-							stiffness: 500,
-							damping: 35,
-						}}
-					/>
-				)}
+				<button
+					ref={ref}
+					className={clsx(
+						"relative flex w-full min-w-0 items-center justify-center rounded-full py-1.5 text-[13px]",
+						active
+							? "text-ink"
+							: "text-ink-dull hover:text-ink hover:bg-app-hover/50",
+					)}
+					{...props}
+				>
+					{active && (
+						<motion.div
+							layoutId="activeTab"
+							className="absolute inset-0 rounded-full bg-app-selected shadow-sm"
+							initial={false}
+							transition={{
+								type: "spring",
+								stiffness: 500,
+								damping: 35,
+							}}
+						/>
+					)}
+					<span className="relative z-10 truncate px-6">{label}</span>
+				</button>
 				{showClose && active && (
-					<span
+					<button
+						type="button"
+						aria-label="Close tab"
 						onClick={(e) => {
 							e.stopPropagation();
 							onClose?.();
 						}}
-						className="z-10 flex cursor-pointer items-center justify-center rounded-full opacity-60 transition-all hover:bg-app-hover hover:opacity-100"
+						className="z-10 flex cursor-pointer items-center justify-center rounded-full opacity-60 transition-[background-color,opacity] hover:bg-app-hover hover:opacity-100"
 						style={{ position: "absolute", left: 6, top: "50%", transform: "translateY(-50%)", width: 20, height: 20 }}
 						title="Close tab"
 					>
@@ -114,10 +123,9 @@ export const TabBarItem = forwardRef<HTMLButtonElement, TabBarItemProps>(
 								<path d="M2 2l6 6M8 2l-6 6" />
 							</svg>
 						)}
-					</span>
+					</button>
 				)}
-				<span className="relative z-10 truncate px-6">{label}</span>
-			</button>
+			</div>
 		);
 	},
 );

@@ -45,6 +45,9 @@ export function MessageBubble({
 					<CircleButton
 						icon={Copy}
 						onClick={() => onCopy(content)}
+						aria-label={
+							isStreaming ? 'Copy Streaming Message' : 'Copy Message'
+						}
 						title={
 							isStreaming ? 'Copy streaming message' : 'Copy message'
 						}

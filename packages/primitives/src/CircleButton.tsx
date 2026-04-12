@@ -7,7 +7,7 @@ import {forwardRef} from "react";
 export const circleButtonStyles = cva(
 	[
 		"flex items-center justify-center",
-		"backdrop-blur-xl transition-all",
+		"backdrop-blur-xl transition-[background-color,border-color,color,transform]",
 		"border border-app-line/50",
 		"rounded-full",
 		"active:scale-95",

@@ -10,7 +10,7 @@ const shinyButtonVariants = cva(
 		"noise with-rounded-2px-border-images inline-flex flex-row items-center justify-center gap-x-2 overflow-hidden",
 		"bg-gradient-to-b from-[#42B2FD] to-[#0078F0] [--border-image:linear-gradient(to_bottom,hsl(200_100%_77%/100%),hsl(200_0%_100%/5%)75%)]",
 		"will-change-transform will-change-[box-shadow]",
-		"transition-all duration-200 ease-out",
+		"transition-[box-shadow,filter,transform] duration-200 ease-out",
 		"cursor-pointer",
 	],
 	{

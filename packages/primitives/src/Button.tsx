@@ -32,7 +32,7 @@ export const buttonStyles = cva(
 	[
 		"inline-flex cursor-default items-center justify-center gap-1.5 border font-medium tracking-wide outline-none transition-colors duration-100",
 		"disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-70",
-		"focus:ring-none focus:ring-offset-none cursor-pointer ring-offset-app-box",
+		"cursor-pointer ring-offset-app-box focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2",
 	],
 	{
 		variants: {

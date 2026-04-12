@@ -25,7 +25,7 @@ export function TagPill({
 				size === "xs" && "px-1.5 py-0.5 text-[10px]",
 				size === "sm" && "px-2 py-0.5 text-xs",
 				size === "md" && "px-2.5 py-1 text-sm",
-				(onClick || onRemove) && "transition-all hover:brightness-110",
+				(onClick || onRemove) && "transition-[filter] hover:brightness-110",
 				className,
 			)}
 			style={{ backgroundColor: `${color}20`, color }}
