@@ -1,6 +1,6 @@
 {
   "name": "@spacedrive/forms",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Form field wrappers for SpaceUI built on react-hook-form",
   "type": "module",
   "main": "./dist/index.js",

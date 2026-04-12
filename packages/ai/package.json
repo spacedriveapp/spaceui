@@ -1,6 +1,6 @@
 {
   "name": "@spacedrive/ai",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "AI agent interaction components for SpaceUI",
   "type": "module",
   "main": "./dist/index.js",
