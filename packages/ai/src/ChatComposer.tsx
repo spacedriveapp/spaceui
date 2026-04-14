@@ -88,7 +88,7 @@ export function ChatComposer({
 					}}
 					placeholder={placeholder}
 					rows={2}
-					className="text-ink placeholder:text-ink-faint block w-full resize-none rounded-md border-0 bg-transparent text-sm leading-6 outline-none focus:border-0 focus:outline-none focus:ring-0 focus-visible:ring-2 focus-visible:ring-accent"
+					className="text-ink placeholder:text-ink-faint block w-full resize-none rounded-md border-0 bg-transparent text-sm leading-6 outline-none focus:border-0 focus:outline-none focus:ring-0"
 				/>
 
 				<div className="mt-4 flex items-center justify-between gap-3">
